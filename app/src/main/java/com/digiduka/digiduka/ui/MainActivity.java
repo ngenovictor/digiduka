@@ -3,6 +3,7 @@ package com.digiduka.digiduka.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,10 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.digiduka.digiduka.R;
+import com.digiduka.digiduka.adapters.MainActivityFragmentsAdapter;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private MainActivityFragmentsAdapter mainActivityFragmentsAdapter;
+    private ViewPager mainActivityViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mainActivityFragmentsAdapter = new MainActivityFragmentsAdapter(getSupportFragmentManager());
+        mainActivityViewPager = findViewById(R.id.mainActivityViewPager);
+        mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
     }
 
     @Override
