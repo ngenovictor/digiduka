@@ -26,7 +26,7 @@ public class CategoriesGridViewAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return 3;
+        return 7;
     }
 
     @Override
@@ -45,9 +45,6 @@ public class CategoriesGridViewAdapter extends BaseAdapter {
         gridText = thisView.findViewById(R.id.gridText);
         gridViewHolder = thisView.findViewById(R.id.gridViewHolder);
         gridText.setText("this");
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        gridViewHolder.setBackgroundColor(color);
 //        view.setBackgroundColor(color);
 //        TextView textView;
 //        textView = new TextView(mContext);

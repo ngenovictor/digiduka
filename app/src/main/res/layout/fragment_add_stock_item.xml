@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#dfdce3"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.digiduka.digiduka.ui.AddStockItemFragment">
     <TextView
@@ -9,22 +10,37 @@
         android:text="Choose one of the following categories:"
         android:textSize="20sp"
         android:gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
     <GridView
         android:id="@+id/gridView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:columnWidth="100dp"
-        android:numColumns="auto_fit"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:stretchMode="spacingWidthUniform"
-        app:layout_constraintTop_toBottomOf="@+id/addStockTitle">
+
+        android:numColumns="2"
+        android:columnWidth="90dp"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="-30dp"
+        android:stretchMode="columnWidth"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addStockTitle"
+        app:layout_constraintBottom_toTopOf="@+id/addCategoryButton">
     </GridView>
+    <Button
+        android:id="@+id/addCategoryButton"
+        android:text="Add New Category"
+        android:background="#465c8b"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridView"/>
 
 </android.support.constraint.ConstraintLayout>
