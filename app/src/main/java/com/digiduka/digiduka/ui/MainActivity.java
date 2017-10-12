@@ -14,14 +14,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.MainActivityFragmentsAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private MainActivityFragmentsAdapter mainActivityFragmentsAdapter;
     private ViewPager mainActivityViewPager;
     private TabLayout homeNavTabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         homeNavTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mainActivityViewPager));
         mainActivityViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(homeNavTabLayout));
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -111,4 +120,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }
