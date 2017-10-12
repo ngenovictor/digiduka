@@ -3,10 +3,12 @@ package com.digiduka.digiduka.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
@@ -17,7 +19,7 @@ import java.util.Random;
  * Created by victor on 10/11/17.
  */
 
-public class CategoriesGridViewAdapter extends BaseAdapter {
+public class CategoriesGridViewAdapter extends BaseAdapter implements View.OnClickListener{
     private Context mContext;
     private TextView gridText;
     private ConstraintLayout gridViewHolder;
@@ -50,5 +52,10 @@ public class CategoriesGridViewAdapter extends BaseAdapter {
 //        textView = new TextView(mContext);
 //        textView.setText(Integer.toString(i));
         return thisView;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
