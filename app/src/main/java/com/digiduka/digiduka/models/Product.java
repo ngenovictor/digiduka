@@ -1,5 +1,6 @@
 package com.digiduka.digiduka.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,12 +13,11 @@ public class Product {
     private Integer price;
     private String description;
     private String categoryId;
-    Map<String, Integer> variation = new HashMap<>();
+    ArrayList<Item> variation;
 
+    public Product(){};
 
-    public Product(){}
-
-    public Product(String nameOfProduct, Integer price, String description, String categoryId, Map<String, Integer> variation) {
+    public Product(String nameOfProduct, Integer price, String description, String categoryId, ArrayList<Item> variation) {
         this.nameOfProduct = nameOfProduct;
         this.price = price;
         this.description = description;
@@ -33,15 +33,33 @@ public class Product {
         return price;
     }
 
-    public String getCategoryId() {
-        return categoryId;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public Map<String, Integer> getVariation() {
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public ArrayList<Item> getVariation() {
         return variation;
     }
 }
+
+ class Item{
+    String quantity;
+    Integer price;
+
+     public Item(String quantity, Integer price) {
+         this.quantity = quantity;
+         this.price = price;
+     }
+
+     public String getQuantity() {
+         return quantity;
+     }
+
+     public Integer getPrice() {
+         return price;
+     }
+ }
