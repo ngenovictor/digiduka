@@ -5,4 +5,5 @@ package com.digiduka.digiduka.models;
  */
 
 public class Shop {
+    //name, location, Date,
 }
