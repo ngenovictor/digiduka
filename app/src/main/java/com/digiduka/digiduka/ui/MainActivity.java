@@ -151,8 +151,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (requestCode == RC_SIGN_IN) {
 
             if (resultCode == RESULT_OK) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
 
                 logedIn();
+                Toast.makeText( getApplicationContext(), "You are Signed in as:"+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
 
             } else {
 
