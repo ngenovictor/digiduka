@@ -1,46 +1,64 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#dfdce3"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.digiduka.digiduka.ui.AddStockItemFragment">
+
     <TextView
         android:id="@+id/addStockTitle"
+        android:layout_width="292dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Choose one of the following categories:"
         android:textSize="20sp"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-
-        android:numColumns="2"
         android:columnWidth="90dp"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="-30dp"
-        android:stretchMode="columnWidth"
 
-        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        android:horizontalSpacing="-30dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/addCategoryButton"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addStockTitle"
-        app:layout_constraintBottom_toTopOf="@+id/addCategoryButton">
-    </GridView>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addStockTitle"></GridView>
+
     <Button
         android:id="@+id/addCategoryButton"
-        android:text="Add New Category"
-        android:background="#465c8b"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#465c8b"
+        android:text="Add New Category"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gridView" />
+
+    <TextView
+        android:id="@+id/categoryShowCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/gridView"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.00999999" />
 
 </android.support.constraint.ConstraintLayout>

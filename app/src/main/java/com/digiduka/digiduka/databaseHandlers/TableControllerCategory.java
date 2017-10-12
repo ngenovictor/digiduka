@@ -34,4 +34,17 @@ public class TableControllerCategory extends DatabaseHandler {
 
         return createSuccessful;
     }
+
+    /**
+     * count method, retrieves the number of records in sql database
+     * **/
+    public int count() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM categories";
+        int recordCount = db.rawQuery(sql, null).getCount();
+        db.close();
+
+        return recordCount;
+    }
 }

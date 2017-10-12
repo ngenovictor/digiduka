@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
@@ -25,7 +26,10 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
     private Button submitCategory;
     private AutoCompleteTextView categoryTitle;
     private AutoCompleteTextView categoryDescription;
-
+    /**
+     * initializes the SQL Database TableController
+     * **/
+    TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
 
     public AddCategoryFragment() {
         // Required empty public constructor
@@ -59,7 +63,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             /**
              * send to sql methods here
              * **/
-            TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
+
             boolean createSuccessful = tableControllerCategory.create(newCategory);
             if (createSuccessful) {
                 Toast.makeText(getContext(), "Category data saved successfully", Toast.LENGTH_LONG).show();
@@ -69,7 +73,13 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             /**
              * send to sql methods here
              * **/
+
+            /**
+             * Retrieve object count in Database
+             * **/
+            //countRecords();
             dismiss();
         }
     }
+
 }
