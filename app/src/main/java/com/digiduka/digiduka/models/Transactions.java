@@ -8,9 +8,9 @@ import java.util.Date;
  */
 
 public class Transactions {
-   Date date;
-    Integer total;
-    String uid;
+  private  Date date;
+   private  Integer total;
+   private  String uid;
 
 
     ArrayList<Product> products=new ArrayList<>();
@@ -18,7 +18,7 @@ public class Transactions {
     public Transactions(){};
 
     public Transactions(Date date,Integer total,String uid,ArrayList<Product> products){
-        this.date=date;
+        this.date=new Date();
         this.uid=uid;
         this.products=products;
     }
@@ -28,10 +28,21 @@ public class Transactions {
     }
 
     public Integer getTotal() {
+
         return total;
     }
 
+    public void setTotal(Integer total) {
+        // total=0;
+//        for (Product product:products) {
+//            total += product.getVariation().entrySet().toArray();
+//        }
+        this.total = total;
+    }
+
     public String getUid() {
+
+
         return uid;
     }
 
