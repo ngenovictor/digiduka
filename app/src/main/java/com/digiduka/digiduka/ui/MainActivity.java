@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivityForResult(
                     // Get an instance of AuthUI based on the default app
                     AuthUI.getInstance().createSignInIntentBuilder()
+                            .setAvailableProviders(
+                                    Arrays.asList(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
+                                            new AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build(),
+                                            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()))
 
                             .build(),
                     RC_SIGN_IN);
