@@ -57,6 +57,9 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Categori
         }
         public void bindCategory(Category category){
             gridText.setText(category.getCategoryTitle());
+
+            Log.d("hey", "hey");
+
         }
     }
     @Override

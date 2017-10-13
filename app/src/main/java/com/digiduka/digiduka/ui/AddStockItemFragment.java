@@ -18,9 +18,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.digiduka.digiduka.R;
+
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
+
+import com.digiduka.digiduka.adapters.CategoriesRecyclerViewAdapter;
+import com.digiduka.digiduka.adapters.FirebaseCategoriesViewHolder;
+import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.utils.Constants;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.ChildEventListener;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +40,10 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddStockItemFragment extends DialogFragment implements View.OnClickListener {
+
+
+public class AddStockItemFragment extends Fragment implements View.OnClickListener{
+
     private RecyclerView categoriesRecyclerView;
     private Button addCategoryButton;
     private CategoryListAdapter listAdapter;
@@ -84,13 +96,28 @@ public class AddStockItemFragment extends DialogFragment implements View.OnClick
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
 
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Category, FirebaseCategoriesViewHolder>(Category.class, R.layout.category_item, FirebaseCategoriesViewHolder.class, reference) {
 
+            @Override
+            protected void populateViewHolder(FirebaseCategoriesViewHolder viewHolder, Category model, int position) {
+                viewHolder.bindCategory(model);
+            }
+        };
+//        final CategoriesRecyclerViewAdapter adapter = new CategoriesRecyclerViewAdapter(getContext(), categories);
+        categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        categoriesRecyclerView.setAdapter(adapter);
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
-            listAdapter = new CategoryListAdapter(getContext(), categories);
-            categoriesRecyclerView.setAdapter(listAdapter);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-            categoriesRecyclerView.setLayoutManager(layoutManager);
-            categoriesRecyclerView.setHasFixedSize(false);
 
 
 
