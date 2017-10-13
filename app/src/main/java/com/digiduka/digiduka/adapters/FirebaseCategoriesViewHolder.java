@@ -4,9 +4,11 @@ package com.digiduka.digiduka.adapters;
  * Created by victor on 10/13/17.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.Image;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.ui.AddProductFragment;
 
 /**
  * Created by victor on 10/11/17.
@@ -27,9 +30,11 @@ public class FirebaseCategoriesViewHolder extends RecyclerView.ViewHolder implem
     private ImageView dropDownImage;
     private ConstraintLayout gridViewHolder;
     private Button addProductButton;
+    private Context mContext;
 
     public FirebaseCategoriesViewHolder(View itemView) {
         super(itemView);
+        mContext = itemView.getContext();
         gridText = itemView.findViewById(R.id.gridText);
         categoryProductsHolder = itemView.findViewById(R.id.categoryProductsHolder);
         dropDownImage = itemView.findViewById(R.id.dropDownImage);
@@ -56,7 +61,10 @@ public class FirebaseCategoriesViewHolder extends RecyclerView.ViewHolder implem
                 categoryProductsHolder.setVisibility(View.VISIBLE);
             }
         }else if(view == addProductButton){
-            
+            AddProductFragment fragment = new AddProductFragment();
+            FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+            android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+            fragment.show(fm, "dialog");
         }
     }
 }
