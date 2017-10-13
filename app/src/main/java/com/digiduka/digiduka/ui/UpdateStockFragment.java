@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,15 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         if(view == addStockfab){
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
             FragmentManager fm = getFragmentManager();
             AddStockItemFragment addStockItemFragment = new AddStockItemFragment();
-            addStockItemFragment.show(fm, "dialog");
+            fragmentTransaction.add(R.id.container, addStockItemFragment);
+            fragmentTransaction.commit();
+//            addStockItemFragment.show(fm, "dialog");
         }
     }
 }
