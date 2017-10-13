@@ -38,13 +38,14 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Categori
 
     @Override
     public void onBindViewHolder(CategoriesViewHolder holder, int position) {
-        holder.bindCategory();
+        holder.bindCategory(categories.get(position));
+
         Log.d("position", Integer.toString(position));
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return categories.size();
     }
 
     public class CategoriesViewHolder extends RecyclerView.ViewHolder{
@@ -54,8 +55,8 @@ public class CategoriesRecyclerViewAdapter extends RecyclerView.Adapter<Categori
             gridText = itemView.findViewById(R.id.gridText);
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
         }
-        public void bindCategory(){
-            gridText.setText("category.getCategoryTitle()");
+        public void bindCategory(Category category){
+            gridText.setText(category.getCategoryTitle());
         }
     }
     @Override

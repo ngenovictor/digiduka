@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
+import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +54,21 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             String categoryId = puhRef.getKey();
             newCategory.setCategoryId(categoryId);
             puhRef.setValue(newCategory);
+
+
+            /**
+             * send to sql methods here
+             * **/
+            TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
+            boolean createSuccessful = tableControllerCategory.create(newCategory);
+            if (createSuccessful) {
+                Toast.makeText(getContext(), "Category data saved successfully", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), "Failed to save category data", Toast.LENGTH_LONG).show();
+            }
+            /**
+             * send to sql methods here
+             * **/
             dismiss();
         }
     }
