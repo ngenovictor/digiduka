@@ -65,6 +65,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
              * **/
 
             boolean createSuccessful = tableControllerCategory.create(newCategory);
+
             if (createSuccessful) {
                 Toast.makeText(getContext(), "Category data saved successfully", Toast.LENGTH_LONG).show();
             } else {

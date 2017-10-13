@@ -93,19 +93,8 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
-<<<<<<< HEAD
         //countRecords();
-        final CategoriesRecyclerViewAdapter adapter = new CategoriesRecyclerViewAdapter(getContext(), categories);
-        categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoriesRecyclerView.setAdapter(adapter);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                adapter.notifyDataSetChanged();
-            }
-=======
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Category, FirebaseCategoriesViewHolder>(Category.class, R.layout.category_item, FirebaseCategoriesViewHolder.class, reference) {
->>>>>>> 158c61b887662a17dd11e80685cb904397c86425
 
             @Override
             protected void populateViewHolder(FirebaseCategoriesViewHolder viewHolder, Category model, int position) {
@@ -130,7 +119,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
 
         return view;
-    }//
+    }
 
     @Override
     public void onClick(View view) {
