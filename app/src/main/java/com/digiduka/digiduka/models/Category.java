@@ -1,17 +1,21 @@
 package com.digiduka.digiduka.models;
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 
 /**
  * Created by victor on 10/11/17.
  */
-
+@Parcel
 public class Category {
     private String categoryTitle;
     private String categoryDescription;
     private String categoryId;
     private String shopId;
     private Date date;
+
+    public Category(){}
 
     public Category(String categoryTitle, String categoryDescription) {
         this.categoryTitle = categoryTitle;
