@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoriesRecyclerViewAdapter;
+import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.database.ChildEventListener;
