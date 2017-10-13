@@ -15,6 +15,7 @@ import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,6 +26,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
     private Button submitCategory;
     private AutoCompleteTextView categoryTitle;
     private AutoCompleteTextView categoryDescription;
+    private FirebaseAuth mAuth;
 
 
     public AddCategoryFragment() {
@@ -38,6 +40,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
         submitCategory = view.findViewById(R.id.submitCategory);
         categoryTitle = view.findViewById(R.id.categoryTitle);
         categoryDescription = view.findViewById(R.id.categoryDescription);
+        mAuth = FirebaseAuth.getInstance();
         submitCategory.setOnClickListener(this);
         return view;
     }
@@ -49,7 +52,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             String description = categoryDescription.getText().toString().trim();
             Category newCategory = new Category(title, description);
             DatabaseReference reference = FirebaseDatabase.getInstance()
-                    .getReference(Constants.CATEGORY_DB_KEY);
+                    .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
             DatabaseReference puhRef = reference.push();
             String categoryId = puhRef.getKey();
             newCategory.setCategoryId(categoryId);

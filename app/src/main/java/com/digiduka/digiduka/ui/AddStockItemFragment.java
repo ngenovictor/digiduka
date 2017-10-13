@@ -28,6 +28,7 @@ import com.digiduka.digiduka.adapters.FirebaseCategoriesViewHolder;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +50,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private CategoryListAdapter listAdapter;
     private ArrayList<Category> categories=new ArrayList<>();
     private DatabaseReference reference;
+    private FirebaseAuth mAuth;
 
 
 
@@ -59,11 +61,11 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mAuth = FirebaseAuth.getInstance();
 
 
         reference = FirebaseDatabase.getInstance()
-                .getReference(Constants.CATEGORY_DB_KEY);
+                .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
 
 
         reference.addValueEventListener(new ValueEventListener() {
