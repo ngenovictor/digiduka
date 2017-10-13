@@ -26,7 +26,7 @@ public class TableControllerCategory extends DatabaseHandler {
         values.put("date", category.getDate().toString()); //workout the date method here
 
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
 
         boolean createSuccessful = db.insert("categories", null, values) > 0;
 

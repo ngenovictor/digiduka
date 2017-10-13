@@ -5,5 +5,5 @@ package com.digiduka.digiduka.utils;
  */
 
 public class Constants {
-    public final static String CATEGORY_DB_KEY = "users";
+    public final static String CATEGORY_DB_KEY = "categories";
 }
