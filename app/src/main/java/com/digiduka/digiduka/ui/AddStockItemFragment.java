@@ -1,8 +1,6 @@
 package com.digiduka.digiduka.ui;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -44,9 +42,9 @@ public class AddStockItemFragment extends DialogFragment implements View.OnClick
         gridView.setAdapter(adapter);
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
-        countRecords();
+        //countRecords();
         return view;
-    }
+    }//
 
     @Override
     public void onClick(View view) {
@@ -60,13 +58,11 @@ public class AddStockItemFragment extends DialogFragment implements View.OnClick
     /**
      * count method, retrieves the number of records in sql database
      * **/
-
-    public void countRecords() {
-        int recordCount = tableControllerCategory.count();
-//        recordCountText = (TextView) getView().findViewById(R.id.categoryShowCount);
-//        recordCountText.setText(recordCount);
-    }
-
+//    public void countRecords() {
+//        int recordCount = tableControllerCategory.count();
+////        recordCountText = (TextView) getView().findViewById(R.id.categoryShowRecord);
+////        recordCountText.setText(recordCount);
+//    }
     /**
      * count method, retrieves the number of records in sql database
      * **/
