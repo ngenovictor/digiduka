@@ -59,6 +59,15 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             newCategory.setCategoryId(categoryId);
             puhRef.setValue(newCategory);
 
+            /**
+             * this line enables offline mode for firebase
+             * **/
+             reference.keepSynced(true);
+
+            /**
+             * this line enables offline mode for firebase
+             * **/
+
 
             /**
              * send to sql methods here
