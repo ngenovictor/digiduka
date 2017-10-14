@@ -5,10 +5,10 @@ package com.digiduka.digiduka.adapters;
  */
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.media.Image;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;

@@ -33,12 +33,12 @@ public class Transactions {
     }
 
     public void setTotal(Integer total) {
-         total=0;
-        for (Product product:products) {
-            for(Item item:product.getVariation()) {
-                total+=item.getPrice();
-            }
-        }
+//         total=0;
+//        for (Product product:products) {
+//            for(Item item:product.getVariation()) {
+//                total+=item.getPrice();
+//            }
+//        }
         this.total = total;
     }
 
