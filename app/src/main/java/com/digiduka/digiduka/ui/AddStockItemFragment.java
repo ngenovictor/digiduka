@@ -36,6 +36,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 
 /**
@@ -47,6 +50,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
     private RecyclerView categoriesRecyclerView;
     private Button addCategoryButton;
+    private CategoryListAdapter mAdapter;
 
     private TextView recordCountText;
     /**
@@ -55,8 +59,6 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
     private ArrayList<Category> categories = new ArrayList<>();
 
-    private DatabaseReference reference;
-    private FirebaseAuth mAuth;
 
 
 
@@ -67,32 +69,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-
-
-        reference = FirebaseDatabase.getInstance()
-                .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
-
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v("data", dataSnapshot.toString());
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    categories.add(data.getValue(Category.class));
-                    Log.v("data", data.toString());
-                }
-
-                Log.v("data", dataSnapshot.toString());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-
-            }
-        });
-
+        categories= Parcels.unwrap(getArguments().getParcelable("categories"));
 
     }
 
@@ -103,28 +80,12 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
-        //countRecords();
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Category, FirebaseCategoriesViewHolder>(Category.class, R.layout.category_item, FirebaseCategoriesViewHolder.class, reference) {
+        mAdapter = new CategoryListAdapter(getContext(), categories);
+        categoriesRecyclerView.setAdapter(mAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        categoriesRecyclerView.setLayoutManager(layoutManager);
+        categoriesRecyclerView.setHasFixedSize(false);
 
-            @Override
-            protected void populateViewHolder(FirebaseCategoriesViewHolder viewHolder, Category model, int position) {
-                viewHolder.bindCategory(model);
-            }
-        };
-//        final CategoriesRecyclerViewAdapter adapter = new CategoriesRecyclerViewAdapter(getContext(), categories);
-        categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        categoriesRecyclerView.setAdapter(adapter);
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
 
 
@@ -141,15 +102,4 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    /**
-     * count method, retrieves the number of records in sql database
-     * **/
-//    public void countRecords() {
-//        int recordCount = tableControllerCategory.count();
-////        recordCountText = (TextView) getView().findViewById(R.id.categoryShowRecord);
-////        recordCountText.setText(recordCount);
-//    }
-    /**
-     * count method, retrieves the number of records in sql database
-     * **/
 }
