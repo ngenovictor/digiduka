@@ -1,17 +1,22 @@
 package com.digiduka.digiduka.adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.ui.AddProductFragment;
 
 import org.parceler.Parcels;
 
@@ -47,25 +52,49 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         // Log.v("items",mItems.get(0).getName());
         return mCategorys.size();
     }
-    public class CategoryViewHolder extends RecyclerView.ViewHolder{
-        private TextView mNameView;
-
+    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private TextView gridText;
+        private ConstraintLayout categoryProductsHolder;
+        private ImageView dropDownImage;
+        private ConstraintLayout gridViewHolder;
+        private Button addProductButton;
         private Context mContext;
 
         public CategoryViewHolder(View itemView){
             super(itemView);
-            //ButterKnife.bind(this,itemView);
-            mNameView =(TextView) itemView.findViewById(R.id.gridText);
+            mContext = itemView.getContext();
+            gridText = itemView.findViewById(R.id.gridText);
+            categoryProductsHolder = itemView.findViewById(R.id.categoryProductsHolder);
+            dropDownImage = itemView.findViewById(R.id.dropDownImage);
+            gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
+            addProductButton = itemView.findViewById(R.id.addProductButton);
 
-            mContext=itemView.getContext();
+            categoryProductsHolder.setVisibility(View.GONE);
+            gridViewHolder.setOnClickListener(this);
+            dropDownImage.setOnClickListener(this);
+            addProductButton.setOnClickListener(this);
 
 
         }
 
         public void bindCategory(Category category){
+            gridText.setText(category.getCategoryTitle());
 
-            mNameView.setText(category.getCategoryTitle());
-
+        }
+        @Override
+        public void onClick(View view) {
+            if (view == dropDownImage || view == gridViewHolder){
+                if (categoryProductsHolder.getVisibility()==View.VISIBLE){
+                    categoryProductsHolder.setVisibility(View.GONE);
+                }else{
+                    categoryProductsHolder.setVisibility(View.VISIBLE);
+                }
+            }else if(view == addProductButton){
+                AddProductFragment fragment = new AddProductFragment();
+                FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+                android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+                fragment.show(fm, "dialog");
+            }
         }
 
 

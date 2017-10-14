@@ -1,11 +1,9 @@
 package com.digiduka.digiduka.ui;
 
 
-import android.os.Bundle;
 import android.app.DialogFragment;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
+
  */
 public class AddProductFragment extends DialogFragment implements View.OnClickListener {
     private Button newProductButton;

@@ -1,5 +1,6 @@
 package com.digiduka.digiduka.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,15 +19,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.MainActivityFragmentsAdapter;
+import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.utils.Constants;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,11 +46,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ViewPager mainActivityViewPager;
     private TabLayout homeNavTabLayout;
     private static final int RC_SIGN_IN = 123;
+    private ArrayList<Category> categories = new ArrayList<>();
+
+    private DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private TextView userName;
+    private TextView email;
+    private ImageView avatar;
+    private NavigationView navigationView;
+    private View  headerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        getSupportActionBar().setTitle(R.string.app_name);
 
 
@@ -56,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     RC_SIGN_IN);
 
         } else {
+            mAuth = FirebaseAuth.getInstance();
 
             logedIn();
         }
@@ -69,13 +95,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        getCategories();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView=findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.username);
+        email = headerView.findViewById(R.id.useremail);
+        avatar=headerView.findViewById(R.id.imageView);
+        if (mAuth.getCurrentUser().getDisplayName()!=null){
+            userName.setText(mAuth.getCurrentUser().getDisplayName());
+            email.setText(mAuth.getCurrentUser().getEmail());
+            Picasso.with(getApplicationContext()).load(mAuth.getCurrentUser().getPhotoUrl()).into(avatar);
 
-        mainActivityFragmentsAdapter = new MainActivityFragmentsAdapter(getSupportFragmentManager());
+        }else{
+            userName.setText("");
+        }
+
+
+
+
+
         mainActivityViewPager = findViewById(R.id.mainActivityViewPager);
-        mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
         homeNavTabLayout = findViewById(R.id.homeNavTabLayout);
         homeNavTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mainActivityViewPager));
         mainActivityViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(homeNavTabLayout));
@@ -168,6 +210,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+
+
+    public void getCategories(){
+        mAuth = FirebaseAuth.getInstance();
+
+
+        reference = FirebaseDatabase.getInstance()
+                .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
+
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.v("data", dataSnapshot.toString());
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    categories.add(data.getValue(Category.class));
+                    Log.v("data", data.toString());
+                }
+                mainActivityFragmentsAdapter = new MainActivityFragmentsAdapter(getSupportFragmentManager(), categories);
+
+                mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
+                Log.v("size", String.valueOf(categories.size()));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+
+            }
+        });
+    }
+
 
 
 }
