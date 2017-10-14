@@ -63,7 +63,6 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
              * this line enables offline mode for firebase
              * **/
              reference.keepSynced(true);
-
             /**
              * this line enables offline mode for firebase
              * **/
