@@ -1,5 +1,6 @@
 package com.digiduka.digiduka.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
@@ -33,6 +36,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,11 +50,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
+    private TextView userName;
+    private TextView email;
+    private ImageView avatar;
+    private NavigationView navigationView;
+    private View  headerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 //        getSupportActionBar().setTitle(R.string.app_name);
 
 
@@ -70,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     RC_SIGN_IN);
 
         } else {
+            mAuth = FirebaseAuth.getInstance();
 
             logedIn();
         }
@@ -87,6 +99,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView=findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.username);
+        email = headerView.findViewById(R.id.useremail);
+        avatar=headerView.findViewById(R.id.imageView);
+        if (mAuth.getCurrentUser().getDisplayName()!=null){
+            userName.setText(mAuth.getCurrentUser().getDisplayName());
+            email.setText(mAuth.getCurrentUser().getEmail());
+            Picasso.with(getApplicationContext()).load(mAuth.getCurrentUser().getPhotoUrl()).into(avatar);
+
+        }else{
+            userName.setText("");
+        }
+
+
+
 
 
         mainActivityViewPager = findViewById(R.id.mainActivityViewPager);
