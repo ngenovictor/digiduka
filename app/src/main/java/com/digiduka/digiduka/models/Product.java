@@ -1,8 +1,7 @@
 package com.digiduka.digiduka.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Created by victor on 10/11/17.
@@ -13,16 +12,17 @@ public class Product {
     private Integer price;
     private String description;
     private String categoryId;
-    ArrayList<Item> variation;
+    List<Variation> variations;
+    private String pushId;
 
     public Product(){};
 
-    public Product(String nameOfProduct, Integer price, String description, String categoryId, ArrayList<Item> variation) {
+    public Product(String nameOfProduct, String description, String categoryId) {
         this.nameOfProduct = nameOfProduct;
         this.price = price;
         this.description = description;
         this.categoryId = categoryId;
-        this.variation = variation;
+        variations = new ArrayList<>();
     }
 
     public String getNameOfProduct() {
@@ -41,25 +41,30 @@ public class Product {
         return categoryId;
     }
 
-    public ArrayList<Item> getVariation() {
-        return variation;
+    public List<Variation> getVariation() {
+        return variations;
     }
-}
 
- class Item{
+    public void addVariations(String quantity,Integer price) {
+        Variation variation = new Variation(quantity, price);
+        this.variations.add(variation);
+    }
+
+}
+class Variation{
     String quantity;
     Integer price;
 
-     public Item(String quantity, Integer price) {
-         this.quantity = quantity;
-         this.price = price;
-     }
+    public Variation(String quantity, Integer price) {
+        this.quantity = quantity;
+        this.price = price;
+    }
 
-     public String getQuantity() {
-         return quantity;
-     }
+    public String getQuantity() {
+        return quantity;
+    }
 
-     public Integer getPrice() {
-         return price;
-     }
- }
+    public Integer getPrice() {
+        return price;
+    }
+}
