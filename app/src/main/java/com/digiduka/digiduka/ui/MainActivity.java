@@ -1,5 +1,7 @@
 package com.digiduka.digiduka.ui;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 //        getSupportActionBar().setTitle(R.string.app_name);
 
@@ -203,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (resultCode == RESULT_OK) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                loggedIn();
+                    userData();
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
 
             } else {
@@ -264,6 +267,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    public void userData(){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        UserInfoFragment ifoFragment=new UserInfoFragment();
+        fragmentTransaction.add(R.id.container,ifoFragment );
+        fragmentTransaction.commit();
 
+        //loggedIn();
+
+    }
 
 }
