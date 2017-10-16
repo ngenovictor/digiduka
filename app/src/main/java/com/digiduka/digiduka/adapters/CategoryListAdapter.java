@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,13 +73,23 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             categoryProductsHolder.setVisibility(View.GONE);
             gridViewHolder.setOnClickListener(this);
             dropDownImage.setOnClickListener(this);
-            addProductButton.setOnClickListener(this);
-
-
         }
 
-        public void bindCategory(Category category){
+        public void bindCategory(final Category category){
             gridText.setText(category.getCategoryTitle());
+            addProductButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddProductFragment fragment = new AddProductFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("category", Parcels.wrap(category));
+                    fragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+                    android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+                    fragment.show(fm, "dialog");
+                }
+            });
 
         }
         @Override
@@ -89,11 +100,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 }else{
                     categoryProductsHolder.setVisibility(View.VISIBLE);
                 }
-            }else if(view == addProductButton){
-                AddProductFragment fragment = new AddProductFragment();
-                FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
-                fragment.show(fm, "dialog");
             }
         }
 

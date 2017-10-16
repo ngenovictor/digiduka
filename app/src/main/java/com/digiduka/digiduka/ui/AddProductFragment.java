@@ -2,8 +2,10 @@ package com.digiduka.digiduka.ui;
 
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.digiduka.digiduka.R;
+import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import org.parceler.Parcels;
 
 /**
 
@@ -30,9 +31,10 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
     private TextInputLayout priceVariationsEditWrapper1;
     private Button addVariationsButton;
     private int variations = 1;
-//    private View view;
+    private Context mContext;
     private AutoCompleteTextView variationSize1;
     private AutoCompleteTextView variationPrice1;
+    private Category mCategory;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -51,8 +53,17 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         variationSize1 = view.findViewById(R.id.variationSize1);
         variationPrice1 = view.findViewById(R.id.variationPrice1);
 
+        Bundle bundle = getArguments();
+
+        mCategory = Parcels.unwrap(bundle.getParcelable("category"));
+
+        Log.d("checkssssssss", mCategory.getCategoryTitle());
+
         addVariationsButton.setOnClickListener(this);
         newProductButton.setOnClickListener(this);
+
+        mContext = view.getContext();
+
         return view;
     }
 
@@ -61,7 +72,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         if(view == newProductButton){
             String name = nameOfProductEditText.getText().toString().trim();
             String description = descriptionOfProductEditText.getText().toString().trim();
-            Product product = new Product(name, description,"food");
+            Product product = new Product(name, description,mCategory.getCategoryId());
             String size = variationSize1.getText().toString().trim();
             Integer price = Integer.parseInt(variationPrice1.getText().toString().trim());
             product.addVariations(size, price);
@@ -81,6 +92,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             reference.setValue(product);
             dismiss();
         }else if(view == addVariationsButton){
+            TextInputLayout textInputLayout = new TextInputLayout(mContext);
 
         }
     }

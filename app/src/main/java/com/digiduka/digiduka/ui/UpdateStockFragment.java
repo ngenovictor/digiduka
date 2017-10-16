@@ -41,7 +41,6 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update_stock, container, false);
         addStockfab = view.findViewById(R.id.addStockfab);
-        ;
         addStockfab.setOnClickListener(this);
 
         return  view;
