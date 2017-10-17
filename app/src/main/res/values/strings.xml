@@ -5,7 +5,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">sign out</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,5 +18,8 @@
     <string name="product_description_hint">Short description</string>
     <string name="product_variation_quantity_hint">Quantity</string>
     <string name="product_variation_price_hint">Price</string>
+
+
+
     <!--end-->
 </resources>
