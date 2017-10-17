@@ -32,9 +32,11 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
     private Category category;
     private Context mContext;
     private ArrayList<Product> products = new ArrayList<>();
+    private CategoriesProductsListAdapter mAdapter;
     public CategoriesProductsListAdapter(Category category, Context context){
         this.category = category;
         mContext = context;
+        mAdapter = this;
     }
 
     @Override
@@ -43,14 +45,16 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
         CategoriesProductsListViewHolder holder = new CategoriesProductsListViewHolder(view);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+        Log.d("dataSnapshop", reference.toString());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("dataSnapshop", dataSnapshot.toString());
                 for (DataSnapshot snapshot:dataSnapshot.getChildren()){
-                    Log.d("products", snapshot.getValue(Product.class).getNameOfProduct());
                     products.add(snapshot.getValue(Product.class));
+                    Log.d("Product", snapshot.getValue(Product.class).getNameOfProduct());
                 }
-                notifyDataSetChanged();
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -78,7 +82,8 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productName = itemView.findViewById(R.id.productName);
         }
         public void bindProduct(Product product){
-            productName.setText(product.getNameOfProduct());
+//            productName.setText(product.getNameOfProduct());
+            productName.setText("some text");
         }
     }
 }

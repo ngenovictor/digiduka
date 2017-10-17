@@ -250,16 +250,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v("data", dataSnapshot.toString());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     categories.add(data.getValue(Category.class));
-                    Log.v("data", data.toString());
                 }
                 mainActivityFragmentsAdapter = new MainActivityFragmentsAdapter(getSupportFragmentManager(), categories);
 
                 mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
-                Log.v("size", String.valueOf(categories.size()));
-
             }
 
             @Override

@@ -22,7 +22,6 @@ public class TableControllerCategory extends DatabaseHandler {
 
         values.put("title", category.getCategoryTitle());
         values.put("description", category.getCategoryDescription());
-        values.put("shopId", category.getShopId());
         values.put("date", category.getDate().toString()); //workout the date method here
 
 
