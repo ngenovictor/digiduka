@@ -19,6 +19,9 @@ import android.widget.LinearLayout;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
+import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -107,8 +110,13 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
                 }
             }
 
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
-            reference.setValue(product);
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.CATEGORY_DB_KEY).child(mCategory.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+
+            DatabaseReference puhRef = reference.push();
+            String pushId = puhRef.getKey();
+            product.setPushId(pushId);
+            puhRef.setValue(product);
             dismiss();
         }else if(view == addVariationsButton){
             variations+=1;

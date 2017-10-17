@@ -44,6 +44,9 @@ public class Product {
     public List<Variation> getVariation() {
         return variations;
     }
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 
 
     public void addVariations(String quantity,Integer price) {
@@ -68,4 +71,5 @@ class Variation{
     public Integer getPrice() {
         return price;
     }
+
 }
