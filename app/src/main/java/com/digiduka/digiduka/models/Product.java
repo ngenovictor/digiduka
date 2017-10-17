@@ -45,6 +45,7 @@ public class Product {
         return variations;
     }
 
+
     public void addVariations(String quantity,Integer price) {
         Variation variation = new Variation(quantity, price);
         this.variations.add(variation);
