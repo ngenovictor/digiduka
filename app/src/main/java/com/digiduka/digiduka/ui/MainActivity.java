@@ -30,6 +30,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout homeNavTabLayout;
     private static final int RC_SIGN_IN = 123;
     private ArrayList<Category> categories = new ArrayList<>();
+    private FirebaseUser loggedInUser;
 
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -236,9 +238,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getCategories(){
         mAuth = FirebaseAuth.getInstance();
 
+        loggedInUser = mAuth.getCurrentUser();
 
         reference = FirebaseDatabase.getInstance()
-                .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
+                .getReference(loggedInUser.getUid()).child(Constants.CATEGORY_DB_KEY);
 
 
         reference.addValueEventListener(new ValueEventListener() {

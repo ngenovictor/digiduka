@@ -42,6 +42,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_update_stock, container, false);
         addStockfab = view.findViewById(R.id.addStockfab);
         addStockfab.setOnClickListener(this);
+        addStockfab.setVisibility(View.VISIBLE);
 
         return  view;
     }
@@ -61,6 +62,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
             addStockItemFragment.setArguments(bundle);
             fragmentTransaction.commit();
 //            addStockItemFragment.show(fm, "dialog");
+            addStockfab.setVisibility(View.GONE);
         }
     }
 }

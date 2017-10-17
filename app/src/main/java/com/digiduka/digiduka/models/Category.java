@@ -14,6 +14,7 @@ public class Category {
     private String categoryId;
     private String shopId;
     private Date date;
+    private String imageEncoded;
 
     public Category(){}
 
@@ -45,5 +46,13 @@ public class Category {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setImageEncoded(String imageEncoded) {
+        this.imageEncoded = imageEncoded;
+    }
+
+    public String getImageEncoded() {
+        return imageEncoded;
     }
 }

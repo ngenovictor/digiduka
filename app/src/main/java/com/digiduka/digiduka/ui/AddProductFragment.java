@@ -4,10 +4,7 @@ package com.digiduka.digiduka.ui;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +12,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
+import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 
 /**
@@ -72,8 +69,6 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
 
         mCategory = Parcels.unwrap(bundle.getParcelable("category"));
 
-        Log.d("checkssssssss", mCategory.getCategoryTitle());
-
         addVariationsButton.setOnClickListener(this);
         newProductButton.setOnClickListener(this);
 
@@ -92,12 +87,9 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             Integer price = Integer.parseInt(variationPrice1.getText().toString().trim());
             product.addVariations(size, price);
 
-            Log.d("hgvbjh", "variations"+Integer.toString(variations));
-
             if (variations>1){
                 for(int i=2; i<=variations; i++){
                     String variationSizeId = "variationSize"+i;
-                    Log.d("ds", variationSizeId);
                     String variationPriceId = "variationPrice"+i;
                     AutoCompleteTextView sizeEditText = mView.findViewWithTag(variationSizeId);
                     String sizeExtra = sizeEditText.getText().toString().trim();
@@ -106,9 +98,14 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
                     product.addVariations(sizeExtra, priceExtra);
                 }
             }
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.CATEGORY_DB_KEY).child(mCategory.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
 
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("products");
-            reference.setValue(product);
+            DatabaseReference puhRef = reference.push();
+            String pushId = puhRef.getKey();
+            product.setPushId(pushId);
+            puhRef.setValue(product);
+
             dismiss();
         }else if(view == addVariationsButton){
             variations+=1;
@@ -151,17 +148,6 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             priceEdit.setHint(variationPrice1.getHint());
             priceEdit.setGravity(View.TEXT_ALIGNMENT_CENTER);
             priceTextInputLayout.addView(priceEdit);
-
-
-//            addProductFragmentParent.addView(textInputLayout,0);
-//
-//            set.clone(addProductFragmentParent);
-//
-//            addProductFragmentParent.addView(textInputLayout);
-
-
-
-
 
         }
     }

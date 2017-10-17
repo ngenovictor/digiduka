@@ -45,8 +45,11 @@ public class Product {
         return variations;
     }
 
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 
-    public void addVariations(String quantity,Integer price) {
+    public void addVariations(String quantity, Integer price) {
         Variation variation = new Variation(quantity, price);
         this.variations.add(variation);
     }

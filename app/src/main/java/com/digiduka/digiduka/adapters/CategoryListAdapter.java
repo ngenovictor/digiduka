@@ -60,6 +60,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         private ConstraintLayout gridViewHolder;
         private Button addProductButton;
         private Context mContext;
+        private RecyclerView categoryProductsRecyclerView;
 
         public CategoryViewHolder(View itemView){
             super(itemView);
@@ -69,6 +70,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             dropDownImage = itemView.findViewById(R.id.dropDownImage);
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
             addProductButton = itemView.findViewById(R.id.addProductButton);
+
+            categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
+
 
             categoryProductsHolder.setVisibility(View.GONE);
             gridViewHolder.setOnClickListener(this);
