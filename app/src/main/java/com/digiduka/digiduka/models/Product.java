@@ -59,6 +59,7 @@ class Variation{
     String quantity;
     Integer price;
 
+    public Variation(){}
     public Variation(String quantity, Integer price) {
         this.quantity = quantity;
         this.price = price;

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +72,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
             addProductButton = itemView.findViewById(R.id.addProductButton);
 
+
             categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
+
 
 
             categoryProductsHolder.setVisibility(View.GONE);
@@ -81,6 +84,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public void bindCategory(final Category category){
             gridText.setText(category.getCategoryTitle());
+
+            //the products under each category:
+            //set the adapter
+            CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext);
+            categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+            categoryProductsRecyclerView.setHasFixedSize(false);
+            categoryProductsRecyclerView.setAdapter(adapter);
+
             addProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
