@@ -40,6 +40,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
     private FirebaseAuth mAuth;
     private ImageView cameraBtn;
     private ImageView imageLabel;
+    private String imageEncoded;
     private static final int REQUEST_IMAGE_CAPTURE = 111;
     private ArrayList<Product> products=new ArrayList<>();
 
@@ -70,10 +71,11 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
             String description = categoryDescription.getText().toString().trim();
             Category newCategory = new Category(title, description,products);
             DatabaseReference reference = FirebaseDatabase.getInstance()
-                    .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
+                    .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
             DatabaseReference puhRef = reference.push();
             String categoryId = puhRef.getKey();
             newCategory.setCategoryId(categoryId);
+            newCategory.setImageEncoded(imageEncoded);
             puhRef.setValue(newCategory);
 
             /**
@@ -135,16 +137,17 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        String imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
+        imageEncoded = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT);
         /**
          * someone fix this reference to store to a specific category
          * **/
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference().child("images");
+//        DatabaseReference ref = FirebaseDatabase.getInstance()
+//                .getReference().child("images");
         /**
          * someone fix this reference to store to a specific category
          * **/
-        ref.setValue(imageEncoded);
+        //fixed. Will now save under category above if not null hopefully.
+//        ref.setValue(imageEncoded);
     }
 
 }

@@ -11,6 +11,7 @@
     <string name="settings">settings</string>
     <string name="action_settings">sign out</string>
     <string name="about">about</string>
+
     <!--creating new product strings-->
     <string name="product_name_hint">Enter name of product</string>
     <string name="product_price_hint">Price</string>
@@ -19,7 +20,6 @@
     <string name="product_description_hint">Short description</string>
     <string name="product_variation_quantity_hint">Quantity</string>
     <string name="product_variation_price_hint">Price</string>
-
 
 
     <!--end-->

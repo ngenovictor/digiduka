@@ -41,7 +41,7 @@
 
             <ScrollView
                 android:id="@+id/categoryProductsScroll"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxHeight="200dp"
                 app:layout_constraintLeft_toLeftOf="parent"

@@ -4,6 +4,7 @@ import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by victor on 10/11/17.
@@ -13,9 +14,12 @@ public class Category {
     private String categoryTitle;
     private String categoryDescription;
     private String categoryId;
-    private String shopId;
     private Date date;
-    private ArrayList<Product> products;
+
+    //private ArrayList<Product> products;
+
+    private String imageEncoded;
+
 
     public Category(){}
 
@@ -23,7 +27,7 @@ public class Category {
         this.categoryTitle = categoryTitle;
         this.categoryDescription = categoryDescription;
         date = new Date();
-        this.products=products;
+        //this.products=products;
     }
 
     public String getCategoryTitle() {
@@ -38,10 +42,6 @@ public class Category {
         return categoryId;
     }
 
-    public String getShopId() {
-        return shopId;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -49,7 +49,17 @@ public class Category {
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
-    public ArrayList<Product> getProducts(){
-        return products;
+
+   // public ArrayList<Product> getProducts() {
+   //     return products;
+
+   // }
+    public void setImageEncoded(String imageEncoded) {
+        this.imageEncoded = imageEncoded;
+    }
+
+    public String getImageEncoded() {
+        return imageEncoded;
+
     }
 }

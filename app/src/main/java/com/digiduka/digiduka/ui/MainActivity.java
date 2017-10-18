@@ -32,6 +32,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout homeNavTabLayout;
     private static final int RC_SIGN_IN = 123;
     private ArrayList<Category> categories = new ArrayList<>();
+    private FirebaseUser loggedInUser;
 
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -208,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     userData();
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
+                Log.v("number",String.valueOf(auth.getCurrentUser().getPhoneNumber()));
 
             } else {
 
@@ -239,24 +242,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void getCategories(){
         mAuth = FirebaseAuth.getInstance();
 
+        loggedInUser = mAuth.getCurrentUser();
 
         reference = FirebaseDatabase.getInstance()
-                .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
+                .getReference(loggedInUser.getUid()).child(Constants.CATEGORY_DB_KEY);
 
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v("data", dataSnapshot.toString());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     categories.add(data.getValue(Category.class));
-                    Log.v("data", data.toString());
                 }
                 mainActivityFragmentsAdapter = new MainActivityFragmentsAdapter(getSupportFragmentManager(), categories);
 
                 mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
-                Log.v("size", String.valueOf(categories.size()));
-
             }
 
             @Override

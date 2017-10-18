@@ -90,7 +90,7 @@ public class UserInfoFragment extends Fragment {
 
                 User user= new User(name,shop,email,phone,userimage,usergender);
                 DatabaseReference ref = FirebaseDatabase.getInstance()
-                        .getReference().child(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid()).child("user");
+                        .getReference().child(mAuth.getCurrentUser().getUid());
                 /**
                  * someone fix this reference to store to a specific category
                  * **/

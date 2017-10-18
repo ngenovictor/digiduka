@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.fragment_update_stock, container, false);
         addStockfab = view.findViewById(R.id.addStockfab);
         addStockfab.setOnClickListener(this);
+        addStockfab.setVisibility(View.VISIBLE);
 
         return  view;
     }
@@ -61,6 +63,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
             addStockItemFragment.setArguments(bundle);
             fragmentTransaction.commit();
 //            addStockItemFragment.show(fm, "dialog");
+            addStockfab.setVisibility(View.GONE);
         }
     }
 }

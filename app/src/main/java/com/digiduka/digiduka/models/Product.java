@@ -49,7 +49,8 @@ public class Product {
     }
 
 
-    public void addVariations(String quantity,Integer price) {
+
+    public void addVariations(String quantity, Integer price) {
         Variation variation = new Variation(quantity, price);
         this.variations.add(variation);
     }
@@ -59,6 +60,7 @@ class Variation{
     String quantity;
     Integer price;
 
+    public Variation(){}
     public Variation(String quantity, Integer price) {
         this.quantity = quantity;
         this.price = price;

@@ -7,37 +7,23 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/viewcategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/imageView3"
-            android:src="@drawable/productlisting" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="31dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginRight="42dp"
+            android:src="@drawable/ic_add_black_24dp" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Products Available for Sale"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textSize="28sp" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView2"
-            android:src="@drawable/productlistingone" />
     </RelativeLayout>
 
 </FrameLayout>

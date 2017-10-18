@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 
@@ -51,6 +52,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private RecyclerView categoriesRecyclerView;
     private Button addCategoryButton;
     private CategoryListAdapter mAdapter;
+    private Button cancelAddStockButton;
 
     private TextView recordCountText;
     /**
@@ -80,13 +82,16 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
-        mAdapter = new CategoryListAdapter(getContext(), categories);
+
+        //setting the adapter for the recycler view
+        mAdapter = new CategoryListAdapter(getContext(), categories,"stock");
         categoriesRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(layoutManager);
         categoriesRecyclerView.setHasFixedSize(false);
 
-
+        cancelAddStockButton = view.findViewById(R.id.cancelAddStockButton);
+        cancelAddStockButton.setOnClickListener(this);
 
 
 
@@ -99,6 +104,10 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             FragmentManager fm = getFragmentManager();
             AddCategoryFragment addStockItemFragment = new AddCategoryFragment();
             addStockItemFragment.show(fm, "dialog");
+        }else if(view == cancelAddStockButton){
+            //how do we close the fragment??
+            Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
+            getFragmentManager().popBackStack();
         }
     }
 

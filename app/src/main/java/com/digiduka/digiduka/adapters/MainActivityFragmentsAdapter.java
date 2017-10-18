@@ -24,7 +24,7 @@ public class MainActivityFragmentsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return SellProductsFragment.newInstance();
+                return SellProductsFragment.newInstance(categories);
             case 1:
                 return UpdateStockFragment.newInstance( categories);
         }
