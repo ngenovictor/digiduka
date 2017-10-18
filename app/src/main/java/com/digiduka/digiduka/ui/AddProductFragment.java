@@ -69,7 +69,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
 
         mCategory = Parcels.unwrap(bundle.getParcelable("category"));
 
-        addVariationsButton.setOnClickListener(this);
+//        addVariationsButton.setOnClickListener(this);
         newProductButton.setOnClickListener(this);
 
         mContext = mView.getContext();
@@ -79,25 +79,15 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if(view == newProductButton){
+        if(view == newProductButton) {
             String name = nameOfProductEditText.getText().toString().trim();
             String description = descriptionOfProductEditText.getText().toString().trim();
-            Product product = new Product(name, description,mCategory.getCategoryId());
             String size = variationSize1.getText().toString().trim();
-            Integer price = Integer.parseInt(variationPrice1.getText().toString().trim());
-            product.addVariations(size, price);
+            Integer buyingPrice = Integer.parseInt(variationPrice1.getText().toString().trim());
+            Integer sellingPrice = Integer.parseInt(variationPrice1.getText().toString().trim());
 
-            if (variations>1){
-                for(int i=2; i<=variations; i++){
-                    String variationSizeId = "variationSize"+i;
-                    String variationPriceId = "variationPrice"+i;
-                    AutoCompleteTextView sizeEditText = mView.findViewWithTag(variationSizeId);
-                    String sizeExtra = sizeEditText.getText().toString().trim();
-                    AutoCompleteTextView priceEditText = mView.findViewWithTag(variationPriceId);
-                    Integer priceExtra = Integer.parseInt(priceEditText.getText().toString().trim());
-                    product.addVariations(sizeExtra, priceExtra);
-                }
-            }
+            Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
+
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.CATEGORY_DB_KEY).child(mCategory.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
 
@@ -107,48 +97,49 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             puhRef.setValue(product);
 
             dismiss();
-        }else if(view == addVariationsButton){
-            variations+=1;
-            String variationSizeId = "variationSize"+variations;
-            String variationPriceId = "variationPrice"+variations;
-            LinearLayout parentLayout = mView.findViewById(R.id.newVariationsHolder);
-            LinearLayout childLayout = mView.findViewById(R.id.newVariationsRow1);
-
-            //the new layout to hold the new items
-            LinearLayout newLayout = new LinearLayout(mContext);
-            newLayout.setOrientation(childLayout.getOrientation());
-            newLayout.setLayoutParams(childLayout.getLayoutParams());
-            parentLayout.addView(newLayout);
-
-            //addbutton to accompany the forms
-            Button addButton = new Button(mContext);
-            addButton.setBackground(addVariationsButton.getBackground());
-            addButton.setHeight(addVariationsButton.getHeight());
-            addButton.setWidth(addVariationsButton.getWidth());
-            newLayout.addView(addButton);
-
-            // input size
-            TextInputLayout sizeTextInputLayout = new TextInputLayout(mContext);
-            sizeTextInputLayout.setLayoutParams(sizeVariationsEditWrapper1.getLayoutParams());
-            newLayout.addView(sizeTextInputLayout);
-
-            AutoCompleteTextView sizeEdit = new AutoCompleteTextView(mContext);
-            sizeEdit.setTag(variationSizeId);
-            sizeEdit.setHint(variationSize1.getHint());
-            sizeEdit.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            sizeTextInputLayout.addView(sizeEdit);
-
-            //input price
-            TextInputLayout priceTextInputLayout = new TextInputLayout(mContext);
-            priceTextInputLayout.setLayoutParams(sizeVariationsEditWrapper1.getLayoutParams());
-            newLayout.addView(priceTextInputLayout);
-
-            AutoCompleteTextView priceEdit = new AutoCompleteTextView(mContext);
-            priceEdit.setTag(variationPriceId);
-            priceEdit.setHint(variationPrice1.getHint());
-            priceEdit.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            priceTextInputLayout.addView(priceEdit);
-
         }
+//        }else if(view == addVariationsButton){
+//            variations+=1;
+//            String variationSizeId = "variationSize"+variations;
+//            String variationPriceId = "variationPrice"+variations;
+//            LinearLayout parentLayout = mView.findViewById(R.id.newVariationsHolder);
+//            LinearLayout childLayout = mView.findViewById(R.id.newVariationsRow1);
+//
+//            //the new layout to hold the new items
+//            LinearLayout newLayout = new LinearLayout(mContext);
+//            newLayout.setOrientation(childLayout.getOrientation());
+//            newLayout.setLayoutParams(childLayout.getLayoutParams());
+//            parentLayout.addView(newLayout);
+//
+//            //addbutton to accompany the forms
+//            Button addButton = new Button(mContext);
+//            addButton.setBackground(addVariationsButton.getBackground());
+//            addButton.setHeight(addVariationsButton.getHeight());
+//            addButton.setWidth(addVariationsButton.getWidth());
+//            newLayout.addView(addButton);
+//
+//            // input size
+//            TextInputLayout sizeTextInputLayout = new TextInputLayout(mContext);
+//            sizeTextInputLayout.setLayoutParams(sizeVariationsEditWrapper1.getLayoutParams());
+//            newLayout.addView(sizeTextInputLayout);
+//
+//            AutoCompleteTextView sizeEdit = new AutoCompleteTextView(mContext);
+//            sizeEdit.setTag(variationSizeId);
+//            sizeEdit.setHint(variationSize1.getHint());
+//            sizeEdit.setGravity(View.TEXT_ALIGNMENT_CENTER);
+//            sizeTextInputLayout.addView(sizeEdit);
+//
+//            //input price
+//            TextInputLayout priceTextInputLayout = new TextInputLayout(mContext);
+//            priceTextInputLayout.setLayoutParams(sizeVariationsEditWrapper1.getLayoutParams());
+//            newLayout.addView(priceTextInputLayout);
+//
+//            AutoCompleteTextView priceEdit = new AutoCompleteTextView(mContext);
+//            priceEdit.setTag(variationPriceId);
+//            priceEdit.setHint(variationPrice1.getHint());
+//            priceEdit.setGravity(View.TEXT_ALIGNMENT_CENTER);
+//            priceTextInputLayout.addView(priceEdit);
+//
+//        }
     }
 }

@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/productName"
-        android:text="s dsdksjdnjk"
+        android:text="Biscuit"
+        android:textSize="20dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/productVariationSize"
+        android:text="250gms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintLeft_toRightOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toLeftOf="@+id/productVariationPrice"/>
+    <TextView
+        android:id="@+id/productVariationPrice"
+        android:text="200KSH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/productVariationSize"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toLeftOf="@+id/pickProductButton"/>
+    <Button
+        android:id="@+id/pickProductButton"
+        android:text="pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

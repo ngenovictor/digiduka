@@ -1,36 +1,31 @@
 package com.digiduka.digiduka.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by victor on 10/11/17.
  */
 
 public class Product {
     private String nameOfProduct;
-    private Integer price;
+    private int buyingPrice;
+    private int sellingPrice;
+    private String size;
     private String description;
     private String categoryId;
-    List<Variation> variations;
     private String pushId;
 
-    public Product(){};
+    public Product(){}
 
-    public Product(String nameOfProduct, String description, String categoryId) {
+    public Product(String nameOfProduct, String description, String categoryId, String size, int buyingPrice, int sellingPrice ) {
         this.nameOfProduct = nameOfProduct;
-        this.price = price;
         this.description = description;
         this.categoryId = categoryId;
-        variations = new ArrayList<>();
+        this.size = size;
+        this.buyingPrice = buyingPrice;
+        this.sellingPrice = sellingPrice;
     }
 
     public String getNameOfProduct() {
         return nameOfProduct;
-    }
-
-    public Integer getPrice() {
-        return price;
     }
 
     public String getDescription() {
@@ -41,35 +36,25 @@ public class Product {
         return categoryId;
     }
 
-    public List<Variation> getVariation() {
-        return variations;
+    public int getBuyingPrice() {
+        return buyingPrice;
+    }
+
+    public int getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public String getPushId() {
+        return pushId;
     }
 
     public void setPushId(String pushId) {
         this.pushId = pushId;
     }
 
-    public void addVariations(String quantity, Integer price) {
-        Variation variation = new Variation(quantity, price);
-        this.variations.add(variation);
-    }
 
-}
-class Variation{
-    String quantity;
-    Integer price;
-
-    public Variation(){}
-    public Variation(String quantity, Integer price) {
-        this.quantity = quantity;
-        this.price = price;
-    }
-
-    public String getQuantity() {
-        return quantity;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
 }
