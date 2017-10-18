@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.digiduka.digiduka.ui.CategoryView;
+import com.digiduka.digiduka.ui.MainActivity;
+import com.digiduka.digiduka.ui.ProductsFragment;
 
 import org.parceler.Parcels;
 
@@ -40,12 +44,17 @@ import java.util.ArrayList;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
 
     private Context mContext;
-    private ArrayList<Category> mCategorys=new ArrayList<>();
+    private ArrayList<Category> mCategorys = new ArrayList<>();
+    private String source;
 
-    public CategoryListAdapter(Context context,ArrayList<Category> categories) {
+
+    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource) {
         mContext = context;
         mCategorys = categories;
+        source = msource;
+
     }
+
     @Override
     public CategoryListAdapter.CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_item, parent, false);
@@ -63,18 +72,19 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         // Log.v("items",mItems.get(0).getName());
         return mCategorys.size();
     }
-    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView gridText;
         private ConstraintLayout categoryProductsHolder;
         private ImageView dropDownImage;
         private ConstraintLayout gridViewHolder;
         private Button addProductButton;
-        private Context mContext;
+        private Context mContext1;
         private RecyclerView categoryProductsRecyclerView;
 
-        public CategoryViewHolder(View itemView){
+        public CategoryViewHolder(View itemView) {
             super(itemView);
-            mContext = itemView.getContext();
+            mContext1 = itemView.getContext();
             gridText = itemView.findViewById(R.id.gridText);
             categoryProductsHolder = itemView.findViewById(R.id.categoryProductsHolder);
             dropDownImage = itemView.findViewById(R.id.dropDownImage);
@@ -85,40 +95,34 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
 
 
-
             categoryProductsHolder.setVisibility(View.GONE);
             gridViewHolder.setOnClickListener(this);
             dropDownImage.setOnClickListener(this);
         }
 
-        public void bindCategory(final Category category){
+        public void bindCategory(final Category category) {
             gridText.setText(category.getCategoryTitle());
-
-            //the products under each category:
-            //set the adapter
-            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
-            reference.addValueEventListener(new ValueEventListener() {
+            gridText.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    ArrayList<Product> products = new ArrayList<>();
-                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                        products.add(snapshot.getValue(Product.class));
-                    }
-                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products);
-                    categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-                    categoryProductsRecyclerView.setHasFixedSize(false);
-                    categoryProductsRecyclerView.setAdapter(adapter);
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onClick(View view) {
+                    MainActivity activity = (MainActivity) (mContext);
+                    android.app.FragmentManager fm = activity.getFragmentManager();
+                    ProductsFragment fragment = new ProductsFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("category", Parcels.wrap(category));
+                    fragment.setArguments(bundle);
+                    fragment.show(fm, "product");
 
                 }
             });
 
 
+            //the products under each category:
+            //set the adapter
+            CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext1, null);
+            categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext1));
+            categoryProductsRecyclerView.setHasFixedSize(false);
+            categoryProductsRecyclerView.setAdapter(adapter);
 
             addProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,20 +132,23 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     bundle.putParcelable("category", Parcels.wrap(category));
                     fragment.setArguments(bundle);
 
-                    FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                    android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+                    //FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+                    android.app.FragmentManager fm = ((Activity) mContext1).getFragmentManager();
                     fragment.show(fm, "dialog");
                 }
             });
 
         }
+
         @Override
         public void onClick(View view) {
-            if (view == dropDownImage || view == gridViewHolder){
-                if (categoryProductsHolder.getVisibility()==View.VISIBLE){
-                    categoryProductsHolder.setVisibility(View.GONE);
-                }else{
-                    categoryProductsHolder.setVisibility(View.VISIBLE);
+            if (source.equals("stock")) {
+                if (view == dropDownImage || view == gridViewHolder) {
+                    if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
+                        categoryProductsHolder.setVisibility(View.GONE);
+                    } else {
+                        categoryProductsHolder.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

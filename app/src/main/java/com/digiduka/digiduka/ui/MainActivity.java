@@ -213,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     userData();
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
+                Log.v("number",String.valueOf(auth.getCurrentUser().getPhoneNumber()));
 
             } else {
                 finish();

@@ -13,9 +13,10 @@ public class Product {
     private String categoryId;
     private String pushId;
 
-    public Product(){}
+    public Product() {
+    }
 
-    public Product(String nameOfProduct, String description, String categoryId, String size, int buyingPrice, int sellingPrice ) {
+    public Product(String nameOfProduct, String description, String categoryId, String size, int buyingPrice, int sellingPrice) {
         this.nameOfProduct = nameOfProduct;
         this.description = description;
         this.categoryId = categoryId;
@@ -55,6 +56,4 @@ public class Product {
     public void setPushId(String pushId) {
         this.pushId = pushId;
     }
-
-
 }

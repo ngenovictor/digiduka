@@ -96,6 +96,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             product.setPushId(pushId);
             puhRef.setValue(product);
 
+
             dismiss();
         }
 //        }else if(view == addVariationsButton){

@@ -21,12 +21,14 @@ import android.widget.Toast;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +42,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
     private ImageView imageLabel;
     private String imageEncoded;
     private static final int REQUEST_IMAGE_CAPTURE = 111;
+    private ArrayList<Product> products=new ArrayList<>();
 
     public AddCategoryFragment() {
         // Required empty public constructor
@@ -66,7 +69,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
         if(view == submitCategory){
             String title = categoryTitle.getText().toString().trim();
             String description = categoryDescription.getText().toString().trim();
-            Category newCategory = new Category(title, description);
+            Category newCategory = new Category(title, description,products);
             DatabaseReference reference = FirebaseDatabase.getInstance()
                     .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
             DatabaseReference puhRef = reference.push();

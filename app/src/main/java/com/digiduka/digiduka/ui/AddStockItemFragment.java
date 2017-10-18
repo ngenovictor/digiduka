@@ -84,7 +84,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         addCategoryButton.setOnClickListener(this);
 
         //setting the adapter for the recycler view
-        mAdapter = new CategoryListAdapter(getContext(), categories);
+        mAdapter = new CategoryListAdapter(getContext(), categories,"stock");
         categoriesRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(layoutManager);

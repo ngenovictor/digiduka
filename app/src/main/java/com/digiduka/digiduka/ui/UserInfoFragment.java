@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,7 +41,7 @@ public class UserInfoFragment extends Fragment {
     private ImageView userImage;
     private  Spinner gender;
     private Button usersubmit;
-
+    private String usergender;
     String userimage;
     private FirebaseAuth mAuth;
     private static final int REQUEST_IMAGE_CAPTURE1 = 123;
@@ -83,7 +84,7 @@ public class UserInfoFragment extends Fragment {
                 String email=useremail.getText().toString().trim();
                 String shop=usershop.getText().toString().trim();
 
-                String usergender="gender";
+                //String usergender=;
 
 
 
@@ -107,6 +108,17 @@ public class UserInfoFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),R.array.gender, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                usergender=adapterView.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         return view;
     }
     public void encodeBitmapAndSaveToFirebase(Bitmap bitmap) {
