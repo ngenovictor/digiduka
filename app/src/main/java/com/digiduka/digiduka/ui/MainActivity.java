@@ -163,6 +163,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about:
                 showAbout();
                 break;
+            case R.id.intro:
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -207,17 +210,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
 
             } else {
-
                 finish();
             }
         }
     }
-
     public void showAbout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("About digiduka");
         builder.setMessage("Built by a great team.");
-
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
@@ -226,21 +226,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         // positive button logic
                     }
                 });
-
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
     }
-
-
     public void getCategories(){
         mAuth = FirebaseAuth.getInstance();
-
-
         reference = FirebaseDatabase.getInstance()
                 .getReference(Constants.CATEGORY_DB_KEY).child(mAuth.getCurrentUser().getUid());
-
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -255,15 +248,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.v("size", String.valueOf(categories.size()));
 
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-
             }
         });
     }
-
-
-
 }
