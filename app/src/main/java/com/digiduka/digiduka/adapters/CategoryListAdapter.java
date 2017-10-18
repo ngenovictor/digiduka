@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +18,16 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.ui.AddProductFragment;
+import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
 
@@ -59,6 +70,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         private ConstraintLayout gridViewHolder;
         private Button addProductButton;
         private Context mContext;
+        private RecyclerView categoryProductsRecyclerView;
 
         public CategoryViewHolder(View itemView){
             super(itemView);
@@ -69,16 +81,58 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
             addProductButton = itemView.findViewById(R.id.addProductButton);
 
+
+            categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
+
+
+
             categoryProductsHolder.setVisibility(View.GONE);
             gridViewHolder.setOnClickListener(this);
             dropDownImage.setOnClickListener(this);
-            addProductButton.setOnClickListener(this);
-
-
         }
 
-        public void bindCategory(Category category){
+        public void bindCategory(final Category category){
             gridText.setText(category.getCategoryTitle());
+
+            //the products under each category:
+            //set the adapter
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        products.add(snapshot.getValue(Product.class));
+                    }
+                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products);
+                    categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                    categoryProductsRecyclerView.setHasFixedSize(false);
+                    categoryProductsRecyclerView.setAdapter(adapter);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+            addProductButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddProductFragment fragment = new AddProductFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("category", Parcels.wrap(category));
+                    fragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+                    android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+                    fragment.show(fm, "dialog");
+                }
+            });
 
         }
         @Override
@@ -89,11 +143,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                 }else{
                     categoryProductsHolder.setVisibility(View.VISIBLE);
                 }
-            }else if(view == addProductButton){
-                AddProductFragment fragment = new AddProductFragment();
-                FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
-                fragment.show(fm, "dialog");
             }
         }
 

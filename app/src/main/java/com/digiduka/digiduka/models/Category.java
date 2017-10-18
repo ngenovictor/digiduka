@@ -3,6 +3,7 @@ package com.digiduka.digiduka.models;
 import org.parceler.Parcel;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by victor on 10/11/17.
@@ -12,8 +13,8 @@ public class Category {
     private String categoryTitle;
     private String categoryDescription;
     private String categoryId;
-    private String shopId;
     private Date date;
+    private String imageEncoded;
 
     public Category(){}
 
@@ -35,15 +36,19 @@ public class Category {
         return categoryId;
     }
 
-    public String getShopId() {
-        return shopId;
-    }
-
     public Date getDate() {
         return date;
     }
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public void setImageEncoded(String imageEncoded) {
+        this.imageEncoded = imageEncoded;
+    }
+
+    public String getImageEncoded() {
+        return imageEncoded;
     }
 }
