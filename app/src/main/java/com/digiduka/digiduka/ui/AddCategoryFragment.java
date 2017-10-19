@@ -141,13 +141,13 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
         /**
          * someone fix this reference to store to a specific category
          * **/
-//        DatabaseReference ref = FirebaseDatabase.getInstance()
-//                .getReference().child("images");
+        DatabaseReference ref = FirebaseDatabase.getInstance()
+                .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
         /**
          * someone fix this reference to store to a specific category
          * **/
         //fixed. Will now save under category above if not null hopefully.
-//        ref.setValue(imageEncoded);
+        ref.setValue(imageEncoded);
     }
 
 }
