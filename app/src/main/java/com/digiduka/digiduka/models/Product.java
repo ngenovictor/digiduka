@@ -12,6 +12,7 @@ public class Product {
     private String description;
     private String categoryId;
     private String pushId;
+    private int amount;
 
     public Product() {
     }
@@ -23,6 +24,7 @@ public class Product {
         this.size = size;
         this.buyingPrice = buyingPrice;
         this.sellingPrice = sellingPrice;
+        this.amount = 0;
     }
 
     public String getNameOfProduct() {
@@ -57,5 +59,11 @@ public class Product {
         this.pushId = pushId;
     }
 
+    public void setBuyingPrice(int buyingPrice) {
+        this.buyingPrice = buyingPrice;
+    }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

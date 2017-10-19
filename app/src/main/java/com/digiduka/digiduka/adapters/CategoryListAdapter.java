@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,13 +48,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     private Context mContext;
     private ArrayList<Category> mCategorys = new ArrayList<>();
     private String source;
+    private StockItemsAdapter mAdapter;
 
 
-    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource) {
+    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource, StockItemsAdapter adapter) {
         mContext = context;
         mCategorys = categories;
         source = msource;
-
+        mAdapter = adapter;
     }
 
     @Override
@@ -130,7 +133,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                         products.add(snapshot.getValue(Product.class));
                     }
-                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products);
+                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter);
                     categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                     categoryProductsRecyclerView.setHasFixedSize(false);
                     categoryProductsRecyclerView.setAdapter(adapter);
@@ -153,8 +156,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     bundle.putParcelable("category", Parcels.wrap(category));
                     fragment.setArguments(bundle);
 
-                    //FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                    android.app.FragmentManager fm = ((Activity) mContext1).getFragmentManager();
+                    FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+
+                    android.support.v4.app.FragmentManager fm = ((FragmentActivity) mContext).getSupportFragmentManager();
                     fragment.show(fm, "dialog");
                 }
             });

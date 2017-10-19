@@ -32,6 +32,9 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
     <string name="app_intro">app intro</string>
+    <string name="product__quantity_hint">Quantity</string>
+    <string name="product_buying_price_hint">Buying Price</string>
+    <string name="product_selling_price_hint">Selling Price</string>
 
 
     <!--end-->
