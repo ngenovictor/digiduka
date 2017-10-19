@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
+import com.digiduka.digiduka.ui.SellProductsFragment;
 
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     private Context mContext;
     private ArrayList<Product> mProducts = new ArrayList<>();
-    private ArrayList<Product>selectedproducts=new ArrayList<>();
+    public static ArrayList<Product>selectedproducts=new ArrayList<>();
 
 
 
@@ -84,6 +86,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 @Override
                 public void onClick(View view) {
                     selectedproducts.add(product);
+                    SellProductsFragment.showSavedItems();
                     Log.v("selected",String.valueOf(selectedproducts.size()));
                 }
             });

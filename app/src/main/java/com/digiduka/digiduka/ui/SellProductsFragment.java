@@ -1,6 +1,7 @@
 package com.digiduka.digiduka.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,9 @@ import android.widget.Button;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
+import com.digiduka.digiduka.adapters.ProductListAdapter;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Product;
 
 import org.parceler.Parcels;
 
@@ -28,8 +31,10 @@ import java.util.ArrayList;
 public class SellProductsFragment extends Fragment implements View.OnClickListener{
     public static ArrayList<Category> categories;
     private FloatingActionButton viewCategory;
-    public RecyclerView stockcategory;
-    public CategoryListAdapter mAdapter;
+    public static ArrayList<Product>selectedproducts1=new ArrayList<>();
+    private static RecyclerView selectedView;
+    private static ProductListAdapter mAdapter;
+    private static Context context;
 
     public SellProductsFragment() {
         // Required empty public constructor
@@ -45,13 +50,29 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sell_products, container, false);
         viewCategory = view.findViewById(R.id.viewcategory);
+        ProductListAdapter.selectedproducts=selectedproducts1;
+        selectedView = view.findViewById(R.id.selectedView);
+        context=getActivity();
+        showSavedItems();
+
         viewCategory.setOnClickListener(this);
 
+
         return view;
+    }
+    public static void showSavedItems(){
+        if (selectedproducts1.size()!=0){
+            mAdapter = new ProductListAdapter(context,selectedproducts1 );
+            selectedView.setAdapter(mAdapter);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+            selectedView.setLayoutManager(layoutManager);
+            selectedView.setHasFixedSize(false);
+        }
     }
     @Override
     public void onClick(View view) {
         if(view == viewCategory){
+            Log.v("new items",String.valueOf(selectedproducts1.size()));
             FragmentManager fm = getFragmentManager();
             CategoryView moodDialogFragment = new CategoryView ();
             Bundle bundle=new Bundle();
