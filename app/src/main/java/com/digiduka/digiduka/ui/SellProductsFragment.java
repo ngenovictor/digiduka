@@ -63,12 +63,8 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         totalsec.setVisibility(View.GONE);
         context=getActivity();
         showSavedItems();
-
         viewCategory.setOnClickListener(this);
         makesale.setOnClickListener(this);
-
-
-
         return view;
     }
     public static void showSavedItems(){
@@ -83,7 +79,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
             for (Product product:selectedproducts1){
                 sum+=product.getSellingPrice();
             }
-            total.setText("Total Ksh"+String.valueOf(sum));
+            total.setText("Total: Ksh "+String.valueOf(sum));
         }
     }
     @Override
@@ -91,12 +87,11 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         if(view == viewCategory){
             Log.v("new items",String.valueOf(selectedproducts1.size()));
             FragmentManager fm = getFragmentManager();
-            CategoryView moodDialogFragment = new CategoryView ();
+            CategoryView moodDialogFragment = new CategoryView();
             Bundle bundle=new Bundle();
             bundle.putParcelable("category", Parcels.wrap(categories));
             moodDialogFragment.setArguments(bundle);
             moodDialogFragment.show(fm,categories.toString());
-
         }
         if(view==makesale){
             ProductListAdapter.selectedproducts.clear();
@@ -104,7 +99,6 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
             mAdapter.notifyDataSetChanged();
             totalsec.setVisibility(View.GONE);
             showSavedItems();
-
         }
     }
 }
