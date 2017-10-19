@@ -54,6 +54,16 @@ public class Stock {
             }
         }
     }
+    public boolean containsProduct(Product product){
+        for (Product product1:products){
+            if (product1.getPushId().equals(product.getPushId())){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        return false;
+    }
 
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;

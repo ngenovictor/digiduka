@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,9 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private Button doneButton;
     public static Stock stock;
     private StockItemsAdapter mAdapter2;
+    private static LinearLayout totalsSection;
+    private static TextView priceTotal;
+
     /**
      * initializes the SQL Database TableController
      * **/
@@ -111,6 +115,14 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         doneButton = view.findViewById(R.id.doneButton);
         doneButton.setOnClickListener(this);
 
+        totalsSection = view.findViewById(R.id.totalsSection);
+        priceTotal = view.findViewById(R.id.priceTotal);
+
+        totalsSection.setVisibility(View.GONE);
+
+
+
+
         return view;
     }
 
@@ -132,6 +144,12 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             }else{
                 Toast.makeText(getContext(), "You have added new items", Toast.LENGTH_LONG).show();
             }
+        }
+    }
+    public static void refreshUi(){
+        if (stock!=null && stock.getProducts().size()>0){
+            totalsSection.setVisibility(View.VISIBLE);
+            priceTotal.setText("KSH. "+Integer.toString(stock.getTotalCost()));
         }
     }
 

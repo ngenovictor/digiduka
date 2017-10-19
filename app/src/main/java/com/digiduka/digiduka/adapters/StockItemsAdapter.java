@@ -19,6 +19,8 @@ import com.digiduka.digiduka.ui.AddStockItemFragment;
 public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.StockItemsViewHolder> {
     private Context mContext;
     private TextView stockProductName;
+    private TextView stockProductSize;
+    private TextView stockProductBuyingPrice;
     public StockItemsAdapter(Context context){
         mContext = context;
     }
@@ -26,11 +28,14 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
     public StockItemsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.stock_show_items, parent, false);
         stockProductName = view.findViewById(R.id.stockProductName);
+        stockProductSize = view.findViewById(R.id.stockProductSize);
+        stockProductBuyingPrice = view.findViewById(R.id.stockProductBuyingPrice);
         return new StockItemsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(StockItemsViewHolder holder, int position) {
+
         holder.bindProduct(AddStockItemFragment.stock.getProducts().get(position));
     }
 
@@ -50,6 +55,8 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
         }
         public void bindProduct(Product product){
             stockProductName.setText(product.getNameOfProduct());
+            stockProductSize.setText(product.getSize());
+            stockProductBuyingPrice.setText(Integer.toString(product.getBuyingPrice()));
         }
     }
 }
