@@ -1,6 +1,7 @@
 package com.digiduka.digiduka.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,6 @@ import com.digiduka.digiduka.models.Category;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +24,7 @@ import java.util.Calendar;
 public class UpdateStockFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton addStockfab;
     private static ArrayList<Category> categories;
-
-
-
+    private Context mContext;
     public UpdateStockFragment() {
         // Required empty public constructor
     }
@@ -43,6 +41,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
         addStockfab = view.findViewById(R.id.addStockfab);
         addStockfab.setOnClickListener(this);
         addStockfab.setVisibility(View.VISIBLE);
+        mContext = view.getContext();
 
         return  view;
     }
@@ -55,7 +54,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
 
 
             FragmentManager fm = getFragmentManager();
-            AddStockItemFragment addStockItemFragment = new AddStockItemFragment();
+            AddStockItemFragment addStockItemFragment = AddStockItemFragment.newInstance(addStockfab);
             Bundle bundle=new Bundle();
             bundle.putParcelable("categories", Parcels.wrap(categories));
             fragmentTransaction.add(R.id.container, addStockItemFragment);

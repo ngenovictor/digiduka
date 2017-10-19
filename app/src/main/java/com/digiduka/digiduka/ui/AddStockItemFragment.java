@@ -2,6 +2,7 @@ package com.digiduka.digiduka.ui;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +21,9 @@ import android.widget.Toast;
 import com.digiduka.digiduka.R;
 
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
+import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Stock;
 import com.digiduka.digiduka.utils.Constants;
 
 import com.digiduka.digiduka.adapters.CategoriesRecyclerViewAdapter;
@@ -53,19 +56,25 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private Button addCategoryButton;
     private CategoryListAdapter mAdapter;
     private Button cancelAddStockButton;
-
-    private TextView recordCountText;
+    private static FloatingActionButton button;
+    private Button doneButton;
+    public static Stock stock;
+    private StockItemsAdapter mAdapter2;
     /**
      * initializes the SQL Database TableController
      * **/
     TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
-    private ArrayList<Category> categories = new ArrayList<>();
+    private static ArrayList<Category> categories = new ArrayList<>();
 
 
 
 
     public AddStockItemFragment() {
         // Required empty public constructor
+    }
+    public static AddStockItemFragment newInstance(FloatingActionButton comingButton){
+        button = comingButton;//remove this
+        return new AddStockItemFragment();
     }
 
     @Override
@@ -84,16 +93,23 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         addCategoryButton.setOnClickListener(this);
 
         //setting the adapter for the recycler view
-        mAdapter = new CategoryListAdapter(getContext(), categories);
-        categoriesRecyclerView.setAdapter(mAdapter);
+//        mAdapter = new CategoryListAdapter(getContext(), categories);
+//        categoriesRecyclerView.setAdapter(mAdapter);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        categoriesRecyclerView.setLayoutManager(layoutManager);
+//        categoriesRecyclerView.setHasFixedSize(false);
+
+        //
+        mAdapter2 = new StockItemsAdapter(getContext());
+        categoriesRecyclerView.setAdapter(mAdapter2);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(layoutManager);
         categoriesRecyclerView.setHasFixedSize(false);
 
         cancelAddStockButton = view.findViewById(R.id.cancelAddStockButton);
         cancelAddStockButton.setOnClickListener(this);
-
-
+        doneButton = view.findViewById(R.id.doneButton);
+        doneButton.setOnClickListener(this);
 
         return view;
     }
@@ -101,13 +117,21 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == addCategoryButton) {
+            Bundle bundle = new Bundle();
             FragmentManager fm = getFragmentManager();
+            DisplayCategoriesFragment fragment = DisplayCategoriesFragment.newInstance(categories, mAdapter2);
             AddCategoryFragment addStockItemFragment = new AddCategoryFragment();
-            addStockItemFragment.show(fm, "dialog");
+            fragment.show(fm, "dialog");
         }else if(view == cancelAddStockButton){
             //how do we close the fragment??
             Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
+        }else if(view ==doneButton){
+            if (stock==null){
+                Toast.makeText(getContext(), "You haven't added any new items", Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getContext(), "You have added new items", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

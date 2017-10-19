@@ -1,9 +1,11 @@
 package com.digiduka.digiduka.adapters;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,27 +13,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
-import com.digiduka.digiduka.models.Variation;
+import com.digiduka.digiduka.models.Stock;
 import com.digiduka.digiduka.ui.AddStockItemFragment;
-import com.digiduka.digiduka.utils.Constants;
-import com.google.firebase.auth.FirebaseAuth;
+import com.digiduka.digiduka.ui.NewStockItemsFragment;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import org.parceler.Parcels;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Date;
 /**
  * Created by victor on 10/17/17.
  */
@@ -41,11 +37,12 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
     private Category category;
     private Context mContext;
     private ArrayList<Product> products = new ArrayList<>();
-    private CategoriesProductsListAdapter mAdapter;
-    public CategoriesProductsListAdapter(Category category, Context context , ArrayList<Product> products){
+    private StockItemsAdapter mAdapter;
+    private Stock stocksItem;
+    public CategoriesProductsListAdapter(Category category, Context context , ArrayList<Product> products, StockItemsAdapter adapter){
         this.category = category;
         mContext = context;
-        mAdapter = this;
+        mAdapter = adapter;
         this.products.addAll(products);
     }
 
@@ -68,38 +65,65 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
 
     public class CategoriesProductsListViewHolder extends RecyclerView.ViewHolder {
         private TextView productName;
-        private TextView productVariationSize;
-        private TextView productVariationPrice;
+        private TextView productSize;
+        private TextView productPrice;
         private Button pickProductButton;
+
         public CategoriesProductsListViewHolder(View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
-            productVariationSize = itemView.findViewById(R.id.productVariationSize);
-            productVariationPrice = itemView.findViewById(R.id.productVariationPrice);
+            productSize = itemView.findViewById(R.id.productSize);
+            productPrice = itemView.findViewById(R.id.productPrice);
             pickProductButton = itemView.findViewById(R.id.pickProductButton);
 
-
-
         }
-        public void bindProduct(Product product){
+        public void bindProduct(final Product product){
             productName.setText(product.getNameOfProduct());
+            productSize.setText(product.getSize());
+            productPrice.setText(Integer.toString(product.getBuyingPrice()));
             pickProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                        FragmentManager fragmentManager = getFragmentManager();
-//                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//
-//                        FragmentManager fm = getFragmentManager();
-//                        AddStockItemFragment addStockItemFragment = new AddStockItemFragment();
-//                        Bundle bundle=new Bundle();
-//                        bundle.putParcelable("categories", Parcels.wrap(categories));
-//                        fragmentTransaction.add(R.id.container, addStockItemFragment);
-//                        addStockItemFragment.setArguments(bundle);
-//                        fragmentTransaction.commit();
-//            addStockItemFragment.show(fm, "dialog");
+                    if (pickProductButton.getText().equals("Remove")){
+                        stocksItem.removeProduct(product);
+                        pickProductButton.setText("Pick");
+                        if (stocksItem.getProducts().size()==0){
+                            stocksItem = null;
+                        }
+                    }else{
+                        if(stocksItem==null){
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                            String date = dateFormat.format(new Date());
+                            stocksItem = new Stock(date);
+                            stocksItem.addProducts(product);
+                        }else{
+                            stocksItem.addProducts(product);
+                        }
+
+                        pickProductButton.setText("Remove");
+                    }
+                    AddStockItemFragment.stock = stocksItem;
+                    if (stocksItem!=null){
+                        Log.d("stockItems", Integer.toString(stocksItem.getProducts().size()));
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("stocks");
+                        reference.setValue(stocksItem);
+                    }
+                    mAdapter.notifyDataSetChanged();
+
+
                 }
             });
+//            button.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (stocksItem!=null){
+//                        NewStockItemsFragment fragment = NewStockItemsFragment.newInstance(stocksItem);
+//                    }else{
+//                        Toast.makeText(mContext, "You haven't picked some products", Toast.LENGTH_LONG).show();
+//                    }
+//
+//                }
+//            });
 
             }
         }

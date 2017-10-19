@@ -26,7 +26,7 @@ public class MainActivityFragmentsAdapter extends FragmentPagerAdapter {
             case 0:
                 return SellProductsFragment.newInstance();
             case 1:
-                return UpdateStockFragment.newInstance( categories);
+                return UpdateStockFragment.newInstance(categories);
         }
         return null;
     }

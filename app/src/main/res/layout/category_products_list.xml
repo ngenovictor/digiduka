@@ -16,20 +16,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
     <TextView
-        android:id="@+id/productVariationSize"
+        android:id="@+id/productSize"
         android:text="250gms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@+id/productName"
         app:layout_constraintLeft_toRightOf="@+id/productName"
         app:layout_constraintBottom_toBottomOf="@+id/productName"
-        app:layout_constraintRight_toLeftOf="@+id/productVariationPrice"/>
+        app:layout_constraintRight_toLeftOf="@+id/productPrice"/>
     <TextView
-        android:id="@+id/productVariationPrice"
+        android:id="@+id/productPrice"
         android:text="200KSH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@+id/productVariationSize"
+        app:layout_constraintLeft_toRightOf="@+id/productSize"
         app:layout_constraintTop_toTopOf="@+id/productName"
         app:layout_constraintBottom_toBottomOf="@+id/productName"
         app:layout_constraintRight_toLeftOf="@+id/pickProductButton"/>
@@ -41,5 +41,6 @@
         app:layout_constraintTop_toTopOf="@+id/productName"
         app:layout_constraintBottom_toBottomOf="@+id/productName"
         app:layout_constraintRight_toRightOf="parent"/>
+
 
 </android.support.constraint.ConstraintLayout>
