@@ -13,7 +13,7 @@
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Choose one of the following categories:"
+        android:text="Your items will be shown below:"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:background="#465c8b"
         android:padding="10dp"
-        android:text="New Category"
+        android:text="Pick Products"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/doneButton"/>
@@ -45,6 +45,8 @@
         android:text="Done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#465c8b"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/addCategoryButton"
         app:layout_constraintRight_toLeftOf="@+id/cancelAddStockButton"/>

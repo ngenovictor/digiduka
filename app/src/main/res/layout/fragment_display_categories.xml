@@ -1,18 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     tools:context="com.digiduka.digiduka.ui.DisplayCategoriesFragment">
     <TextView
         android:id="@+id/chooseCategoryTitle"
+        android:text="Choose from the categories below:"
+        android:textSize="20sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Choose from below" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/categoryDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/chooseCategoryTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
     </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
