@@ -21,6 +21,9 @@ import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.ui.AddProductFragment;
+import com.digiduka.digiduka.ui.CategoryView;
+import com.digiduka.digiduka.ui.MainActivity;
+import com.digiduka.digiduka.ui.ProductsFragment;
 import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,9 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.digiduka.digiduka.ui.CategoryView;
-import com.digiduka.digiduka.ui.MainActivity;
-import com.digiduka.digiduka.ui.ProductsFragment;
 
 import org.parceler.Parcels;
 
@@ -105,13 +105,15 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             gridText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MainActivity activity = (MainActivity) (mContext);
-                    android.app.FragmentManager fm = activity.getFragmentManager();
-                    ProductsFragment fragment = new ProductsFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable("category", Parcels.wrap(category));
-                    fragment.setArguments(bundle);
-                    fragment.show(fm, "product");
+                    if (source.equals("sell")) {
+                        MainActivity activity = (MainActivity) (mContext);
+                        android.app.FragmentManager fm = activity.getFragmentManager();
+                        ProductsFragment fragment = new ProductsFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable("category", Parcels.wrap(category));
+                        fragment.setArguments(bundle);
+                        fragment.show(fm, "product");
+                    }
 
                 }
             });
@@ -119,10 +121,29 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
             //the products under each category:
             //set the adapter
-            CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext1, null);
-            categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext1));
-            categoryProductsRecyclerView.setHasFixedSize(false);
-            categoryProductsRecyclerView.setAdapter(adapter);
+            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ArrayList<Product> products = new ArrayList<>();
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        products.add(snapshot.getValue(Product.class));
+                    }
+                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products);
+                    categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                    categoryProductsRecyclerView.setHasFixedSize(false);
+                    categoryProductsRecyclerView.setAdapter(adapter);
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
 
             addProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
