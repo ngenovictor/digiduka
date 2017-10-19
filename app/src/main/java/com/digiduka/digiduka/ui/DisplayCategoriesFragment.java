@@ -39,7 +39,7 @@ public class DisplayCategoriesFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_display_categories, container, false);
         categoryDisplay = view.findViewById(R.id.categoryDisplay);
-        CategoryListAdapter adapter = new CategoryListAdapter(getContext(),mCategories, mAdapter);
+        CategoryListAdapter adapter = new CategoryListAdapter(getContext(),mCategories,"stock", mAdapter);
         categoryDisplay.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoryDisplay.setLayoutManager(layoutManager);
