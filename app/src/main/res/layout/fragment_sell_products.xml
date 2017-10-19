@@ -15,8 +15,32 @@
             android:id="@+id/selectedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
         </android.support.v7.widget.RecyclerView>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/totalsec"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/selectedView"
+            android:layout_marginTop="25dp">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total sh500" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_below="@id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+        </RelativeLayout>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/viewcategory"
             android:layout_width="wrap_content"
