@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
@@ -35,6 +37,9 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     private static RecyclerView selectedView;
     private static ProductListAdapter mAdapter;
     private static Context context;
+    private static TextView total;
+    private Button makesale;
+    private static RelativeLayout totalsec;
 
     public SellProductsFragment() {
         // Required empty public constructor
@@ -52,21 +57,32 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         viewCategory = view.findViewById(R.id.viewcategory);
         ProductListAdapter.selectedproducts=selectedproducts1;
         selectedView = view.findViewById(R.id.selectedView);
+        total=view.findViewById(R.id.textView6);
+        makesale=view.findViewById(R.id.button2);
+        totalsec=view.findViewById(R.id.totalsec);
+        totalsec.setVisibility(View.GONE);
         context=getActivity();
         showSavedItems();
 
         viewCategory.setOnClickListener(this);
+        makesale.setOnClickListener(this);
 
 
         return view;
     }
     public static void showSavedItems(){
         if (selectedproducts1.size()!=0){
+            totalsec.setVisibility(View.VISIBLE);
             mAdapter = new ProductListAdapter(context,selectedproducts1 );
             selectedView.setAdapter(mAdapter);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
             selectedView.setLayoutManager(layoutManager);
             selectedView.setHasFixedSize(false);
+            int sum=0;
+            for (Product product:selectedproducts1){
+                sum+=product.getSellingPrice();
+            }
+            total.setText("Total Ksh"+String.valueOf(sum));
         }
     }
     @Override
@@ -79,6 +95,12 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
             bundle.putParcelable("category", Parcels.wrap(categories));
             moodDialogFragment.setArguments(bundle);
             moodDialogFragment.show(fm,categories.toString());
+
+        }
+        if(view==makesale){
+            ProductListAdapter.selectedproducts.clear();
+            selectedproducts1.clear();
+            SellProductsFragment.showSavedItems();
 
         }
     }
