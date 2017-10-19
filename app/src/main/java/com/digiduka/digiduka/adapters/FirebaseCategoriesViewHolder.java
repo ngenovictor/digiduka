@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +64,7 @@ public class FirebaseCategoriesViewHolder extends RecyclerView.ViewHolder implem
         }else if(view == addProductButton){
             AddProductFragment fragment = new AddProductFragment();
             FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-            android.app.FragmentManager fm = ((Activity) mContext).getFragmentManager();
+            android.support.v4.app.FragmentManager fm = ((FragmentActivity) mContext).getSupportFragmentManager();
             fragment.show(fm, "dialog");
         }
     }

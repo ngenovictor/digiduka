@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
+import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +31,7 @@ public class CategoryView extends DialogFragment {
     private CategoryListAdapter mAdapter;
 
 
+
     public CategoryView() {
         // Required empty public constructor
     }
@@ -41,9 +43,10 @@ public class CategoryView extends DialogFragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_category_view, container, false);
         categories= Parcels.unwrap(getArguments().getParcelable("category"));
+        StockItemsAdapter adapter=new StockItemsAdapter(null);
 
         categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView1);
-        mAdapter = new CategoryListAdapter(getContext(), categories,"sell");
+        mAdapter = new CategoryListAdapter(getContext(), categories,"sell",adapter);
         categoriesRecyclerView.setAdapter(mAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(layoutManager);

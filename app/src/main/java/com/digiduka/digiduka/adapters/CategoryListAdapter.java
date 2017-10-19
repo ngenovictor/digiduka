@@ -1,27 +1,26 @@
 package com.digiduka.digiduka.adapters;
 
 import android.app.Activity;
-import android.app.FragmentManager;
+
+
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.ui.AddProductFragment;
-import com.digiduka.digiduka.ui.CategoryView;
 import com.digiduka.digiduka.ui.MainActivity;
 import com.digiduka.digiduka.ui.ProductsFragment;
 import com.digiduka.digiduka.utils.Constants;
@@ -46,12 +45,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     private Context mContext;
     private ArrayList<Category> mCategorys = new ArrayList<>();
     private String source;
+    private StockItemsAdapter mAdapter;
 
 
-    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource) {
+    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource, StockItemsAdapter adapter) {
         mContext = context;
         mCategorys = categories;
         source = msource;
+        mAdapter = adapter;
 
     }
 
@@ -130,7 +131,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                         products.add(snapshot.getValue(Product.class));
                     }
-                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products);
+                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter);
                     categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                     categoryProductsRecyclerView.setHasFixedSize(false);
                     categoryProductsRecyclerView.setAdapter(adapter);
@@ -154,7 +155,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     fragment.setArguments(bundle);
 
                     //FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
-                    android.app.FragmentManager fm = ((Activity) mContext1).getFragmentManager();
+
+                    android.support.v4.app.FragmentManager fm = ((FragmentActivity) mContext).getSupportFragmentManager();
+
                     fragment.show(fm, "dialog");
                 }
             });

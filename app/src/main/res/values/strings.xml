@@ -18,9 +18,9 @@
     <string name="new_product_view_title">Enter new product under category:</string>
     <string name="new_product_button_text">Create Product</string>
     <string name="product_description_hint">Short description</string>
-    <string name="product_variation_quantity_hint">Quantity</string>
-    <string name="product_variation_price_hint">Price</string>
-
+    <string name="product__quantity_hint">Quantity</string>
+    <string name="product_buying_price_hint">Buying Price</string>
+    <string name="product_selling_price_hint">Selling Price</string>
 
     <!--end-->
 </resources>
