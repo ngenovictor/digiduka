@@ -68,6 +68,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         makesale.setOnClickListener(this);
 
 
+
         return view;
     }
     public static void showSavedItems(){
@@ -100,7 +101,9 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         if(view==makesale){
             ProductListAdapter.selectedproducts.clear();
             selectedproducts1.clear();
-            SellProductsFragment.showSavedItems();
+            mAdapter.notifyDataSetChanged();
+            totalsec.setVisibility(View.GONE);
+            showSavedItems();
 
         }
     }
