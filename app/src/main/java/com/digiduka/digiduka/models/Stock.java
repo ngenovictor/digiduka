@@ -21,6 +21,8 @@ public class Stock {
         totalCost = 0;
     }
 
+
+
     public void setStockId(String stockId) {
         this.stockId = stockId;
     }
