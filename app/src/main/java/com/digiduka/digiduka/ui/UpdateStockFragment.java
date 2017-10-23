@@ -62,7 +62,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
             addStockItemFragment.setArguments(bundle);
             fragmentTransaction.commit();
 //            addStockItemFragment.show(fm, "dialog");
-            addStockfab.setVisibility(View.GONE);
+//            addStockfab.setVisibility(View.GONE);
         }
     }
 }

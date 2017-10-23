@@ -66,6 +66,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private static LinearLayout totalsSection;
     private static TextView priceTotal;
     private FirebaseUser currentUser;
+    private View thisView;
 
     /**
      * initializes the SQL Database TableController
@@ -119,7 +120,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
 
 
-
+        thisView = view;
         return view;
     }
 
@@ -135,6 +136,9 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             //how do we close the fragment??
             Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
+            stock = null;
+            thisView.setVisibility(View.GONE);
+
         }else if(view ==doneButton){
             if (stock==null){
                 Toast.makeText(getContext(), "You haven't added any new items", Toast.LENGTH_LONG).show();
@@ -194,9 +198,11 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
                 });
                 stock = null;
                 Toast.makeText(getContext(), "You have added new items", Toast.LENGTH_LONG).show();
+                thisView.setVisibility(View.GONE);
             }
         }
     }
+
     public static void refreshUi(){
         if (stock!=null && stock.getProducts().size()>0){
             totalsSection.setVisibility(View.VISIBLE);
