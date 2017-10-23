@@ -1,12 +1,13 @@
 package com.digiduka.digiduka.adapters;
 
 import android.app.Activity;
+
+
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.ui.AddProductFragment;
-import com.digiduka.digiduka.ui.CategoryView;
 import com.digiduka.digiduka.ui.MainActivity;
 import com.digiduka.digiduka.ui.ProductsFragment;
 import com.digiduka.digiduka.utils.Constants;
@@ -125,13 +124,18 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             //the products under each category:
             //set the adapter
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+//
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(currentUser.getUid()).child(Constants.PRODUCTS_DB_KEY);
+            Log.d("log shvdcbs", reference.toString());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<Product> products = new ArrayList<>();
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                        products.add(snapshot.getValue(Product.class));
+                        Product product = snapshot.getValue(Product.class);
+                        if (product.getCategoryId().equals(category.getCategoryId())){
+                            products.add(product);
+                        }
                     }
                     CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter);
                     categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -145,6 +149,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
                 }
             });
+
 
 
 

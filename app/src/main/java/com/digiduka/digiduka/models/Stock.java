@@ -29,6 +29,8 @@ public class Stock {
         return stockId;
     }
 
+
+
     public String getDateCreated() {
         return dateCreated;
     }

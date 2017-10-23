@@ -74,7 +74,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.CATEGORY_DB_KEY).child(mCategory.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
 
             DatabaseReference puhRef = reference.push();
             String pushId = puhRef.getKey();
