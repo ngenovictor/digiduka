@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -271,5 +272,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //loggedIn();
 
     }
+
 
 }

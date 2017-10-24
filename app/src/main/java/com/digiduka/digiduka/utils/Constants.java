@@ -12,5 +12,6 @@ public class Constants {
     public static final String PREF_NAME = "intro_slider-welcome";
 
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    public final static String STOCKS_DB_KEY = "stockItems";
 
 }
