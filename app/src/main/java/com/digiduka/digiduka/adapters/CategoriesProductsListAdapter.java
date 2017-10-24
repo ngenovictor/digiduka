@@ -106,12 +106,8 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                         pickProductButton.setText("Remove");
                     }
                     AddStockItemFragment.stock = stocksItem;
-                    if (stocksItem!=null){
-                        Log.d("stockItems", Integer.toString(stocksItem.getProducts().size()));
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("stocks");
-                        reference.setValue(stocksItem);
-                    }
-                    mAdapter.notifyDataSetChanged();
+
+//                    mAdapter.notifyDataSetChanged();
                     AddStockItemFragment.refreshUi();
 
 
