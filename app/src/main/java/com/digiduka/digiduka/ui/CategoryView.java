@@ -6,17 +6,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
 import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 

@@ -1,8 +1,5 @@
 package com.digiduka.digiduka.adapters;
 
-import android.app.Activity;
-
-
 import android.content.Context;
 
 import android.os.Bundle;
@@ -53,10 +50,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         mCategorys = categories;
         source = msource;
         mAdapter = adapter;
-<<<<<<< HEAD
-=======
-
->>>>>>> 61f84afd4f4597130f9af99d480fa8bd3be6f0aa
     }
 
     @Override

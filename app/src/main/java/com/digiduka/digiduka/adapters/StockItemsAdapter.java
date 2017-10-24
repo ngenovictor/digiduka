@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
-import com.digiduka.digiduka.models.Stock;
 import com.digiduka.digiduka.ui.AddStockItemFragment;
 
 /**

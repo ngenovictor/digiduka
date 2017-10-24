@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,9 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.digiduka.digiduka.R;
-import com.digiduka.digiduka.adapters.CategoryListAdapter;
 import com.digiduka.digiduka.adapters.ProductListAdapter;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;

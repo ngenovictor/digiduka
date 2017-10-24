@@ -17,17 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.User;
-import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

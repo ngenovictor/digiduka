@@ -1,10 +1,7 @@
 package com.digiduka.digiduka.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

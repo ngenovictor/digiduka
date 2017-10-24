@@ -1,7 +1,5 @@
 package com.digiduka.digiduka.models;
 
-import java.util.Date;
-
 /**
  * Created by waracci on 10/11/17.
  */
