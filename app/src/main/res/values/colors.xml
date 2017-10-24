@@ -5,8 +5,8 @@
     <!--<color name="colorAccent">#FF4081</color>-->
 <!--</resources>-->
 <resources>
-    <color name="colorPrimary">#465c8b</color>
-    <color name="colorPrimaryDark">#f7ef6a</color>
+    <color name="colorPrimary">#558b2f</color>
+    <color name="colorPrimaryDark">#c0ca33</color>
     <color name="colorAccent">#93c178</color>
     <color name="colorNav">#5D709A</color>
     <!-- Screens background color-->

@@ -13,5 +13,6 @@ public class Constants {
 
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     public final static String STOCKS_DB_KEY = "stockItems";
+    public final static String USER_INFO_KEY = "userinfo";
 
 }

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.User;
+import com.digiduka.digiduka.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,7 +87,7 @@ public class UserInfoFragment extends Fragment {
 
                 User user= new User(name,shop,email,phone,userimage,usergender);
                 DatabaseReference ref = FirebaseDatabase.getInstance()
-                        .getReference().child(mAuth.getCurrentUser().getUid());
+                        .getReference().child(mAuth.getCurrentUser().getUid()).child(Constants.USER_INFO_KEY);
                 /**
                  * someone fix this reference to store to a specific category
                  * **/
