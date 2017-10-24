@@ -42,14 +42,20 @@ public class StockProductsListAdapter extends RecyclerView.Adapter<StockProducts
 
     public class StockProductsListViewHolder extends RecyclerView.ViewHolder{
         private TextView productName;
+        private TextView buyingPrice;
+        private TextView productAmount;
 
         public StockProductsListViewHolder(View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
+            buyingPrice = itemView.findViewById(R.id.buyingPrice);
+            productAmount = itemView.findViewById(R.id.productAmount);
 
         }
         public void bindProduct(Product product){
             productName.setText(product.getNameOfProduct());
+            buyingPrice.setText("KSH. "+Integer.toString(product.getBuyingPrice()));
+            productAmount.setText(Integer.toString(product.getAmount()));
         }
     }
 }
