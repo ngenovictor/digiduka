@@ -10,6 +10,7 @@
     <color name="colorAccent">#93c178</color>
     <color name="colorNav">#5D709A</color>
     <color name="backgroundButtons">#43a047</color>
+    <color name="backgroundButtonsCancel">#b71c1c</color>
     <color name="backgroundFragments">#b2ff59</color>
     <!-- Screens background color-->
     <color name="bg_slider_screen1">#948F3F</color>

@@ -39,6 +39,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
     private Category mCategory;
     private View mView;
     private TextView newProductPageTitle;
+    private Button closeNewProductButton;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -54,6 +55,8 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         productSizeEdit = mView.findViewById(R.id.productSizeEdit);
         productBuyingPriceEdit = mView.findViewById(R.id.productBuyingPriceEdit);
         productSellingPriceEdit = mView.findViewById(R.id.productSellingPriceEdit);
+        closeNewProductButton = mView.findViewById(R.id.closeNewProductButton);
+        closeNewProductButton.setOnClickListener(this);
 
 
         Bundle bundle = getArguments();
@@ -90,6 +93,8 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             puhRef.setValue(product);
 
 
+            dismiss();
+        }else if(view==closeNewProductButton){
             dismiss();
         }
     }
