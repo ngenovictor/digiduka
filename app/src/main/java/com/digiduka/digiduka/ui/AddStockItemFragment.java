@@ -1,6 +1,7 @@
 package com.digiduka.digiduka.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -67,6 +68,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private static TextView priceTotal;
     private FirebaseUser currentUser;
     private View thisView;
+    private Context mContext;
 
     /**
      * initializes the SQL Database TableController
@@ -117,7 +119,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
         totalsSection.setVisibility(View.GONE);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        mContext = view.getContext();
 
 
         thisView = view;

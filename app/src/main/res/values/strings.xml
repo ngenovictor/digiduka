@@ -35,6 +35,7 @@
     <string name="product__quantity_hint">Quantity</string>
     <string name="product_buying_price_hint">Buying Price</string>
     <string name="product_selling_price_hint">Selling Price</string>
+    <string name="add_product_button">Add Product</string>
 
 
     <!--end-->
