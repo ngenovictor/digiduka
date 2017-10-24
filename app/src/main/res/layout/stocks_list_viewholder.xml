@@ -61,7 +61,8 @@
     <Button
         android:id="@+id/revealStockProducts"
         android:text="Show Products"
-
+        android:textColor="#fff"
+        android:textAllCaps="false"
         android:padding="@dimen/buttons_padding"
         android:background="@color/backgroundButtons"
         android:layout_width="wrap_content"
