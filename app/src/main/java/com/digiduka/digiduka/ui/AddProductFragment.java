@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
@@ -32,6 +36,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
     private Context mContext;
     private Category mCategory;
     private View mView;
+    private TextView newProductPageTitle;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -48,12 +53,17 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         productBuyingPriceEdit = mView.findViewById(R.id.productBuyingPriceEdit);
         productSellingPriceEdit = mView.findViewById(R.id.productSellingPriceEdit);
 
+
         Bundle bundle = getArguments();
 
         mCategory = Parcels.unwrap(bundle.getParcelable("category"));
         newProductButton.setOnClickListener(this);
 
         mContext = mView.getContext();
+
+        newProductPageTitle = mView.findViewById(R.id.newProductPageTitle);
+
+        newProductPageTitle.setText("Add new product under category: "+mCategory.getCategoryTitle());
 
         return mView;
     }

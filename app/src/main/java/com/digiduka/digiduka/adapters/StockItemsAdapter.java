@@ -20,6 +20,7 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
     private TextView stockProductName;
     private TextView stockProductSize;
     private TextView stockProductBuyingPrice;
+    private TextView stockProductAmount;
     public StockItemsAdapter(Context context){
         mContext = context;
     }
@@ -29,6 +30,7 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
         stockProductName = view.findViewById(R.id.stockProductName);
         stockProductSize = view.findViewById(R.id.stockProductSize);
         stockProductBuyingPrice = view.findViewById(R.id.stockProductBuyingPrice);
+        stockProductAmount = view.findViewById(R.id.stockProductAmount);
         return new StockItemsViewHolder(view);
     }
 
@@ -55,7 +57,8 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
         public void bindProduct(Product product){
             stockProductName.setText(product.getNameOfProduct());
             stockProductSize.setText(product.getSize());
-            stockProductBuyingPrice.setText(Integer.toString(product.getBuyingPrice()));
+            stockProductBuyingPrice.setText("KSH. "+Integer.toString(product.getBuyingPrice()));
+            stockProductAmount.setText(Integer.toString(product.getAmount()));
         }
     }
 }

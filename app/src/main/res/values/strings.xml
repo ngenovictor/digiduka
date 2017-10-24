@@ -15,7 +15,7 @@
     <!--creating new product strings-->
     <string name="product_name_hint">Enter name of product</string>
     <string name="product_price_hint">Price</string>
-    <string name="new_product_view_title">Enter new product under category:</string>
+    <string name="new_product_view_title">Enter new product.</string>
     <string name="new_product_button_text">Create Product</string>
     <string name="product_description_hint">Short description</string>
     <string name="product_variation_quantity_hint">Quantity</string>

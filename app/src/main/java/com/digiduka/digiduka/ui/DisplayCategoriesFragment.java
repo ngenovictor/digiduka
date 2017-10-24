@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
@@ -28,6 +29,7 @@ public class DisplayCategoriesFragment extends DialogFragment {
     private static ArrayList<Category> mCategories= new ArrayList<>();
     private static StockItemsAdapter mAdapter;
     private Button addCategoryHere;
+    private ImageView closePickProducts;
 
     public DisplayCategoriesFragment() {
         // Required empty public constructor
@@ -50,6 +52,13 @@ public class DisplayCategoriesFragment extends DialogFragment {
         categoryDisplay.setHasFixedSize(false);
 
         addCategoryHere = view.findViewById(R.id.addCategoryHere);
+        closePickProducts = view.findViewById(R.id.closePickProducts);
+        closePickProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         addCategoryHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

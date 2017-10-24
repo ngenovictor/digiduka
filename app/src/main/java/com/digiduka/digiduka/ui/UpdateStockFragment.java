@@ -60,7 +60,7 @@ public class UpdateStockFragment extends Fragment implements View.OnClickListene
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         stockItemsRecyclerView = view.findViewById(R.id.stockItemsRecyclerView);
-        stockRef = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.STOCKS_DB_KEY);
+        stockRef = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.STOCKS_DB_KEY).orderByChild("dateCreated").getRef();
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Stock, StocksListViewHolder>(Stock.class, R.layout.stocks_list_viewholder, StocksListViewHolder.class, stockRef) {
             @Override
             protected void populateViewHolder(StocksListViewHolder viewHolder, Stock model, int position) {

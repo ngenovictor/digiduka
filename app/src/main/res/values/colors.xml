@@ -5,10 +5,11 @@
     <!--<color name="colorAccent">#FF4081</color>-->
 <!--</resources>-->
 <resources>
-    <color name="colorPrimary">#558b2f</color>
-    <color name="colorPrimaryDark">#c0ca33</color>
+    <color name="colorPrimary">#2e7d32</color>
+    <color name="colorPrimaryDark">#f7ef6a</color>
     <color name="colorAccent">#93c178</color>
     <color name="colorNav">#5D709A</color>
+    <color name="backgroundButtons">#43a047</color>
     <!-- Screens background color-->
     <color name="bg_slider_screen1">#948F3F</color>
     <color name="bg_slider_screen2">#93c178</color>
