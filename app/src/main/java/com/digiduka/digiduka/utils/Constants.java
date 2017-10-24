@@ -8,5 +8,6 @@ public class Constants {
     public final static String USERS_DB_KEY = "users";
     public final static String CATEGORY_DB_KEY = "categories";
     public final static String PRODUCTS_DB_KEY = "products";
+    public final static String USER_INFO_KEY = "userinfo";
 
 }
