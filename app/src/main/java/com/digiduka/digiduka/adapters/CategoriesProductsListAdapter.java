@@ -89,7 +89,13 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productName.setText(product.getNameOfProduct());
             productSize.setText(product.getSize());
             productPrice.setText(Integer.toString(product.getBuyingPrice()));
-            dialProductsHolder.setVisibility(View.GONE);
+
+            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)){
+                pickProductButton.setVisibility(View.GONE);
+                dialProductsHolder.setVisibility(View.VISIBLE);
+            }else{
+                dialProductsHolder.setVisibility(View.GONE);
+            }
 
 
             pickProductButton.setOnClickListener(new View.OnClickListener() {
@@ -121,10 +127,12 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                 @Override
                 public void onClick(View view) {
                     AddStockItemFragment.stock.removeProduct(product);
-                    if (AddStockItemFragment.stock.getProducts().size() < 1) {
+                    if (!AddStockItemFragment.stock.containsProduct(product)) {
                         dialProductsHolder.setVisibility(View.GONE);
                         pickProductButton.setVisibility(View.VISIBLE);
-                        AddStockItemFragment.stock = null;
+                        if (AddStockItemFragment.stock.getProducts().size()<1){
+                            AddStockItemFragment.stock = null;
+                        }
                     }
                     refreshUI();
                 }
