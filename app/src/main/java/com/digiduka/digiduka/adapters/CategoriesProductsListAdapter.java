@@ -101,7 +101,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                     try{
                         AddStockItemFragment.stock.addProducts(product);
                     }catch (NullPointerException e){
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
                         String date = dateFormat.format(new Date());
                         AddStockItemFragment.stock = new Stock(date);
                         AddStockItemFragment.stock.addProducts(product);
