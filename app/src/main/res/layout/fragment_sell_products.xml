@@ -16,8 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/makeNewSale"
         android:layout_width="wrap_content"
@@ -27,6 +25,4 @@
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="#f4511e"
         android:src="@drawable/ic_add_black_24dp" />
-
-
 </android.support.constraint.ConstraintLayout>

@@ -84,7 +84,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/backgroundButtons"
+        android:backgroundTint="@color/backgroundButtonsCancel"
         android:text="Cancel"
         android:textColor="#fff"
         android:textAllCaps="false"
