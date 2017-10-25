@@ -10,13 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.SaleProductsAdapter;
 import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Transaction;
 import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
 
@@ -34,6 +46,8 @@ public class AddSaleItemFragment extends Fragment implements View.OnClickListene
     private RecyclerView saleItems;
     private SaleProductsAdapter mAdapter;
     private static ArrayList<Category> categories = new ArrayList<>();
+    private static LinearLayout totalsSection;
+    private static TextView priceTotal;
 
 
 
@@ -59,6 +73,10 @@ public class AddSaleItemFragment extends Fragment implements View.OnClickListene
         pickProducts = thisView.findViewById(R.id.pickProducts);
         doneButton = thisView.findViewById(R.id.doneButton);
         saleItems = thisView.findViewById(R.id.saleItems);
+        totalsSection = thisView.findViewById(R.id.totalsSection);
+        priceTotal = thisView.findViewById(R.id.priceTotal);
+
+        totalsSection.setVisibility(View.GONE);
 
         mAdapter = new SaleProductsAdapter(getContext());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -84,9 +102,62 @@ public class AddSaleItemFragment extends Fragment implements View.OnClickListene
 
         }else if (view==doneButton){
             //put actions to done button
+            if (transaction==null){
+                Toast.makeText(getContext(), "You haven't added any new items", Toast.LENGTH_LONG).show();
+            }else{
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference reference = FirebaseDatabase.getInstance()
+                        .getReference(currentUser.getUid())
+                        .child(Constants.TRANSACTIONS_DB_KEY);
+
+                DatabaseReference pushRef = reference.push();
+                String pushId = pushRef.getKey();
+                transaction.setTransactionId(pushId);
+                pushRef.setValue(transaction);
+
+
+
+                DatabaseReference productsRef = FirebaseDatabase.getInstance()
+                        .getReference(currentUser.getUid())
+                        .child(Constants.PRODUCTS_DB_KEY);
+                productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                            Product thisProduct = snapshot.getValue(Product.class);
+                            if (transaction.containsProduct(thisProduct)){
+                                Product transactionProduct = transaction.getSimilarProduct(thisProduct);
+                                int amount = thisProduct.getAmount()-transactionProduct.getAmount();
+                                thisProduct.setAmount(amount);
+                                DatabaseReference thisProductRef = snapshot.getRef();
+                                thisProductRef.setValue(thisProduct);
+                            }
+                        }
+                        transaction = null;
+                        Toast.makeText(getContext(), "You have recorded sale of items", Toast.LENGTH_LONG).show();
+                        thisView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
         }else if (view==cancelSaleButton){
+            Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
+            transaction = null;
             getFragmentManager().popBackStack();
             thisView.setVisibility(View.GONE);
+        }
+    }
+    public static void refreshUi(){
+        if (transaction!=null && transaction.getProducts().size()>0){
+            totalsSection.setVisibility(View.VISIBLE);
+            priceTotal.setText("KSH. "+Integer.toString(transaction.getTotalCost()));
+        }else{
+            totalsSection.setVisibility(View.GONE);
         }
     }
 }

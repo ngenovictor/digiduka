@@ -191,7 +191,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
 
             }else if(mSource.equals(Constants.SALES_SIDE)){
                 salesAdapter.notifyDataSetChanged();
-//                AddSaleItemFragment.refreshUi();
+                AddSaleItemFragment.refreshUi();
             }
         }
     }

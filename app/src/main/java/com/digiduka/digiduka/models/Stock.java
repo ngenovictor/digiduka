@@ -84,6 +84,14 @@ public class Stock {
         }
         return false;
     }
+    public Product getSimilarProduct(Product product){
+        for (Product product1:products){
+            if (product1.getPushId().equals(product.getPushId())){
+                return product1;
+            }
+        }
+        return null;
+    }
     public void computeTotalCost(){
         int totalCost = 0;
         for (Product product:products){

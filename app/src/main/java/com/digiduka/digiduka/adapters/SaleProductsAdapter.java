@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class SaleProductsAdapter extends RecyclerView.Adapter<SaleProductsAdapter.SaleProductsViewHolder> {
     private Context mContext;
     private TextView stockProductName;
+    private TextView stockProductSize;
+    private TextView stockProductBuyingPrice;
+    private TextView stockProductAmount;
     public SaleProductsAdapter(Context context){
         mContext = context;
     }
@@ -27,6 +30,9 @@ public class SaleProductsAdapter extends RecyclerView.Adapter<SaleProductsAdapte
     public SaleProductsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View thisView = LayoutInflater.from(mContext).inflate(R.layout.stock_show_items, parent, false);
         stockProductName = thisView.findViewById(R.id.stockProductName);
+        stockProductSize = thisView.findViewById(R.id.stockProductSize);
+        stockProductBuyingPrice = thisView.findViewById(R.id.stockProductBuyingPrice);
+        stockProductAmount = thisView.findViewById(R.id.stockProductAmount);
         return new SaleProductsViewHolder(thisView);
     }
 
@@ -50,7 +56,9 @@ public class SaleProductsAdapter extends RecyclerView.Adapter<SaleProductsAdapte
         }
         public void bindProduct(Product product){
             stockProductName.setText(product.getNameOfProduct());
-
+            stockProductSize.setText(product.getSize());
+            stockProductBuyingPrice.setText("KSH. "+Integer.toString(product.getSellingPrice()));
+            stockProductAmount.setText(Integer.toString(product.getAmount()));
         }
     }
 }
