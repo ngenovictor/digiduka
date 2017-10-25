@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
@@ -32,6 +35,8 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
     private Context mContext;
     private Category mCategory;
     private View mView;
+    private TextView newProductPageTitle;
+    private Button closeNewProductButton;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -47,6 +52,9 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         productSizeEdit = mView.findViewById(R.id.productSizeEdit);
         productBuyingPriceEdit = mView.findViewById(R.id.productBuyingPriceEdit);
         productSellingPriceEdit = mView.findViewById(R.id.productSellingPriceEdit);
+        closeNewProductButton = mView.findViewById(R.id.closeNewProductButton);
+        closeNewProductButton.setOnClickListener(this);
+
 
         Bundle bundle = getArguments();
 
@@ -54,6 +62,10 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         newProductButton.setOnClickListener(this);
 
         mContext = mView.getContext();
+
+        newProductPageTitle = mView.findViewById(R.id.newProductPageTitle);
+
+        newProductPageTitle.setText("Add new product under category: "+mCategory.getCategoryTitle());
 
         return mView;
     }
@@ -78,6 +90,8 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             puhRef.setValue(product);
 
 
+            dismiss();
+        }else if(view==closeNewProductButton){
             dismiss();
         }
     }

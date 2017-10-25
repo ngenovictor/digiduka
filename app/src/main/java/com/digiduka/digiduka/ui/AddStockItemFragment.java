@@ -91,17 +91,17 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         View view = inflater.inflate(R.layout.fragment_add_stock_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_stock_item, container, false);
         categoriesRecyclerView = view.findViewById(R.id.categoriesRecyclerView);
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
 
 
         mAdapter2 = new StockItemsAdapter(getContext());
-        categoriesRecyclerView.setAdapter(mAdapter2);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         categoriesRecyclerView.setLayoutManager(layoutManager);
         categoriesRecyclerView.setHasFixedSize(false);
+        categoriesRecyclerView.setAdapter(mAdapter2);
 
         cancelAddStockButton = view.findViewById(R.id.cancelAddStockButton);
         cancelAddStockButton.setOnClickListener(this);
@@ -203,6 +203,8 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         if (stock!=null && stock.getProducts().size()>0){
             totalsSection.setVisibility(View.VISIBLE);
             priceTotal.setText("KSH. "+Integer.toString(stock.getTotalCost()));
+        }else{
+            totalsSection.setVisibility(View.GONE);
         }
     }
 

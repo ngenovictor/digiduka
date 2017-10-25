@@ -1,6 +1,11 @@
 package com.digiduka.digiduka.adapters;
 
 import android.content.Context;
+
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +36,8 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
     private Context mContext;
     private ArrayList<Product> products = new ArrayList<>();
     private StockItemsAdapter mAdapter;
-    private Stock stocksItem;
-    public CategoriesProductsListAdapter(Category category, Context context , ArrayList<Product> products, StockItemsAdapter adapter){
+
+    public CategoriesProductsListAdapter(Category category, Context context, ArrayList<Product> products, StockItemsAdapter adapter) {
         this.category = category;
         mContext = context;
         mAdapter = adapter;
@@ -41,7 +46,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
 
     @Override
     public CategoriesProductsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.category_products_list, parent,false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.category_products_list, parent, false);
         CategoriesProductsListViewHolder holder = new CategoriesProductsListViewHolder(view);
         return holder;
     }
@@ -61,6 +66,9 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
         private TextView productSize;
         private TextView productPrice;
         private Button pickProductButton;
+        private ConstraintLayout dialProductsHolder;
+        private Button incrementProduct;
+        private Button deductProduct;
 
         public CategoriesProductsListViewHolder(View itemView) {
             super(itemView);
@@ -68,49 +76,73 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productSize = itemView.findViewById(R.id.productSize);
             productPrice = itemView.findViewById(R.id.productPrice);
             pickProductButton = itemView.findViewById(R.id.pickProductButton);
+            dialProductsHolder = itemView.findViewById(R.id.dialProductsHolder);
+            incrementProduct = itemView.findViewById(R.id.incrementProduct);
+            deductProduct = itemView.findViewById(R.id.deductProduct);
 
         }
-        public void bindProduct(final Product product){
+
+        public void bindProduct(final Product product) {
             productName.setText(product.getNameOfProduct());
             productSize.setText(product.getSize());
             productPrice.setText(Integer.toString(product.getBuyingPrice()));
-            if (stocksItem!=null && stocksItem.containsProduct(product)){
-                pickProductButton.setText("Remove");
+
+            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)){
+                pickProductButton.setVisibility(View.GONE);
+                dialProductsHolder.setVisibility(View.VISIBLE);
+            }else{
+                dialProductsHolder.setVisibility(View.GONE);
             }
+
+
             pickProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (pickProductButton.getText().equals("Remove")){
-                        stocksItem.removeProduct(product);
-                        pickProductButton.setText("Pick");
-                        if (stocksItem.getProducts().size()==0){
-                            stocksItem = null;
-                        }
-                    }else{
-                        if(stocksItem==null){
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-                            String date = dateFormat.format(new Date());
-                            stocksItem = new Stock(date);
-                            stocksItem.addProducts(product);
-                        }else{
-                            stocksItem.addProducts(product);
-                        }
-
-                        pickProductButton.setText("Remove");
+                    try{
+                        AddStockItemFragment.stock.addProducts(product);
+                    }catch (NullPointerException e){
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+                        String date = dateFormat.format(new Date());
+                        AddStockItemFragment.stock = new Stock(date);
+                        AddStockItemFragment.stock.addProducts(product);
                     }
-                    AddStockItemFragment.stock = stocksItem;
-                    if (stocksItem!=null){
-                        Log.d("stockItems", Integer.toString(stocksItem.getProducts().size()));
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("stocks");
-                        reference.setValue(stocksItem);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                    AddStockItemFragment.refreshUi();
 
+                    pickProductButton.setVisibility(View.GONE);
+                    dialProductsHolder.setVisibility(View.VISIBLE);
+                    refreshUI();
 
                 }
             });
+            incrementProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddStockItemFragment.stock.addProducts(product);
+                    refreshUI();
+                }
+            });
+            deductProduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AddStockItemFragment.stock.removeProduct(product);
+                    if (!AddStockItemFragment.stock.containsProduct(product)) {
+                        dialProductsHolder.setVisibility(View.GONE);
+                        pickProductButton.setVisibility(View.VISIBLE);
+                        if (AddStockItemFragment.stock.getProducts().size()<1){
+                            AddStockItemFragment.stock = null;
+                        }
+                    }
+                    refreshUI();
+                }
+            });
+        }
+
+        public void refreshUI() {
+            if ( AddStockItemFragment.stock!=null){
+                Log.d("stockitems", AddStockItemFragment.stock.toString());
             }
+
+            mAdapter.notifyDataSetChanged();
+            AddStockItemFragment.refreshUi();
         }
     }
-
+}
