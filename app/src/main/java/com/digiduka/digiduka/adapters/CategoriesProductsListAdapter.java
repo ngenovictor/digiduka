@@ -16,7 +16,11 @@ import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Stock;
+import com.digiduka.digiduka.models.Transaction;
+import com.digiduka.digiduka.ui.AddSaleItemFragment;
 import com.digiduka.digiduka.ui.AddStockItemFragment;
+import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,12 +38,25 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
     private Context mContext;
     private ArrayList<Product> products = new ArrayList<>();
     private StockItemsAdapter mAdapter;
+    private SaleProductsAdapter salesAdapter;
+    private String mSource;
 
-    public CategoriesProductsListAdapter(Category category, Context context, ArrayList<Product> products, StockItemsAdapter adapter) {
+    //constructor from the stock side
+    public CategoriesProductsListAdapter(Category category, Context context, ArrayList<Product> products, StockItemsAdapter adapter, String source) {
         this.category = category;
         mContext = context;
         mAdapter = adapter;
         this.products.addAll(products);
+        mSource = source;
+    }
+
+    //constructor from the sales side
+    public CategoriesProductsListAdapter(Category category, Context context, ArrayList<Product> products, SaleProductsAdapter adapter, String source) {
+        this.category = category;
+        mContext = context;
+        salesAdapter = adapter;
+        this.products.addAll(products);
+        mSource = source;
     }
 
     @Override
@@ -85,7 +102,8 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productSize.setText(product.getSize());
             productPrice.setText(Integer.toString(product.getBuyingPrice()));
 
-            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)){
+            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)||
+                    !(AddSaleItemFragment.transaction==null) && AddSaleItemFragment.transaction.containsProduct(product)){
                 pickProductButton.setVisibility(View.GONE);
                 dialProductsHolder.setVisibility(View.VISIBLE);
             }else{
@@ -96,51 +114,85 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             pickProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    try{
-                        AddStockItemFragment.stock.addProducts(product);
-                    }catch (NullPointerException e){
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-                        String date = dateFormat.format(new Date());
-                        AddStockItemFragment.stock = new Stock(date);
-                        AddStockItemFragment.stock.addProducts(product);
+                    if (mSource.equals(Constants.STOCK_SIDE)){
+                        try{
+                            AddStockItemFragment.stock.addProducts(product);
+                        }catch (NullPointerException e){
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            String date = dateFormat.format(new Date());
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            AddStockItemFragment.stock = new Stock(date, user.getUid());
+                            AddStockItemFragment.stock.addProducts(product);
+                        }
+
+                        pickProductButton.setVisibility(View.GONE);
+                        dialProductsHolder.setVisibility(View.VISIBLE);
+                    }else if(mSource.equals(Constants.SALES_SIDE)){
+                        try{
+                            AddSaleItemFragment.transaction.addProducts(product);
+                        }catch (NullPointerException e){
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            String date = dateFormat.format(new Date());
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            AddSaleItemFragment.transaction = new Transaction(date, user.getUid());
+                            AddSaleItemFragment.transaction.addProducts(product);
+                        }
+
+                        pickProductButton.setVisibility(View.GONE);
+                        dialProductsHolder.setVisibility(View.VISIBLE);
                     }
-
-                    pickProductButton.setVisibility(View.GONE);
-                    dialProductsHolder.setVisibility(View.VISIBLE);
                     refreshUI();
-
                 }
             });
             incrementProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AddStockItemFragment.stock.addProducts(product);
+                    if (mSource.equals(Constants.STOCK_SIDE)){
+                        AddStockItemFragment.stock.addProducts(product);
+                    }else if(mSource.equals(Constants.SALES_SIDE)){
+                        AddSaleItemFragment.transaction.addProducts(product);
+                    }
+
                     refreshUI();
                 }
             });
             deductProduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    AddStockItemFragment.stock.removeProduct(product);
-                    if (!AddStockItemFragment.stock.containsProduct(product)) {
-                        dialProductsHolder.setVisibility(View.GONE);
-                        pickProductButton.setVisibility(View.VISIBLE);
-                        if (AddStockItemFragment.stock.getProducts().size()<1){
-                            AddStockItemFragment.stock = null;
+                    if (mSource.equals(Constants.STOCK_SIDE)){
+                        AddStockItemFragment.stock.removeProduct(product);
+                        if (!AddStockItemFragment.stock.containsProduct(product)) {
+                            dialProductsHolder.setVisibility(View.GONE);
+                            pickProductButton.setVisibility(View.VISIBLE);
+                            if (AddStockItemFragment.stock.getProducts().size()<1){
+                                AddStockItemFragment.stock = null;
+                            }
+                        }
+                    }else if(mSource.equals(Constants.SALES_SIDE)){
+                        AddSaleItemFragment.transaction.removeProduct(product);
+                        if (!AddSaleItemFragment.transaction.containsProduct(product)) {
+                            dialProductsHolder.setVisibility(View.GONE);
+                            pickProductButton.setVisibility(View.VISIBLE);
+                            if (AddSaleItemFragment.transaction.getProducts().size()<1){
+                                AddSaleItemFragment.transaction = null;
+                            }
                         }
                     }
+
                     refreshUI();
                 }
             });
         }
 
         public void refreshUI() {
-            if ( AddStockItemFragment.stock!=null){
-                Log.d("stockitems", AddStockItemFragment.stock.toString());
-            }
+            if(mSource.equals(Constants.STOCK_SIDE)){
+                mAdapter.notifyDataSetChanged();
+                AddStockItemFragment.refreshUi();
 
-            mAdapter.notifyDataSetChanged();
-            AddStockItemFragment.refreshUi();
+            }else if(mSource.equals(Constants.SALES_SIDE)){
+                salesAdapter.notifyDataSetChanged();
+//                AddSaleItemFragment.refreshUi();
+            }
         }
     }
 }

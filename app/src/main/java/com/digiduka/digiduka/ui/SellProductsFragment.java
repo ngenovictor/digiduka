@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.digiduka.digiduka.R;
@@ -36,7 +38,7 @@ import java.util.ArrayList;
  */
 public class SellProductsFragment extends Fragment implements View.OnClickListener{
     public static ArrayList<Category> categories;
-    private FloatingActionButton viewCategory;
+
     public static ArrayList<Product>selectedproducts1=new ArrayList<>();
     private static RecyclerView selectedView;
     private static ProductListAdapter mAdapter;
@@ -45,6 +47,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     private Button makesale;
     private static RelativeLayout totalsec;
     private FirebaseAuth mAuth;
+    private FloatingActionButton makeNewSale;
 
     public SellProductsFragment() {
         // Required empty public constructor
@@ -59,7 +62,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sell_products, container, false);
-        viewCategory = view.findViewById(R.id.viewcategory);
+        makeNewSale = view.findViewById(R.id.makeNewSale);
         mAuth = FirebaseAuth.getInstance();
         ProductListAdapter.selectedproducts=selectedproducts1;
         selectedView = view.findViewById(R.id.selectedView);
@@ -69,7 +72,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         totalsec.setVisibility(View.GONE);
         context=getActivity();
         showSavedItems();
-        viewCategory.setOnClickListener(this);
+        makeNewSale.setOnClickListener(this);
         makesale.setOnClickListener(this);
         return view;
     }
@@ -90,14 +93,16 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     }
     @Override
     public void onClick(View view) {
-        if(view == viewCategory){
-            Log.v("new items",String.valueOf(selectedproducts1.size()));
+        if(view == makeNewSale){
+
             FragmentManager fm = getFragmentManager();
-            CategoryView moodDialogFragment = new CategoryView();
+            FragmentTransaction ft = fm.beginTransaction();
+            AddSaleItemFragment fragment = AddSaleItemFragment.newInstance();
             Bundle bundle=new Bundle();
-            bundle.putParcelable("category", Parcels.wrap(categories));
-            moodDialogFragment.setArguments(bundle);
-            moodDialogFragment.show(fm,categories.toString());
+            bundle.putParcelable("categories", Parcels.wrap(categories));
+            fragment.setArguments(bundle);
+            ft.add(R.id.saleProductsFragment, fragment);
+            ft.commit();
         }
         if(view==makesale){
             final ArrayList<String> productIds = new ArrayList<>();

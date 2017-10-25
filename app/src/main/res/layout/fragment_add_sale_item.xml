@@ -1,0 +1,57 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#dfdce3"
+    android:layout_height="match_parent"
+    tools:context="com.digiduka.digiduka.ui.AddSaleItemFragment">
+
+    <TextView
+        android:id="@+id/addSaleTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Items in cart will be shown below"
+        android:textSize="18sp"
+        android:gravity="center"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/saleItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/addSaleTitle">
+
+    </android.support.v7.widget.RecyclerView>
+    <Button
+        android:id="@+id/pickProducts"
+        android:text="Pick Products"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:backgroundTint="@color/backgroundButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/doneButton"/>
+    <Button
+        android:id="@+id/doneButton"
+        android:text="Done"
+        android:textColor="#fff"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/backgroundButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/pickProducts"
+        app:layout_constraintRight_toLeftOf="@+id/cancelSaleButton"/>
+    <Button
+        android:id="@+id/cancelSaleButton"
+        android:text="Cancel"
+        android:textColor="#fff"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/backgroundButtonsCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/doneButton"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -123,9 +123,10 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == addCategoryButton) {
+            //pick products here by opening a list of all categories
             Bundle bundle = new Bundle();
             FragmentManager fm = getFragmentManager();
-            DisplayCategoriesFragment fragment = DisplayCategoriesFragment.newInstance(categories, mAdapter2);
+            DisplayCategoriesFragment fragment = DisplayCategoriesFragment.newInstance(categories, mAdapter2, Constants.STOCK_SIDE);
             AddCategoryFragment addStockItemFragment = new AddCategoryFragment();
             fragment.show(fm, "dialog");
         }else if(view == cancelAddStockButton){

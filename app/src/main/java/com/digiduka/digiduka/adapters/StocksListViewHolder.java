@@ -12,6 +12,13 @@ import android.widget.TextView;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Stock;
+import com.digiduka.digiduka.models.User;
+import com.digiduka.digiduka.utils.Constants;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +39,7 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
     private RecyclerView stockProductsRecyclerView;
     private Button revealStockProducts;
     private ConstraintLayout productsHolder;
+    private TextView assistantName;
     public StocksListViewHolder(View itemView) {
         super(itemView);
         mView = itemView;
@@ -40,6 +48,7 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
         totalCost = itemView.findViewById(R.id.totalCost);
         stockProductsRecyclerView = itemView.findViewById(R.id.stockProductsRecyclerView);
         productsHolder = itemView.findViewById(R.id.productsHolder);
+        assistantName = itemView.findViewById(R.id.assistantName);
         productsHolder.setVisibility(View.GONE);
         revealStockProducts = itemView.findViewById(R.id.revealStockProducts);
         revealStockProducts.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +70,29 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
         stockId.setText(stock.getStockId());
         stockDate.setText(getDisplayDate(stock.getDateCreated()));
         totalCost.setText("KSH. "+stock.getTotalCost());
+        try{
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(stock.getAssistantId()).child(Constants.USER_INFO_KEY);
+            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    try{
+                        String assistant = dataSnapshot.getValue(User.class).getName();
+                        assistantName.setText(assistant);
+                    }catch (NullPointerException e){
+                        assistantName.setText("No name");
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }catch (NullPointerException e){
+            assistantName.setText("No name");
+        }
+
         ArrayList<Product> products = new ArrayList<>();
         products.addAll(stock.getProducts());
         StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products);

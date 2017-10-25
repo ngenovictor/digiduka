@@ -43,12 +43,29 @@
         app:layout_constraintLeft_toRightOf="@+id/stockIdTitle"
         app:layout_constraintRight_toRightOf="parent"/>
     <TextView
+        android:id="@+id/assistantNameTitle"
+        android:text="Assistant Name: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/stockIcon"
+        app:layout_constraintTop_toBottomOf="@+id/stockId"/>
+    <TextView
+        android:id="@+id/assistantName"
+        android:text="Assistant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/assistantNameTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/assistantNameTitle"
+        app:layout_constraintLeft_toRightOf="@+id/assistantNameTitle"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
         android:id="@+id/totalCostTitle"
         android:text="Total Cost:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@+id/stockIcon"
-        app:layout_constraintTop_toBottomOf="@+id/stockId"/>
+        app:layout_constraintTop_toBottomOf="@+id/assistantNameTitle"/>
+
     <TextView
         android:id="@+id/totalCost"
         android:text="KSH. 1000"

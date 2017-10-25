@@ -3,26 +3,31 @@ package com.digiduka.digiduka.models;
 import java.util.ArrayList;
 
 /**
+ * Created by mosoti on 10/11/17.
+ */
+
+
+/**
  * Created by victor on 10/11/17.
  */
 
-public class Stock {
-    private String stockId;
+public class Transaction {
+    private String transactionId;
     private String dateCreated;
     private ArrayList<Product> products;
     private int totalCost;
     private String assistantId;
 
-    public Stock(){}
+    public Transaction(){}
 
-    public Stock(String dateCreated, String userId) {
+    public Transaction(String dateCreated, String userId) {
         this.dateCreated = dateCreated;
         totalCost = 0;
         products = new ArrayList<>();
         this.assistantId = userId;
     }
-    public String getStockId() {
-        return stockId;
+    public String getTransactionId() {
+        return transactionId;
     }
     public String getDateCreated() {
         return dateCreated;
@@ -33,8 +38,8 @@ public class Stock {
     public int getTotalCost() {
         return totalCost;
     }
-    public void setStockId(String stockId) {
-        this.stockId = stockId;
+    public void setTransactionId(String stockId) {
+        this.transactionId = stockId;
     }
 
     public String getAssistantId() {
@@ -87,7 +92,7 @@ public class Stock {
     public void computeTotalCost(){
         int totalCost = 0;
         for (Product product:products){
-            int cost = product.getAmount()*product.getBuyingPrice();
+            int cost = product.getAmount()*product.getSellingPrice();
             totalCost+=cost;
         }
         this.totalCost=totalCost;
@@ -96,7 +101,7 @@ public class Stock {
     @Override
     public String toString() {
         String result = "";
-        result+=stockId+", "+dateCreated+", "+totalCost+", {";
+        result+=transactionId+", "+dateCreated+", "+totalCost+", {";
         for (Product product:products){
             result+=product.getNameOfProduct()+", ";
         }

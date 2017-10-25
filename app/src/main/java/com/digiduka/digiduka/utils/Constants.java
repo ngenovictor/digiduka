@@ -15,5 +15,10 @@ public class Constants {
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     public final static String STOCKS_DB_KEY = "stockItems";
 
+    //sides for the recycling of views
+    public final static String STOCK_SIDE = "stock";
+    public final static String SALES_SIDE = "sale";
+
+
 
 }
