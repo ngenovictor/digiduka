@@ -81,7 +81,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             String size = productSizeEdit.getText().toString().trim();
             Integer buyingPrice = Integer.parseInt(productBuyingPriceEdit.getText().toString().trim());
             Integer sellingPrice = Integer.parseInt(productSellingPriceEdit.getText().toString().trim());
-
+//            if ()
             Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
