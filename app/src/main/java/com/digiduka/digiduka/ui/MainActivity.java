@@ -172,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.intro:
                 Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                 startActivity(intent);
+            case R.id.generateReports:
+                Intent intent1 = new Intent(MainActivity.this, GenerateReportsActivity.class);
+                startActivity(intent1);
             default:
                 return super.onOptionsItemSelected(item);
         }

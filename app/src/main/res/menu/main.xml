@@ -21,4 +21,9 @@
         android:orderInCategory="300"
         app:showAsAction="never"
         />
+    <item android:id="@+id/generateReports"
+        android:title="@string/generateReports"
+        android:orderInCategory="300"
+        app:showAsAction="never"
+        />
 </menu>
