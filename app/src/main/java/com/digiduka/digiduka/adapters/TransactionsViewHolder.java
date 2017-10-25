@@ -1,7 +1,6 @@
 package com.digiduka.digiduka.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,14 +10,7 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
-import com.digiduka.digiduka.models.Stock;
-import com.digiduka.digiduka.models.User;
-import com.digiduka.digiduka.utils.Constants;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.digiduka.digiduka.models.Transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,59 +19,33 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by victor on 10/23/17.
+ * Created by victor on 10/25/17.
  */
 
-public class StocksListViewHolder extends RecyclerView.ViewHolder {
-    private View mView;
-    private Context mContext;
-    private TextView stockId;
+public class TransactionsViewHolder extends RecyclerView.ViewHolder {
     private TextView stockDate;
+    private TextView stockId;
     private TextView totalCost;
-    private RecyclerView stockProductsRecyclerView;
     private Button revealStockProducts;
     private ConstraintLayout productsHolder;
-    private TextView assistantName;
-    public StocksListViewHolder(View itemView) {
+    private RecyclerView stockProductsRecyclerView;
+    private Context mContext;
+    public TransactionsViewHolder(View itemView) {
         super(itemView);
-        mView = itemView;
         mContext = itemView.getContext();
         stockDate = itemView.findViewById(R.id.stockDate);
+        stockId = itemView.findViewById(R.id.stockId);
         totalCost = itemView.findViewById(R.id.totalCost);
-        stockProductsRecyclerView = itemView.findViewById(R.id.stockProductsRecyclerView);
-        productsHolder = itemView.findViewById(R.id.productsHolder);
-        assistantName = itemView.findViewById(R.id.assistantName);
-        productsHolder.setVisibility(View.GONE);
         revealStockProducts = itemView.findViewById(R.id.revealStockProducts);
+        productsHolder = itemView.findViewById(R.id.productsHolder);
+        stockProductsRecyclerView = itemView.findViewById(R.id.stockProductsRecyclerView);
 
     }
-    public void bindStock(Stock stock){
-        stockId = mView.findViewById(R.id.stockId);
-        stockId.setText(stock.getStockId());
-        stockDate.setText(getDisplayDate(stock.getDateCreated()));
-        totalCost.setText("KSH. "+stock.getTotalCost());
-        try{
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(stock.getAssistantId()).child(Constants.USER_INFO_KEY);
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    try{
-                        String assistant = dataSnapshot.getValue(User.class).getName();
-                        assistantName.setText(assistant);
-                    }catch (NullPointerException e){
-                        assistantName.setText("No name");
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }catch (NullPointerException e){
-            assistantName.setText("No name");
-        }
+    public void bindTransaction(Transaction transaction){
+        stockDate.setText(getDisplayDate(transaction.getDateCreated()));
+        stockId.setText(transaction.getTransactionId());
+        totalCost.setText("KSH. "+Integer.toString(transaction.getTotalCost()));
+        productsHolder.setVisibility(View.GONE);
         revealStockProducts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,9 +59,8 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
-
         ArrayList<Product> products = new ArrayList<>();
-        products.addAll(stock.getProducts());
+        products.addAll(transaction.getProducts());
         StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products);
         stockProductsRecyclerView.setHasFixedSize(true);
         stockProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));

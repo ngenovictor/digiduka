@@ -19,10 +19,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.ProductListAdapter;
+import com.digiduka.digiduka.adapters.StocksListViewHolder;
+import com.digiduka.digiduka.adapters.TransactionsViewHolder;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
+import com.digiduka.digiduka.models.Stock;
+import com.digiduka.digiduka.models.Transaction;
 import com.digiduka.digiduka.utils.Constants;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,6 +54,7 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
     private static RelativeLayout totalsec;
     private FirebaseAuth mAuth;
     private FloatingActionButton makeNewSale;
+    private RecyclerView transactionItemsRecyclerView;
 
     public SellProductsFragment() {
         // Required empty public constructor
@@ -65,31 +72,22 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
         makeNewSale = view.findViewById(R.id.makeNewSale);
         mAuth = FirebaseAuth.getInstance();
         ProductListAdapter.selectedproducts=selectedproducts1;
-        selectedView = view.findViewById(R.id.selectedView);
-        total=view.findViewById(R.id.textView6);
-        makesale=view.findViewById(R.id.button2);
-        totalsec=view.findViewById(R.id.totalsec);
-        totalsec.setVisibility(View.GONE);
         context=getActivity();
-        showSavedItems();
         makeNewSale.setOnClickListener(this);
-        makesale.setOnClickListener(this);
-        return view;
-    }
-    public static void showSavedItems(){
-        if (selectedproducts1.size()!=0){
-            totalsec.setVisibility(View.VISIBLE);
-            mAdapter = new ProductListAdapter(context,selectedproducts1 );
-            selectedView.setAdapter(mAdapter);
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-            selectedView.setLayoutManager(layoutManager);
-            selectedView.setHasFixedSize(false);
-            int sum=0;
-            for (Product product:selectedproducts1){
-                sum+=product.getSellingPrice();
+        transactionItemsRecyclerView = view.findViewById(R.id.transactionItemsRecyclerView);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference transactionRef = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.TRANSACTIONS_DB_KEY);
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Transaction, TransactionsViewHolder>(Transaction.class, R.layout.transaction_list_viewholder, TransactionsViewHolder.class, transactionRef) {
+            @Override
+            protected void populateViewHolder(TransactionsViewHolder viewHolder, Transaction model, int position) {
+                viewHolder.bindTransaction(model);
             }
-            total.setText("Total: Ksh "+String.valueOf(sum));
-        }
+        };
+        transactionItemsRecyclerView.setHasFixedSize(false);
+        transactionItemsRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        transactionItemsRecyclerView.setAdapter(adapter);
+
+        return view;
     }
     @Override
     public void onClick(View view) {
@@ -103,55 +101,6 @@ public class SellProductsFragment extends Fragment implements View.OnClickListen
             fragment.setArguments(bundle);
             ft.add(R.id.saleProductsFragment, fragment);
             ft.commit();
-        }
-        if(view==makesale){
-            final ArrayList<String> productIds = new ArrayList<>();
-            for (Product product: selectedproducts1){
-                productIds.add(product.getPushId());
-            }
-
-            DatabaseReference productsRef = FirebaseDatabase.getInstance()
-                    .getReference(mAuth.getCurrentUser().getUid())
-                    .child(Constants.PRODUCTS_DB_KEY);
-
-
-            productsRef.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    if (productIds.contains(dataSnapshot.getKey())){
-                        Product thisProduct = dataSnapshot.getValue(Product.class);
-                        int amount = thisProduct.getAmount()-1;
-                        thisProduct.setAmount(amount);
-                        DatabaseReference thisProductRef = dataSnapshot.getRef();
-                        thisProductRef.setValue(thisProduct);
-                    }
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            ProductListAdapter.selectedproducts.clear();
-            selectedproducts1.clear();
-            mAdapter.notifyDataSetChanged();
-            totalsec.setVisibility(View.GONE);
-            showSavedItems();
         }
     }
 }
