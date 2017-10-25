@@ -4,14 +4,11 @@ package com.digiduka.digiduka.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +24,6 @@ import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Stock;
-import com.digiduka.digiduka.utils.Constants;
-
-import com.digiduka.digiduka.adapters.CategoriesRecyclerViewAdapter;
 import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.adapters.FirebaseCategoriesViewHolder;
 import com.digiduka.digiduka.models.Category;

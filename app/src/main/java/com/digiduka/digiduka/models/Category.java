@@ -4,7 +4,6 @@ import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by victor on 10/11/17.

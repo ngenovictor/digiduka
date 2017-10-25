@@ -1,5 +1,7 @@
 package com.digiduka.digiduka.ui;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -40,7 +42,13 @@ public class WelcomeActivity extends AppCompatActivity {
         prefManager = new PreferenceManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
-            finish();
+
+//            FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            UserInfoFragment ifoFragment=new UserInfoFragment();
+//            fragmentTransaction.add(R.id.container,ifoFragment );
+//            fragmentTransaction.commit();
+//            finish();
         }
 
         // Making notification bar transparent

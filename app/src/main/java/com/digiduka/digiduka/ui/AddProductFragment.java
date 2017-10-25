@@ -4,7 +4,6 @@ package com.digiduka.digiduka.ui;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import org.parceler.Parcels;
-import java.util.ArrayList;
 
 /**
 

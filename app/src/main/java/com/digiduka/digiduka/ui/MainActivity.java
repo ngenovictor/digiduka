@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (resultCode == RESULT_OK) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                    userData();
+
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
                 Log.v("number",String.valueOf(auth.getCurrentUser().getPhoneNumber()));
 
@@ -265,16 +265,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    public void userData(){
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        UserInfoFragment ifoFragment=new UserInfoFragment();
-        fragmentTransaction.add(R.id.container,ifoFragment );
-        fragmentTransaction.commit();
+
 
         //loggedIn();
 
-    }
+
 
 
 }
