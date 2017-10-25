@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Stock;
 
-import java.util.ArrayList;
-
 /**
  * A simple {@link Fragment} subclass.
  */

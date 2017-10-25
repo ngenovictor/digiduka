@@ -4,14 +4,11 @@ package com.digiduka.digiduka.ui;
 import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
@@ -21,7 +18,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import org.parceler.Parcels;
-import java.util.ArrayList;
 
 /**
 
@@ -74,7 +70,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.CATEGORY_DB_KEY).child(mCategory.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
 
             DatabaseReference puhRef = reference.push();
             String pushId = puhRef.getKey();

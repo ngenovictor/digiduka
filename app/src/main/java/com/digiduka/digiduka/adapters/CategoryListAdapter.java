@@ -3,6 +3,7 @@ package com.digiduka.digiduka.adapters;
 import android.app.Activity;
 
 
+import android.app.FragmentManager;
 import android.content.Context;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +55,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         mCategorys = categories;
         source = msource;
         mAdapter = adapter;
-
     }
 
     @Override
@@ -123,13 +124,18 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             //the products under each category:
             //set the adapter
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(currentUser.getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child(Constants.PRODUCTS_DB_KEY);
+//
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(currentUser.getUid()).child(Constants.PRODUCTS_DB_KEY);
+            Log.d("log shvdcbs", reference.toString());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     ArrayList<Product> products = new ArrayList<>();
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                        products.add(snapshot.getValue(Product.class));
+                        Product product = snapshot.getValue(Product.class);
+                        if (product.getCategoryId().equals(category.getCategoryId())){
+                            products.add(product);
+                        }
                     }
                     CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter);
                     categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -146,6 +152,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
 
 
+
             addProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -154,10 +161,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     bundle.putParcelable("category", Parcels.wrap(category));
                     fragment.setArguments(bundle);
 
-                    //FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
+                    FragmentManager fragmentManager = ((Activity) mContext).getFragmentManager();
 
                     android.support.v4.app.FragmentManager fm = ((FragmentActivity) mContext).getSupportFragmentManager();
-
                     fragment.show(fm, "dialog");
                 }
             });

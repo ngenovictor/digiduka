@@ -1,6 +1,5 @@
 package com.digiduka.digiduka.models;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +20,8 @@ public class Stock {
         totalCost = 0;
     }
 
+
+
     public void setStockId(String stockId) {
         this.stockId = stockId;
     }
@@ -28,6 +29,8 @@ public class Stock {
     public String getStockId() {
         return stockId;
     }
+
+
 
     public String getDateCreated() {
         return dateCreated;

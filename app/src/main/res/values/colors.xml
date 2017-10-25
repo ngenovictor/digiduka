@@ -8,4 +8,27 @@
     <color name="colorPrimary">#465c8b</color>
     <color name="colorPrimaryDark">#f7ef6a</color>
     <color name="colorAccent">#93c178</color>
+    <color name="colorNav">#5D709A</color>
+    <!-- Screens background color-->
+    <color name="bg_slider_screen1">#948F3F</color>
+    <color name="bg_slider_screen2">#93c178</color>
+    <color name="bg_slider_screen3">#465c8b</color>
+    <!-- dots inactive colors -->
+    <color name="dot_inactive_screen1">#f7ef6a</color>
+    <color name="dot_inactive_screen2">#93c178</color>
+    <color name="dot_inactive_screen3">#465c8b</color>
+    <!-- dots active colors -->
+    <color name="dot_active_screen1">#f7ef6a</color>
+    <color name="dot_active_screen2">#93c178</color>
+    <color name="dot_active_screen3">#465c8b</color>
+    <array name="array_dot_active">
+        <item>@color/dot_active_screen1</item>
+        <item>@color/dot_active_screen2</item>
+        <item>@color/dot_active_screen3</item>
+    </array>
+    <array name="array_dot_inactive">
+        <item>@color/dot_inactive_screen1</item>
+        <item>@color/dot_inactive_screen2</item>
+        <item>@color/dot_inactive_screen3</item>
+    </array>
 </resources>

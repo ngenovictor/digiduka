@@ -14,9 +14,10 @@ public class Product {
     private String pushId;
     private int amount;
 
-    public Product(){}
+    public Product() {
+    }
 
-    public Product(String nameOfProduct, String description, String categoryId, String size, int buyingPrice, int sellingPrice ) {
+    public Product(String nameOfProduct, String description, String categoryId, String size, int buyingPrice, int sellingPrice) {
         this.nameOfProduct = nameOfProduct;
         this.description = description;
         this.categoryId = categoryId;
@@ -64,5 +65,9 @@ public class Product {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

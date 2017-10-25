@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -168,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about:
                 showAbout();
                 break;
+            case R.id.intro:
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -208,22 +212,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (resultCode == RESULT_OK) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                    userData();
+
                 Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
                 Log.v("number",String.valueOf(auth.getCurrentUser().getPhoneNumber()));
 
             } else {
-
                 finish();
             }
         }
     }
-
     public void showAbout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("About digiduka");
         builder.setMessage("Built by a great team.");
-
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
@@ -232,13 +233,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         // positive button logic
                     }
                 });
-
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
     }
-
-
     public void getCategories(){
         mAuth = FirebaseAuth.getInstance();
 
@@ -258,24 +256,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
-
             }
         });
     }
 
-    public void userData(){
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        UserInfoFragment ifoFragment=new UserInfoFragment();
-        fragmentTransaction.add(R.id.container,ifoFragment );
-        fragmentTransaction.commit();
+
 
         //loggedIn();
 
-    }
+
+
 
 }

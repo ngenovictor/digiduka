@@ -1,16 +1,14 @@
 package com.digiduka.digiduka.ui;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,16 +22,15 @@ import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.CategoryListAdapter;
 import com.digiduka.digiduka.adapters.StockItemsAdapter;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Stock;
-import com.digiduka.digiduka.utils.Constants;
-
-import com.digiduka.digiduka.adapters.CategoriesRecyclerViewAdapter;
 import com.digiduka.digiduka.databaseHandlers.TableControllerCategory;
 import com.digiduka.digiduka.adapters.FirebaseCategoriesViewHolder;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.utils.Constants;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 
 import com.google.firebase.database.DataSnapshot;
@@ -63,6 +60,9 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     private StockItemsAdapter mAdapter2;
     private static LinearLayout totalsSection;
     private static TextView priceTotal;
+    private FirebaseUser currentUser;
+    private View thisView;
+    private Context mContext;
 
     /**
      * initializes the SQL Database TableController
@@ -96,14 +96,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setOnClickListener(this);
 
-        //setting the adapter for the recycler view
-//        mAdapter = new CategoryListAdapter(getContext(), categories);
-//        categoriesRecyclerView.setAdapter(mAdapter);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        categoriesRecyclerView.setLayoutManager(layoutManager);
-//        categoriesRecyclerView.setHasFixedSize(false);
 
-        //
         mAdapter2 = new StockItemsAdapter(getContext());
         categoriesRecyclerView.setAdapter(mAdapter2);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -119,10 +112,11 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
         priceTotal = view.findViewById(R.id.priceTotal);
 
         totalsSection.setVisibility(View.GONE);
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mContext = view.getContext();
 
 
-
-
+        thisView = view;
         return view;
     }
 
@@ -138,14 +132,73 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             //how do we close the fragment??
             Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
+            stock = null;
+            thisView.setVisibility(View.GONE);
+
         }else if(view ==doneButton){
             if (stock==null){
                 Toast.makeText(getContext(), "You haven't added any new items", Toast.LENGTH_LONG).show();
             }else{
+                DatabaseReference reference = FirebaseDatabase.getInstance()
+                        .getReference(currentUser.getUid())
+                        .child(Constants.STOCKS_DB_KEY);
+
+
+
+                DatabaseReference pushRef = reference.push();
+                String pushId = pushRef.getKey();
+                stock.setStockId(pushId);
+                pushRef.setValue(stock);
+
+                final ArrayList<String> productIds = new ArrayList<>();
+                for (Product product: stock.getProducts()){
+                    productIds.add(product.getPushId());
+                }
+
+                DatabaseReference productsRef = FirebaseDatabase.getInstance()
+                        .getReference(currentUser.getUid())
+                        .child(Constants.PRODUCTS_DB_KEY);
+
+
+                productsRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        if (productIds.contains(dataSnapshot.getKey())){
+                            Product thisProduct = dataSnapshot.getValue(Product.class);
+                            int amount = thisProduct.getAmount()+1;
+                            thisProduct.setAmount(amount);
+                            DatabaseReference thisProductRef = dataSnapshot.getRef();
+                            thisProductRef.setValue(thisProduct);
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                stock = null;
                 Toast.makeText(getContext(), "You have added new items", Toast.LENGTH_LONG).show();
+                thisView.setVisibility(View.GONE);
             }
         }
     }
+
     public static void refreshUi(){
         if (stock!=null && stock.getProducts().size()>0){
             totalsSection.setVisibility(View.VISIBLE);
