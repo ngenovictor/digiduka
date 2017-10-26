@@ -115,6 +115,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                         bundle.putParcelable("category", Parcels.wrap(category));
                         fragment.setArguments(bundle);
                         fragment.show(fm, "product");
+
                     }if (source.equals("stock")) {
 
                         if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
