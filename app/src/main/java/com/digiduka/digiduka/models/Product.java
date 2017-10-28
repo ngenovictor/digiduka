@@ -54,6 +54,9 @@ public class Product {
     public String getPushId() {
         return pushId;
     }
+    public void setProfitAmount(Product product1,Product product2){
+        amount= product1.getAmount()+product2.getAmount();
+    }
 
     public void setPushId(String pushId) {
         this.pushId = pushId;

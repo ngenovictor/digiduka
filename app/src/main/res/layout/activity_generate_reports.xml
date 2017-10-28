@@ -7,4 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.digiduka.digiduka.ui.GenerateReportsActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/transactionsRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
 </android.support.constraint.ConstraintLayout>
