@@ -61,6 +61,7 @@ public class DisplayCategoriesFragment extends DialogFragment {
         if (mSource.equals(Constants.STOCK_SIDE)){
             CategoryListAdapter adapter = new CategoryListAdapter(getContext(),mCategories,Constants.STOCK_SIDE, mAdapter);
             categoryDisplay.setAdapter(adapter);
+
         }else if(mSource.equals(Constants.SALES_SIDE)){
             CategoryListAdapter adapter = new CategoryListAdapter(getContext(),mCategories,Constants.SALES_SIDE, salesAdapter);
             categoryDisplay.setAdapter(adapter);
@@ -72,6 +73,9 @@ public class DisplayCategoriesFragment extends DialogFragment {
         categoryDisplay.setHasFixedSize(false);
 
         addCategoryHere = view.findViewById(R.id.addCategoryHere);
+        if(mSource.equals(Constants.SALES_SIDE)){
+            addCategoryHere.setVisibility(View.GONE);
+        }
         closePickProducts = view.findViewById(R.id.closePickProducts);
         closePickProducts.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,6 +29,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
 
 
+
     public ProductListAdapter(Context context, ArrayList<Product> products) {
         mContext = context;
         mProducts = products;
@@ -76,9 +77,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         public void bindProduct(final Product product) {
             name.setText(product.getNameOfProduct());
-            quantity.setVisibility(View.INVISIBLE);
+            quantity.setText(String.valueOf(product.getAmount()) );
             description.setText(product.getDescription());
-            amount.setText(String.valueOf(product.getSellingPrice()));
+            amount.setText(String.valueOf((product.getSellingPrice()-product.getBuyingPrice())*product.getAmount()));
+
+
             amount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

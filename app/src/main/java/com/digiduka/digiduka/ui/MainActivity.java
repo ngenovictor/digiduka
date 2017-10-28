@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.MainActivityFragmentsAdapter;
 import com.digiduka.digiduka.models.Category;
+import com.digiduka.digiduka.models.User;
 import com.digiduka.digiduka.utils.Constants;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,14 +51,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final int RC_SIGN_IN = 123;
     private ArrayList<Category> categories = new ArrayList<>();
     private FirebaseUser loggedInUser;
-
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
     private TextView userName;
     private TextView email;
     private ImageView avatar;
     private NavigationView navigationView;
-    private View  headerView;
+    private View headerView;
+
 
 
     @Override
@@ -103,22 +104,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView=findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         headerView = navigationView.getHeaderView(0);
         userName = headerView.findViewById(R.id.username);
         email = headerView.findViewById(R.id.useremail);
-        avatar=headerView.findViewById(R.id.imageView);
-        if (mAuth.getCurrentUser().getDisplayName()!=null){
+        avatar = headerView.findViewById(R.id.imageView);
+        if (mAuth.getCurrentUser().getDisplayName() != null) {
             userName.setText(mAuth.getCurrentUser().getDisplayName());
             email.setText(mAuth.getCurrentUser().getEmail());
             Picasso.with(getApplicationContext()).load(mAuth.getCurrentUser().getPhotoUrl()).into(avatar);
 
-        }else{
+        } else {
             userName.setText("");
         }
-
-
-
 
 
         mainActivityViewPager = findViewById(R.id.mainActivityViewPager);
@@ -178,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             default:
                 return super.onOptionsItemSelected(item);
         }
-            return true;
+        return true;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -216,15 +214,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
 
-                Toast.makeText( getApplicationContext(), "You are Signed in as: "+ auth.getCurrentUser().getDisplayName(),Toast.LENGTH_LONG).show();
-                Log.v("number",String.valueOf(auth.getCurrentUser().getPhoneNumber()));
+                Toast.makeText(getApplicationContext(), "You are Signed in as: " + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
+                Log.v("number", String.valueOf(auth.getCurrentUser().getPhoneNumber()));
 
             } else {
                 finish();
             }
         }
     }
-    public void showAbout(){
+
+    public void showAbout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("About digiduka");
         builder.setMessage("Built by a great team.");
@@ -240,7 +239,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // display dialog
         dialog.show();
     }
-    public void getCategories(){
+
+    public void getCategories() {
         mAuth = FirebaseAuth.getInstance();
 
         loggedInUser = mAuth.getCurrentUser();
@@ -259,17 +259,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 mainActivityViewPager.setAdapter(mainActivityFragmentsAdapter);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
     }
-
-
-
-        //loggedIn();
-
-
-
-
+    //loggedIn();
 }
