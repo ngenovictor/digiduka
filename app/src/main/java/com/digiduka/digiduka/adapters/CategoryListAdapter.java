@@ -151,7 +151,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
 
 
-
             addProductButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
