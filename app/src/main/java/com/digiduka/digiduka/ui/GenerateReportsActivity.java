@@ -18,7 +18,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GenerateReportsActivity extends AppCompatActivity {
     private DatabaseReference refrence;
@@ -27,6 +32,9 @@ public class GenerateReportsActivity extends AppCompatActivity {
     private ArrayList<String> productname=new ArrayList<>();
     private RecyclerView transactionsRecycler;
     private ProductListAdapter mAdapter;
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +53,31 @@ public class GenerateReportsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data:dataSnapshot.getChildren()){
-                    for (Product product:data.getValue(Transaction.class).getProducts()){
-                        if (productname.contains(product.getNameOfProduct())){
-                            for (Product product1:products){
-                                if (product1.getPushId().equals(product.getPushId())){
-                                    product1.setProfitAmount(product,product1);
-                                }
-                            }
-                        }else{
-                            products.add(product);
-                            productname.add(product.getNameOfProduct());
-                        }
+                    String datein=data.getValue(Transaction.class).getDateCreated();
+                    Date date = null;
+                    try {
+                         date=dateFormatin.parse(datein);
+                    } catch (ParseException e) { 
+                       
+                        e.printStackTrace();
+                    }
+                   
+                    if(dateFormat.format(new Date()).equals(dateFormat.format(date))) {
+                        for (Product product : data.getValue(Transaction.class).getProducts()) {
 
-                        Log.v("product",product.toString());
+                            if (productname.contains(product.getNameOfProduct())) {
+                                for (Product product1 : products) {
+                                    if (product1.getPushId().equals(product.getPushId())) {
+                                        product1.setProfitAmount(product, product1);
+                                    }
+                                }
+                            } else {
+                                products.add(product);
+                                productname.add(product.getNameOfProduct());
+                            }
+
+                            Log.v("product", product.toString());
+                        }
                     }
                 }
                 Log.v("size",String.valueOf( products.size()));
