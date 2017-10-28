@@ -84,7 +84,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
                 public void onClick(View view) {
 
                     selectedproducts.add(product);
-                    SellProductsFragment.showSavedItems();
+//                    SellProductsFragment.showSavedItems();
                     Log.v("selected",String.valueOf(selectedproducts.size()));
                 }
             });

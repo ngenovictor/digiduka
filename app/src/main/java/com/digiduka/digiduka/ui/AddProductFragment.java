@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Category;
 import com.digiduka.digiduka.models.Product;
@@ -76,21 +77,42 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             String name = nameOfProductEditText.getText().toString().trim();
             String description = descriptionOfProductEditText.getText().toString().trim();
             String size = productSizeEdit.getText().toString().trim();
-            Integer buyingPrice = Integer.parseInt(productBuyingPriceEdit.getText().toString().trim());
-            Integer sellingPrice = Integer.parseInt(productSellingPriceEdit.getText().toString().trim());
-//            if ()
-            Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
+            boolean isValid = true;
+            if (name.length()<1){
+                nameOfProductEditText.setError("cannot set empty product name");
+                nameOfProductEditText.setFocusable(true);
+                isValid = false;
+            }if (size.length()<1){
+                productSizeEdit.setError("cannot set empty product size");
+                productSizeEdit.setFocusable(true);
+                isValid = false;
+            }if (productBuyingPriceEdit.getText().toString().trim().length()<1){
+                productBuyingPriceEdit.setError("cannot set empty buying price");
+                productBuyingPriceEdit.setFocusable(true);
+                isValid = false;
+            }if (productSellingPriceEdit.getText().toString().trim().length()<1){
+                productSellingPriceEdit.setError("cannot set empty selling price");
+                productSellingPriceEdit.setFocusable(true);
+                isValid = false;
+            }
 
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
+            if (isValid){
+                Integer buyingPrice = Integer.parseInt(productBuyingPriceEdit.getText().toString().trim());
+                Integer sellingPrice = Integer.parseInt(productSellingPriceEdit.getText().toString().trim());
+                Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
 
-            DatabaseReference puhRef = reference.push();
-            String pushId = puhRef.getKey();
-            product.setPushId(pushId);
-            puhRef.setValue(product);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
+
+                DatabaseReference puhRef = reference.push();
+                String pushId = puhRef.getKey();
+                product.setPushId(pushId);
+                puhRef.setValue(product);
 
 
-            dismiss();
+                dismiss();
+            }
+
         }else if(view==closeNewProductButton){
             dismiss();
         }

@@ -48,13 +48,22 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     private ArrayList<Category> mCategorys = new ArrayList<>();
     private String source;
     private StockItemsAdapter mAdapter;
+    private SaleProductsAdapter salesAdapter;
 
-
+    //constructor where source is stock side
     public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource, StockItemsAdapter adapter) {
         mContext = context;
         mCategorys = categories;
         source = msource;
         mAdapter = adapter;
+    }
+
+    //constructor where source is sales side
+    public CategoryListAdapter(Context context, ArrayList<Category> categories, String msource, SaleProductsAdapter adapter) {
+        mContext = context;
+        mCategorys = categories;
+        source = msource;
+        salesAdapter = adapter;
     }
 
     @Override
@@ -92,6 +101,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             dropDownImage = itemView.findViewById(R.id.dropDownImage);
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
             addProductButton = itemView.findViewById(R.id.addProductButton);
+            if (source.equals(Constants.SALES_SIDE)){
+               addProductButton.setVisibility(View.GONE);
+            }
 
 
             categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
@@ -104,30 +116,34 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public void bindCategory(final Category category) {
             gridText.setText(category.getCategoryTitle());
-            gridText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (source.equals("sell")) {
-                        MainActivity activity = (MainActivity) (mContext);
-                        android.app.FragmentManager fm = activity.getFragmentManager();
-                        ProductsFragment fragment = new ProductsFragment();
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("category", Parcels.wrap(category));
-                        fragment.setArguments(bundle);
-                        fragment.show(fm, "product");
 
-                    }if (source.equals("stock")) {
+//            gridText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (source.equals("sell")) {
+//                        MainActivity activity = (MainActivity) (mContext);
+//                        android.app.FragmentManager fm = activity.getFragmentManager();
+//                        ProductsFragment fragment = new ProductsFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putParcelable("category", Parcels.wrap(category));
+//                        fragment.setArguments(bundle);
+//                        fragment.show(fm, "product");
+//
+//                    }if (source.equals("stock")) {
+//
+//                        if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
+//                            categoryProductsHolder.setVisibility(View.GONE);
+//                        } else {
+//                            categoryProductsHolder.setVisibility(View.VISIBLE);
+//                        }
+//
+//                    }
+//
+//                }
+//            });
 
-                        if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
-                            categoryProductsHolder.setVisibility(View.GONE);
-                        } else {
-                            categoryProductsHolder.setVisibility(View.VISIBLE);
-                        }
+            gridText.setOnClickListener(this);
 
-                    }
-
-                }
-            });
 
 
             //the products under each category:
@@ -135,7 +151,6 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 //
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(currentUser.getUid()).child(Constants.PRODUCTS_DB_KEY);
-            Log.d("log shvdcbs", reference.toString());
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -146,10 +161,15 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                             products.add(product);
                         }
                     }
-                    CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter);
                     categoryProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                     categoryProductsRecyclerView.setHasFixedSize(false);
-                    categoryProductsRecyclerView.setAdapter(adapter);
+                    if (source.equals(Constants.STOCK_SIDE)){
+                        CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, mAdapter, source);
+                        categoryProductsRecyclerView.setAdapter(adapter);
+                    }else if(source.equals(Constants.SALES_SIDE)){
+                        CategoriesProductsListAdapter adapter = new CategoriesProductsListAdapter(category, mContext, products, salesAdapter, source);
+                        categoryProductsRecyclerView.setAdapter(adapter);
+                    }
 
                 }
 
@@ -181,13 +201,11 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         @Override
         public void onClick(View view) {
-            if (source.equals("stock")) {
-                if (view == dropDownImage || view == gridViewHolder) {
-                    if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
-                        categoryProductsHolder.setVisibility(View.GONE);
-                    } else {
-                        categoryProductsHolder.setVisibility(View.VISIBLE);
-                    }
+            if (view == dropDownImage || view == gridViewHolder || view == gridText) {
+                if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
+                    categoryProductsHolder.setVisibility(View.GONE);
+                } else {
+                    categoryProductsHolder.setVisibility(View.VISIBLE);
                 }
             }
         }

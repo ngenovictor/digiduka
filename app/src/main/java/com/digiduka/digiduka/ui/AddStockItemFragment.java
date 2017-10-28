@@ -123,9 +123,10 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == addCategoryButton) {
+            //pick products here by opening a list of all categories
             Bundle bundle = new Bundle();
             FragmentManager fm = getFragmentManager();
-            DisplayCategoriesFragment fragment = DisplayCategoriesFragment.newInstance(categories, mAdapter2);
+            DisplayCategoriesFragment fragment = DisplayCategoriesFragment.newInstance(categories, mAdapter2, Constants.STOCK_SIDE);
             AddCategoryFragment addStockItemFragment = new AddCategoryFragment();
             fragment.show(fm, "dialog");
         }else if(view == cancelAddStockButton){
@@ -158,33 +159,20 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
                 DatabaseReference productsRef = FirebaseDatabase.getInstance()
                         .getReference(currentUser.getUid())
                         .child(Constants.PRODUCTS_DB_KEY);
-
-
-                productsRef.addChildEventListener(new ChildEventListener() {
+                productsRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        if (productIds.contains(dataSnapshot.getKey())){
-                            Product thisProduct = dataSnapshot.getValue(Product.class);
-                            int amount = thisProduct.getAmount()+1;
-                            thisProduct.setAmount(amount);
-                            DatabaseReference thisProductRef = dataSnapshot.getRef();
-                            thisProductRef.setValue(thisProduct);
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for(DataSnapshot snapshot:dataSnapshot.getChildren()){
+                            Product thisProduct = snapshot.getValue(Product.class);
+                            if (stock.containsProduct(thisProduct)){
+                                Product transactionProduct = stock.getSimilarProduct(thisProduct);
+                                int amount = thisProduct.getAmount()+transactionProduct.getAmount();
+                                thisProduct.setAmount(amount);
+                                DatabaseReference thisProductRef = snapshot.getRef();
+                                thisProductRef.setValue(thisProduct);
+                            }
                         }
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                        stock = null;
                     }
 
                     @Override
@@ -192,7 +180,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
 
                     }
                 });
-                stock = null;
+
                 Toast.makeText(getContext(), "You have added new items", Toast.LENGTH_LONG).show();
                 thisView.setVisibility(View.GONE);
             }
@@ -207,5 +195,4 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             totalsSection.setVisibility(View.GONE);
         }
     }
-
 }
