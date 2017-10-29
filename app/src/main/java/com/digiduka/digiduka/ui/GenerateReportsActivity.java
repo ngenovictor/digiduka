@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.adapters.ProductListAdapter;
@@ -32,8 +33,10 @@ public class GenerateReportsActivity extends AppCompatActivity {
     private ArrayList<String> productname=new ArrayList<>();
     private RecyclerView transactionsRecycler;
     private ProductListAdapter mAdapter;
-    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private TextView profitTotal;
+    private TextView date;
 
 
     @Override
@@ -41,8 +44,11 @@ public class GenerateReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_reports);
         transactionsRecycler=findViewById(R.id.transactionsRecycler);
+        profitTotal=findViewById(R.id.daysTransactionsTotal);
+        date=findViewById(R.id.profitDate);
         mAuth = FirebaseAuth.getInstance();
         getTransactions();
+
 
 
 
@@ -80,12 +86,15 @@ public class GenerateReportsActivity extends AppCompatActivity {
                         }
                     }
                 }
+                date.setText("Profit for  " +dateFormat.format(new Date()));
                 Log.v("size",String.valueOf( products.size()));
                 mAdapter = new ProductListAdapter(getApplicationContext(), products);
                 transactionsRecycler.setAdapter(mAdapter);
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 transactionsRecycler.setLayoutManager(layoutManager);
                 transactionsRecycler.setHasFixedSize(false);
+
+                gettotalProfit(products);
 
 
             }
@@ -95,6 +104,14 @@ public class GenerateReportsActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+    public void gettotalProfit(ArrayList<Product> products){
+        int total=0;
+        for (Product product:products){
+           total+= ((product.getSellingPrice()-product.getBuyingPrice())*product.getAmount()) ;
+        }
+        profitTotal.setText("Total profit   Ksh"+String.valueOf(total));
 
     }
 }

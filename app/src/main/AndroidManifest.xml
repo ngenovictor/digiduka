@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.GenerateReportsActivity">
+            android:name=".ui.GenerateReportsActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         </activity>
     </application>
