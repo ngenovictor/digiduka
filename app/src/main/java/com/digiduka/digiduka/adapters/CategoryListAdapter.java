@@ -101,6 +101,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             dropDownImage = itemView.findViewById(R.id.dropDownImage);
             gridViewHolder = itemView.findViewById(R.id.gridViewHolder);
             addProductButton = itemView.findViewById(R.id.addProductButton);
+            if (source.equals(Constants.SALES_SIDE)){
+               addProductButton.setVisibility(View.GONE);
+            }
 
 
             categoryProductsRecyclerView = itemView.findViewById(R.id.categoryProductsRecyclerView);
@@ -113,7 +116,34 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public void bindCategory(final Category category) {
             gridText.setText(category.getCategoryTitle());
+
+//            gridText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (source.equals("sell")) {
+//                        MainActivity activity = (MainActivity) (mContext);
+//                        android.app.FragmentManager fm = activity.getFragmentManager();
+//                        ProductsFragment fragment = new ProductsFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putParcelable("category", Parcels.wrap(category));
+//                        fragment.setArguments(bundle);
+//                        fragment.show(fm, "product");
+//
+//                    }if (source.equals("stock")) {
+//
+//                        if (categoryProductsHolder.getVisibility() == View.VISIBLE) {
+//                            categoryProductsHolder.setVisibility(View.GONE);
+//                        } else {
+//                            categoryProductsHolder.setVisibility(View.VISIBLE);
+//                        }
+//
+//                    }
+//
+//                }
+//            });
+
             gridText.setOnClickListener(this);
+
 
 
             //the products under each category:
