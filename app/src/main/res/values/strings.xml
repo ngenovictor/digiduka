@@ -11,6 +11,7 @@
     <string name="settings">settings</string>
     <string name="about">about</string>
     <string name="sign_out">sign out</string>
+    <string name="generateReports">generate reports</string>
 
     <!--creating new product strings-->
     <string name="product_name_hint">Enter name of product</string>

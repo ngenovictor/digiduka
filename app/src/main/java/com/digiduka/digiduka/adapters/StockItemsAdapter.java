@@ -36,7 +36,6 @@ public class StockItemsAdapter extends RecyclerView.Adapter<StockItemsAdapter.St
 
     @Override
     public void onBindViewHolder(StockItemsViewHolder holder, int position) {
-
         holder.bindProduct(AddStockItemFragment.stock.getProducts().get(position));
     }
 

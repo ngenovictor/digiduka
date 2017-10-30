@@ -37,6 +37,7 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
     private Category mCategory;
     private View mView;
     private TextView newProductPageTitle;
+    private Button closeNewProductButton;
 
     public AddProductFragment() {
         // Required empty public constructor
@@ -52,6 +53,8 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
         productSizeEdit = mView.findViewById(R.id.productSizeEdit);
         productBuyingPriceEdit = mView.findViewById(R.id.productBuyingPriceEdit);
         productSellingPriceEdit = mView.findViewById(R.id.productSellingPriceEdit);
+        closeNewProductButton = mView.findViewById(R.id.closeNewProductButton);
+        closeNewProductButton.setOnClickListener(this);
 
 
         Bundle bundle = getArguments();
@@ -74,20 +77,43 @@ public class AddProductFragment extends DialogFragment implements View.OnClickLi
             String name = nameOfProductEditText.getText().toString().trim();
             String description = descriptionOfProductEditText.getText().toString().trim();
             String size = productSizeEdit.getText().toString().trim();
-            Integer buyingPrice = Integer.parseInt(productBuyingPriceEdit.getText().toString().trim());
-            Integer sellingPrice = Integer.parseInt(productSellingPriceEdit.getText().toString().trim());
+            boolean isValid = true;
+            if (name.length()<1){
+                nameOfProductEditText.setError("cannot set empty product name");
+                nameOfProductEditText.setFocusable(true);
+                isValid = false;
+            }if (size.length()<1){
+                productSizeEdit.setError("cannot set empty product size");
+                productSizeEdit.setFocusable(true);
+                isValid = false;
+            }if (productBuyingPriceEdit.getText().toString().trim().length()<1){
+                productBuyingPriceEdit.setError("cannot set empty buying price");
+                productBuyingPriceEdit.setFocusable(true);
+                isValid = false;
+            }if (productSellingPriceEdit.getText().toString().trim().length()<1){
+                productSellingPriceEdit.setError("cannot set empty selling price");
+                productSellingPriceEdit.setFocusable(true);
+                isValid = false;
+            }
 
-            Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
+            if (isValid){
+                Integer buyingPrice = Integer.parseInt(productBuyingPriceEdit.getText().toString().trim());
+                Integer sellingPrice = Integer.parseInt(productSellingPriceEdit.getText().toString().trim());
+                Product product = new Product(name, description, mCategory.getCategoryId(), size, buyingPrice, sellingPrice);
 
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference(user.getUid()).child(Constants.PRODUCTS_DB_KEY);
 
-            DatabaseReference puhRef = reference.push();
-            String pushId = puhRef.getKey();
-            product.setPushId(pushId);
-            puhRef.setValue(product);
+                DatabaseReference puhRef = reference.push();
+                String pushId = puhRef.getKey();
+                product.setPushId(pushId);
+                puhRef.setValue(product);
 
 
+                dismiss();
+            }
+
+        }else if(view==closeNewProductButton){
             dismiss();
         }
     }

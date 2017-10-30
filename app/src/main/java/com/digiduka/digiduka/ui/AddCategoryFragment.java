@@ -67,45 +67,53 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
         if(view == submitCategory){
             String title = categoryTitle.getText().toString().trim();
             String description = categoryDescription.getText().toString().trim();
-            Category newCategory = new Category(title, description,products);
-            DatabaseReference reference = FirebaseDatabase.getInstance()
-                    .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
-            DatabaseReference puhRef = reference.push();
-            String categoryId = puhRef.getKey();
-            newCategory.setCategoryId(categoryId);
-            newCategory.setImageEncoded(imageEncoded);
-            puhRef.setValue(newCategory);
-
-            /**
-             * this line enables offline mode for firebase
-             * **/
-             reference.keepSynced(true);
-            /**
-             * this line enables offline mode for firebase
-             * **/
-
-
-            /**
-             * send to sql methods here
-             * **/
-             TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
-
-            boolean createSuccessful = tableControllerCategory.create(newCategory);
-
-            if (createSuccessful) {
-                Toast.makeText(getContext(), "Category data saved successfully", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getContext(), "Failed to save category data", Toast.LENGTH_LONG).show();
+            Category newCategory = new Category(title, description);
+            boolean isValid = true;
+            if (title.length()<1){
+                categoryTitle.setError("cannot set empty title");
+                isValid = false;
             }
-            /**
-             * send to sql methods here
-             * **/
+            if (isValid){
+                DatabaseReference reference = FirebaseDatabase.getInstance()
+                        .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
+                DatabaseReference puhRef = reference.push();
+                String categoryId = puhRef.getKey();
+                newCategory.setCategoryId(categoryId);
+                newCategory.setImageEncoded(imageEncoded);
+                puhRef.setValue(newCategory);
 
-            /**
-             * Retrieve object count in Database
-             * **/
-            //countRecords();
-            dismiss();
+                /**
+                 * this line enables offline mode for firebase
+                 * **/
+                reference.keepSynced(true);
+                /**
+                 * this line enables offline mode for firebase
+                 * **/
+
+
+                /**
+                 * send to sql methods here
+                 * **/
+                TableControllerCategory tableControllerCategory = new TableControllerCategory(getContext());
+
+                boolean createSuccessful = tableControllerCategory.create(newCategory);
+
+                if (createSuccessful) {
+                    Toast.makeText(getContext(), "Category data saved successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getContext(), "Failed to save category data", Toast.LENGTH_LONG).show();
+                }
+                /**
+                 * send to sql methods here
+                 * **/
+
+                /**
+                 * Retrieve object count in Database
+                 * **/
+                //countRecords();
+                dismiss();
+            }
+
         }
 
         if (view == cameraBtn) {
@@ -139,13 +147,13 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
         /**
          * someone fix this reference to store to a specific category
          * **/
-        DatabaseReference ref = FirebaseDatabase.getInstance()
-                .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
+//        DatabaseReference ref = FirebaseDatabase.getInstance()
+//                .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY);
         /**
          * someone fix this reference to store to a specific category
          * **/
         //fixed. Will now save under category above if not null hopefully.
-        ref.setValue(imageEncoded);
+//        ref.setValue(imageEncoded);
     }
 
 }

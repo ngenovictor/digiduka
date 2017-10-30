@@ -53,15 +53,19 @@ public class ProductsFragment extends DialogFragment {
 
         mAuth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance()
-                .getReference(mAuth.getCurrentUser().getUid()).child(Constants.CATEGORY_DB_KEY).child(category.getCategoryId()).child("products");
+                .getReference(mAuth.getCurrentUser().getUid()).child("products");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.v("data",dataSnapshot.toString());
                 for (DataSnapshot data:dataSnapshot.getChildren()){
-                    products.add(data.getValue(Product.class));
+                    Log.v("productbefore",data.toString());
+                    if(data.getValue(Product.class).getCategoryId().equals(category.getCategoryId())){
+                        Log.v("product",data.toString());
+                        products.add(data.getValue(Product.class));
+                    }
+
                 }
-                Log.v("size",String.valueOf(products.size()));
+
             }
 
             @Override

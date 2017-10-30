@@ -1,64 +1,28 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.digiduka.digiduka.ui.SellProductsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
-
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/saleProductsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/selectedView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-        </android.support.v7.widget.RecyclerView>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:id="@+id/totalsec"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/selectedView"
-            android:layout_marginTop="25dp">
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="12dp"
-                android:padding="12dp"
-                android:text="Total sh500"
-                android:textSize="18sp" />
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView6"
-                android:text="checkout" />
-        </RelativeLayout>
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/viewcategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="31dp"
-            android:layout_marginEnd="42dp"
-            android:layout_marginRight="42dp"
-            android:src="@drawable/ic_add_black_24dp" />
-
-    </RelativeLayout>
-
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:elevation="20dp">
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/transactionItemsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/makeNewSale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="#f4511e"
+        android:src="@drawable/ic_add_black_24dp" />
+</android.support.constraint.ConstraintLayout>

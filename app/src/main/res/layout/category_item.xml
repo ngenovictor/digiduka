@@ -4,7 +4,9 @@
     android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+    android:paddingBottom="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/gridViewHolder"
@@ -37,22 +39,60 @@
             android:id="@+id/categoryProductsHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/productNameTitle"
+                android:text="Product"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintBottom_toTopOf="@+id/categoryProductsScroll"/>
+            <TextView
+                android:id="@+id/productSizeTitle"
+                android:text="Size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/productNameTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/productNameTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"/>
+            <TextView
+                android:id="@+id/productPriceTitle"
+                android:text="Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/productNameTitle"
+                app:layout_constraintBottom_toBottomOf="@+id/productNameTitle"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.6"/>
 
             <ScrollView
                 android:id="@+id/categoryProductsScroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/productPriceTitle">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/categoryProductsRecyclerView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
             </ScrollView>
             <Button
                 android:id="@+id/addProductButton"
                 android:text="New Product"
+                android:textColor="#fff"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/backgroundButtons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/categoryProductsScroll"
