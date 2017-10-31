@@ -33,7 +33,7 @@ public class GenerateReportsActivity extends AppCompatActivity {
     private RecyclerView transactionsRecycler;
     private ProductListAdapter mAdapter;
     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 
     @Override
