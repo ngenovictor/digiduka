@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
 import com.digiduka.digiduka.models.Transaction;
+import com.digiduka.digiduka.utils.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,7 +62,7 @@ public class TransactionsViewHolder extends RecyclerView.ViewHolder {
         });
         ArrayList<Product> products = new ArrayList<>();
         products.addAll(transaction.getProducts());
-        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products);
+        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products, Constants.SALES_SIDE);
         stockProductsRecyclerView.setHasFixedSize(true);
         stockProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         stockProductsRecyclerView.setAdapter(adapter);

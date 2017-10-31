@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.models.Product;
+import com.digiduka.digiduka.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -19,9 +20,11 @@ import java.util.ArrayList;
 public class StockProductsListAdapter extends RecyclerView.Adapter<StockProductsListAdapter.StockProductsListViewHolder> {
     private Context mContext;
     private ArrayList<Product> mProducts;
-    public StockProductsListAdapter(Context context,ArrayList<Product> products){
+    private String mSource;
+    public StockProductsListAdapter(Context context,ArrayList<Product> products, String source){
         mContext = context;
         mProducts = products;
+        mSource = source;
     }
     @Override
     public StockProductsListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -54,7 +57,14 @@ public class StockProductsListAdapter extends RecyclerView.Adapter<StockProducts
         }
         public void bindProduct(Product product){
             productName.setText(product.getNameOfProduct());
-            buyingPrice.setText("KSH. "+Integer.toString(product.getBuyingPrice()));
+            //we are recycling this so we need to set to
+            //display:  1. buying price if being used on the stock side
+            //          2. selling price if adapter being used in the sales side
+            if (mSource.equals(Constants.SALES_SIDE)){
+                buyingPrice.setText("KSH. "+Integer.toString(product.getSellingPrice()));
+            }else if(mSource.equals(Constants.STOCK_SIDE)){
+                buyingPrice.setText("KSH. "+Integer.toString(product.getBuyingPrice()));
+            }
             productAmount.setText(Integer.toString(product.getAmount()));
         }
     }
