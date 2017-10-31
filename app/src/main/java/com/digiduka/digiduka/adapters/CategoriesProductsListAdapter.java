@@ -123,7 +123,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                         try{
                             AddStockItemFragment.stock.addProducts(product);
                         }catch (NullPointerException e){
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                             String date = dateFormat.format(new Date());
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             AddStockItemFragment.stock = new Stock(date, user.getUid());
@@ -136,7 +136,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                         try{
                             AddSaleItemFragment.transaction.addProducts(product);
                         }catch (NullPointerException e){
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                             String date = dateFormat.format(new Date());
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             AddSaleItemFragment.transaction = new Transaction(date, user.getUid());

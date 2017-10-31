@@ -26,7 +26,7 @@ public class Category {
     public Category(String categoryTitle, String categoryDescription) {
         this.categoryTitle = categoryTitle;
         this.categoryDescription = categoryDescription;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         dateCreated = dateFormat.format(new Date());
     }
 

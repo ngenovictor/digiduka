@@ -102,7 +102,7 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
         stockProductsRecyclerView.setAdapter(adapter);
     }
     public String getDisplayDate(String dateCreated){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         try{
             Date date = dateFormat.parse(dateCreated);
             Calendar calendar = Calendar.getInstance();

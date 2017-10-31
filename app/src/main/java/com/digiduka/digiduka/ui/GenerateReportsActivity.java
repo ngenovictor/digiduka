@@ -33,10 +33,8 @@ public class GenerateReportsActivity extends AppCompatActivity {
     private ArrayList<String> productname=new ArrayList<>();
     private RecyclerView transactionsRecycler;
     private ProductListAdapter mAdapter;
-    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-    private TextView profitTotal;
-    private TextView date;
+    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 
     @Override
@@ -44,8 +42,8 @@ public class GenerateReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_reports);
         transactionsRecycler=findViewById(R.id.transactionsRecycler);
-        profitTotal=findViewById(R.id.daysTransactionsTotal);
-        date=findViewById(R.id.profitDate);
+//        profitTotal=findViewById(R.id.daysTransactionsTotal);
+//        date=findViewById(R.id.profitDate);
         mAuth = FirebaseAuth.getInstance();
         getTransactions();
 
@@ -86,7 +84,7 @@ public class GenerateReportsActivity extends AppCompatActivity {
                         }
                     }
                 }
-                date.setText("Profit for  " +dateFormat.format(new Date()));
+//                date.setText("Profit for  " +dateFormat.format(new Date()));
                 Log.v("size",String.valueOf( products.size()));
                 mAdapter = new ProductListAdapter(getApplicationContext(), products);
                 transactionsRecycler.setAdapter(mAdapter);
@@ -111,7 +109,7 @@ public class GenerateReportsActivity extends AppCompatActivity {
         for (Product product:products){
            total+= ((product.getSellingPrice()-product.getBuyingPrice())*product.getAmount()) ;
         }
-        profitTotal.setText("Total profit   Ksh"+String.valueOf(total));
+//        profitTotal.setText("Total profit   Ksh"+String.valueOf(total));
 
     }
 }
