@@ -131,7 +131,7 @@ public class AddStockItemFragment extends Fragment implements View.OnClickListen
             fragment.show(fm, "dialog");
         }else if(view == cancelAddStockButton){
             //how do we close the fragment??
-            Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             getFragmentManager().popBackStack();
             stock = null;
             thisView.setVisibility(View.GONE);

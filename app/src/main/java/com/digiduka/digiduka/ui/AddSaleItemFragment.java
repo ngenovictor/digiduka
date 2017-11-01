@@ -146,7 +146,7 @@ public class AddSaleItemFragment extends Fragment implements View.OnClickListene
 
             }
         }else if (view==cancelSaleButton){
-            Toast.makeText(getContext(), "Cancel button pressed", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Cancelled", Toast.LENGTH_LONG).show();
             transaction = null;
             getFragmentManager().popBackStack();
             thisView.setVisibility(View.GONE);
