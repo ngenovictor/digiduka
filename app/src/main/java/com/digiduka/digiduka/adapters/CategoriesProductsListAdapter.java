@@ -107,12 +107,20 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productSize.setText(product.getSize());
             productPrice.setText(Integer.toString(product.getBuyingPrice()));
 
-            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)||
-                    !(AddSaleItemFragment.transaction==null) && AddSaleItemFragment.transaction.containsProduct(product)){
-                pickProductButton.setVisibility(View.GONE);
-                dialProductsHolder.setVisibility(View.VISIBLE);
-            }else{
-                dialProductsHolder.setVisibility(View.GONE);
+            if(mSource.equals(Constants.STOCK_SIDE)){
+                if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)){
+                    pickProductButton.setVisibility(View.GONE);
+                    dialProductsHolder.setVisibility(View.VISIBLE);
+                }else{
+                    dialProductsHolder.setVisibility(View.GONE);
+                }
+            }else if(mSource.equals(Constants.SALES_SIDE)){
+                if (!(AddSaleItemFragment.transaction==null) && AddSaleItemFragment.transaction.containsProduct(product)){
+                    pickProductButton.setVisibility(View.GONE);
+                    dialProductsHolder.setVisibility(View.VISIBLE);
+                }else{
+                    dialProductsHolder.setVisibility(View.GONE);
+                }
             }
 
 
