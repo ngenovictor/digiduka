@@ -52,12 +52,12 @@ public class GenerateReportsActivity extends AppCompatActivity {
                 },mDay,mMonth,mYear);
                 datePicker.show();
 
-//                FragmentManager fm = getSupportFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-//                ProfitReportFragment fragment = new ProfitReportFragment();
-//                ft.add(R.id.todayProfitZZ, fragment);
-//                ft.addToBackStack(null);
-//                ft.commit();
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ProfitReportFragment fragment = new ProfitReportFragment();
+                ft.add(R.id.todayProfitZZ, fragment);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
 
