@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.parceler.Parcels;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +45,8 @@ public class ProfitReportFragment extends Fragment {
     SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     private TextView profitTotal;
     private TextView date;
+    private String newDate;
+    private String newDate1;
 
 
     public ProfitReportFragment() {
@@ -59,10 +63,12 @@ public class ProfitReportFragment extends Fragment {
         profitTotal=view.findViewById(R.id.daysTransactionsTotal);
         date=view.findViewById(R.id.profitDate);
         mAuth = FirebaseAuth.getInstance();
-        getTransactions();
+        newDate= Parcels.unwrap(getArguments().getParcelable(Constants.START_DAY));
+        newDate1= Parcels.unwrap(getArguments().getParcelable(Constants.END_DAY));
+        getProfitBtwTwoDates();
         return view;
     }
-    public void getTransactions(){
+    public void getProfitBtwTwoDates(){
         refrence= FirebaseDatabase.getInstance().getReference(mAuth.getCurrentUser().getUid()).child(Constants.TRANSACTIONS_DB_KEY);
         refrence.addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,14 +76,19 @@ public class ProfitReportFragment extends Fragment {
                 for (DataSnapshot data:dataSnapshot.getChildren()){
                     String datein=data.getValue(Transaction.class).getDateCreated();
                     Date date = null;
+                    Date datenew=null;
+                    Date datenew1=null;
                     try {
                         date=dateFormatin.parse(datein);
+                        datenew=dateFormat.parse(newDate);
+                        datenew1=dateFormat.parse(newDate1);
                     } catch (ParseException e) {
 
                         e.printStackTrace();
                     }
+                    Log.v("date",dateFormat.format(datenew)+"/"+dateFormat.format(date));
 
-                    if(dateFormat.format(new Date()).equals(dateFormat.format(date))) {
+                    if(date.after(datenew)&&date.before(datenew1)) {
                         for (Product product : data.getValue(Transaction.class).getProducts()) {
 
                             if (productname.contains(product.getNameOfProduct())) {

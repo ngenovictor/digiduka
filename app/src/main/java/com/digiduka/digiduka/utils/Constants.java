@@ -21,6 +21,11 @@ public class Constants {
     public final static String STOCK_SIDE = "stock";
     public final static String SALES_SIDE = "sale";
 
+    //profit days set
+    public final static String START_DAY = "startDate";
+    public final static String END_DAY = "endDate";
+    public final static String SINGLE_DAY = "singleDate";
+
 
 
 }

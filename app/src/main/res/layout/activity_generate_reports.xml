@@ -4,22 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.digiduka.digiduka.ui.GenerateReportsActivity"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="25dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/daysprofit"
-        android:text="daysprofit"/>
-
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/todayProfitZZ"
         android:layout_width="match_parent"
+        android:id="@+id/generateReports"
         android:layout_height="match_parent">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/daysprofit"
+            android:text="startdate"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/daysprofit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="enddate"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/daysprofit"/>
+
+        <Button
+            android:id="@+id/submitdate"
+            android:text="submit"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/backgroundButtons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/daysprofit2"
+            app:layout_constraintHorizontal_bias="0"/>
+
     </android.support.constraint.ConstraintLayout>
+
+    <!--<android.support.constraint.ConstraintLayout-->
+        <!--android:id="@+id/todayProfitZZ"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--android:background="#fff"-->
+        <!--android:elevation="20dp">-->
+
+
+    <!--</android.support.constraint.ConstraintLayout>-->
+    <!--<fragment-->
+        <!--android:name="com.digiduka.digiduka.ui.ProfitReportFragment"-->
+        <!--android:id="@+id/profitfragment"-->
+        <!--tools:layout="@layout/fragment_createlist"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
 
 
