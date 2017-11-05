@@ -67,7 +67,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             super(itemView);
             mContext1 = itemView.getContext();
             name = itemView.findViewById(R.id.textView);
-            description=itemView.findViewById(R.id.textView2);
+
             amount=itemView.findViewById(R.id.textView4);
             quantity=itemView.findViewById(R.id.textView3);
 
@@ -78,21 +78,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         public void bindProduct(final Product product) {
             name.setText(product.getNameOfProduct());
             quantity.setText(String.valueOf(product.getAmount()) );
-            description.setText(product.getDescription());
             amount.setText(String.valueOf((product.getSellingPrice()-product.getBuyingPrice())*product.getAmount()));
-
-
-            amount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    selectedproducts.add(product);
-//                    SellProductsFragment.showSavedItems();
-                    Log.v("selected",String.valueOf(selectedproducts.size()));
-                }
-            });
-
-
 
         }
 
