@@ -107,12 +107,20 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
             productSize.setText(product.getSize());
             productPrice.setText(Integer.toString(product.getBuyingPrice()));
 
-            if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)||
-                    !(AddSaleItemFragment.transaction==null) && AddSaleItemFragment.transaction.containsProduct(product)){
-                pickProductButton.setVisibility(View.GONE);
-                dialProductsHolder.setVisibility(View.VISIBLE);
-            }else{
-                dialProductsHolder.setVisibility(View.GONE);
+            if(mSource.equals(Constants.STOCK_SIDE)){
+                if (!(AddStockItemFragment.stock==null) && AddStockItemFragment.stock.containsProduct(product)){
+                    pickProductButton.setVisibility(View.GONE);
+                    dialProductsHolder.setVisibility(View.VISIBLE);
+                }else{
+                    dialProductsHolder.setVisibility(View.GONE);
+                }
+            }else if(mSource.equals(Constants.SALES_SIDE)){
+                if (!(AddSaleItemFragment.transaction==null) && AddSaleItemFragment.transaction.containsProduct(product)){
+                    pickProductButton.setVisibility(View.GONE);
+                    dialProductsHolder.setVisibility(View.VISIBLE);
+                }else{
+                    dialProductsHolder.setVisibility(View.GONE);
+                }
             }
 
 
@@ -123,7 +131,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                         try{
                             AddStockItemFragment.stock.addProducts(product);
                         }catch (NullPointerException e){
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                             String date = dateFormat.format(new Date());
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             AddStockItemFragment.stock = new Stock(date, user.getUid());
@@ -136,7 +144,7 @@ public class CategoriesProductsListAdapter extends RecyclerView.Adapter<Categori
                         try{
                             AddSaleItemFragment.transaction.addProducts(product);
                         }catch (NullPointerException e){
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
                             String date = dateFormat.format(new Date());
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             AddSaleItemFragment.transaction = new Transaction(date, user.getUid());

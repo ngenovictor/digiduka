@@ -22,7 +22,7 @@ public class TableControllerCategory extends DatabaseHandler {
 
         values.put("title", category.getCategoryTitle());
         values.put("description", category.getCategoryDescription());
-        values.put("date", category.getDate().toString()); //workout the date method here
+        values.put("date", category.getDateCreated()); //workout the date method here
 
 
         SQLiteDatabase db = getWritableDatabase();

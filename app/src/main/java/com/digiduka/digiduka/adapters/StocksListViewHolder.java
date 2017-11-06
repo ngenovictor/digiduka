@@ -96,13 +96,13 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
 
         ArrayList<Product> products = new ArrayList<>();
         products.addAll(stock.getProducts());
-        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products);
+        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products, Constants.STOCK_SIDE);
         stockProductsRecyclerView.setHasFixedSize(true);
         stockProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         stockProductsRecyclerView.setAdapter(adapter);
     }
     public String getDisplayDate(String dateCreated){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         try{
             Date date = dateFormat.parse(dateCreated);
             Calendar calendar = Calendar.getInstance();

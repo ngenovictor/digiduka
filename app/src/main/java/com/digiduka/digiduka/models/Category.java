@@ -2,6 +2,7 @@ package com.digiduka.digiduka.models;
 
 import org.parceler.Parcel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +14,7 @@ public class Category {
     private String categoryTitle;
     private String categoryDescription;
     private String categoryId;
-    private Date date;
+    private String dateCreated;
 
     //private ArrayList<Product> products;
 
@@ -22,11 +23,11 @@ public class Category {
 
     public Category(){}
 
-    public Category(String categoryTitle, String categoryDescription,ArrayList<Product> products) {
+    public Category(String categoryTitle, String categoryDescription) {
         this.categoryTitle = categoryTitle;
         this.categoryDescription = categoryDescription;
-        date = new Date();
-        //this.products=products;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        dateCreated = dateFormat.format(new Date());
     }
 
     public String getCategoryTitle() {
@@ -41,18 +42,14 @@ public class Category {
         return categoryId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDateCreated() {
+        return dateCreated;
     }
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-   // public ArrayList<Product> getProducts() {
-   //     return products;
-
-   // }
     public void setImageEncoded(String imageEncoded) {
         this.imageEncoded = imageEncoded;
     }
