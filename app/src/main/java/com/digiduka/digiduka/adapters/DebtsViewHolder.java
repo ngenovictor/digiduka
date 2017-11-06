@@ -47,7 +47,7 @@ public class DebtsViewHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(mContext,"Debt of "+debt.getDebtorName()+" cleared saved.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(mContext,"Debt of "+debt.getDebtorName()+" cleared.",Toast.LENGTH_LONG).show();
                         }else{
                             Toast.makeText(mContext,"Something went wrong",Toast.LENGTH_LONG).show();
                         }
