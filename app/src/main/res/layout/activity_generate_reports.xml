@@ -14,24 +14,26 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/daysprofit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/daysprofit"
             android:text="startdate"
+            android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/daysprofit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="enddate"
+            android:textAlignment="center"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/daysprofit"/>
+            app:layout_constraintTop_toBottomOf="@+id/daysprofit" />
 
         <Button
             android:id="@+id/submitdate"
