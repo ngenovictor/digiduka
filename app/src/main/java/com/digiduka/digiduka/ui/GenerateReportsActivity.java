@@ -96,31 +96,42 @@ public class GenerateReportsActivity extends AppCompatActivity implements View.O
         }
         if(view==submitdate){
 
-            Date datenew=null;
-            Date datenew1=null;
-            try {
-                datenew=dateFormat.parse(fromdate);
-                datenew1=dateFormat.parse(todate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if(fromdate==null){
-                Toast.makeText(getApplicationContext(),"Enter Start day",Toast.LENGTH_LONG).show();
-            } else if(todate==null){
-                Toast.makeText(getApplicationContext(),"Enter end date",Toast.LENGTH_LONG).show();
-            }else if(datenew.before(datenew1)){
-                Toast.makeText(getApplicationContext(),"End Date shold be after srtart date",Toast.LENGTH_LONG).show();
-            }else {
+            try{
+                Date datenew=null;
+                Date datenew1=null;
+                try {
+                    datenew=dateFormat.parse(fromdate);
+                    datenew1=dateFormat.parse(todate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(datenew1.compareTo(datenew)<=0){
+                    Toast.makeText(getApplicationContext(),"End Date shold be after srtart date",Toast.LENGTH_LONG).show();
+                }else {
 
 
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Fragment myFragment = new ProfitReportFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants.START_DAY, Parcels.wrap(fromdate));
-                bundle.putParcelable(Constants.END_DAY, Parcels.wrap(todate));
-                myFragment.setArguments(bundle);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.generateReports, myFragment).addToBackStack(null).commit();
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment myFragment = new ProfitReportFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.START_DAY, Parcels.wrap(fromdate));
+                    bundle.putParcelable(Constants.END_DAY, Parcels.wrap(todate));
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.generateReports, myFragment).addToBackStack(null).commit();
+                }
+
+            }catch (NullPointerException e) {
+                if (fromdate == null) {
+                    Toast.makeText(getApplicationContext(), "Enter Start day", Toast.LENGTH_LONG).show();
+                }
+                if (todate == null) {
+                    Toast.makeText(getApplicationContext(), "Enter end date", Toast.LENGTH_LONG).show();
+
+
+                }
             }
+
+
         }
     }
 
