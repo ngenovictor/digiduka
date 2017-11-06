@@ -42,7 +42,7 @@ public class ProfitReportFragment extends Fragment {
     private RecyclerView transactionsRecycler;
     private ProductListAdapter mAdapter;
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    SimpleDateFormat dateFormatin = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private TextView profitTotal;
     private TextView date;
     private String newDate;
