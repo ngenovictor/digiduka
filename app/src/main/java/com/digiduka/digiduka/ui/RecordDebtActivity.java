@@ -101,6 +101,9 @@ public class RecordDebtActivity extends AppCompatActivity implements View.OnClic
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
+                                debtorNameEdit.setText("");
+                                debtValueEdit.setText("");
+
                                 Toast.makeText(getApplicationContext(),"Debt record saved.",Toast.LENGTH_LONG).show();
                                 mAdapter.notifyDataSetChanged();
                             }else{
