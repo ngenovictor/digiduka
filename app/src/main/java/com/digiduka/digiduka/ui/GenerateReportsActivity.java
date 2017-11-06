@@ -15,23 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-<<<<<<< HEAD
-=======
 import android.widget.Toast;
-
->>>>>>> a04cd2321ac07865e7067860dba437c5e00cfaa0
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.utils.Constants;
 
 
 import org.parceler.Parcels;
-<<<<<<< HEAD
-=======
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
->>>>>>> a04cd2321ac07865e7067860dba437c5e00cfaa0
 import java.util.Calendar;
 import java.util.Date;
 
