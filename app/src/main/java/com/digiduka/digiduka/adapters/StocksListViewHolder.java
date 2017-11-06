@@ -96,7 +96,7 @@ public class StocksListViewHolder extends RecyclerView.ViewHolder {
 
         ArrayList<Product> products = new ArrayList<>();
         products.addAll(stock.getProducts());
-        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products);
+        StockProductsListAdapter adapter = new StockProductsListAdapter(mContext, products, Constants.STOCK_SIDE);
         stockProductsRecyclerView.setHasFixedSize(true);
         stockProductsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         stockProductsRecyclerView.setAdapter(adapter);

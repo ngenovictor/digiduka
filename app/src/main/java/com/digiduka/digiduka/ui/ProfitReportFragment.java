@@ -41,13 +41,9 @@ public class ProfitReportFragment extends Fragment {
     private TextView date;
     private String newDate;
     private String newDate1;
-
-
     public ProfitReportFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,14 +73,11 @@ public class ProfitReportFragment extends Fragment {
                         datenew=dateFormat.parse(newDate);
                         datenew1=dateFormat.parse(newDate1);
                     } catch (ParseException e) {
-
                         e.printStackTrace();
                     }
-                    Log.v("date",dateFormat.format(datenew)+"/"+dateFormat.format(date));
-
+                   Log.v("date",dateFormat.format(datenew)+"/"+dateFormat.format(date));
                     if(date.after(datenew)&&date.before(datenew1)) {
                         for (Product product : data.getValue(Transaction.class).getProducts()) {
-
                             if (productname.contains(product.getNameOfProduct())) {
                                 for (Product product1 : products) {
                                     if (product1.getPushId().equals(product.getPushId())) {
@@ -95,12 +88,10 @@ public class ProfitReportFragment extends Fragment {
                                 products.add(product);
                                 productname.add(product.getNameOfProduct());
                             }
-
                             Log.v("product", product.toString());
                         }
                     }
                 }
-
                 date.setText("Profit for  " +dateFormat.format(new Date()));
                 Log.v("size",String.valueOf( products.size()));
                 mAdapter = new ProductListAdapter(getActivity(), products);
@@ -108,18 +99,12 @@ public class ProfitReportFragment extends Fragment {
                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                 transactionsRecycler.setLayoutManager(layoutManager);
                 transactionsRecycler.setHasFixedSize(false);
-
                 gettotalProfit(products);
-
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
-
     }
     public void gettotalProfit(ArrayList<Product> products){
         int total=0;
@@ -127,7 +112,5 @@ public class ProfitReportFragment extends Fragment {
             total+= ((product.getSellingPrice()-product.getBuyingPrice())*product.getAmount()) ;
         }
         profitTotal.setText("Total profit   Ksh"+String.valueOf(total));
-
     }
-
 }
