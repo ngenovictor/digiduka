@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.utils.Constants;
@@ -24,7 +25,11 @@ import com.digiduka.digiduka.utils.Constants;
 
 import org.parceler.Parcels;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class GenerateReportsActivity extends AppCompatActivity implements View.OnClickListener{
@@ -35,6 +40,7 @@ public class GenerateReportsActivity extends AppCompatActivity implements View.O
     private String todate;
     int mDay,mMonth,mYear;
     ConstraintLayout generateReport;
+    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
     @Override
@@ -90,13 +96,42 @@ public class GenerateReportsActivity extends AppCompatActivity implements View.O
         }
         if(view==submitdate){
 
-            AppCompatActivity activity = (AppCompatActivity) view.getContext();
-            Fragment myFragment = new ProfitReportFragment();
-            Bundle bundle=new Bundle();
-            bundle.putParcelable(Constants.START_DAY,Parcels.wrap(fromdate));
-            bundle.putParcelable(Constants.END_DAY,Parcels.wrap(todate));
-            myFragment.setArguments(bundle);
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.generateReports, myFragment).addToBackStack(null).commit();
+            try{
+                Date datenew=null;
+                Date datenew1=null;
+                try {
+                    datenew=dateFormat.parse(fromdate);
+                    datenew1=dateFormat.parse(todate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(datenew1.compareTo(datenew)<=0){
+                    Toast.makeText(getApplicationContext(),"End Date shold be after srtart date",Toast.LENGTH_LONG).show();
+                }else {
+
+
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment myFragment = new ProfitReportFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constants.START_DAY, Parcels.wrap(fromdate));
+                    bundle.putParcelable(Constants.END_DAY, Parcels.wrap(todate));
+                    myFragment.setArguments(bundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.generateReports, myFragment).addToBackStack(null).commit();
+                }
+
+            }catch (NullPointerException e) {
+                if (fromdate == null) {
+                    Toast.makeText(getApplicationContext(), "Enter Start day", Toast.LENGTH_LONG).show();
+                }
+                if (todate == null) {
+                    Toast.makeText(getApplicationContext(), "Enter end date", Toast.LENGTH_LONG).show();
+
+
+                }
+            }
+
+
         }
     }
 
