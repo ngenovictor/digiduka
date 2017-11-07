@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void showAbout() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("About digiduka");
-        builder.setMessage("Built by a great team.");
+        builder.setMessage("Built by a great team. Victor Ng'eno, Elvis Mosoti and Morris Warachi.");
         String positiveText = getString(android.R.string.ok);
         builder.setPositiveButton(positiveText,
                 new DialogInterface.OnClickListener() {
