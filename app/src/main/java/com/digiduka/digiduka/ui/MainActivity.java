@@ -167,12 +167,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about:
                 showAbout();
                 break;
-            case R.id.intro:
-                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-                startActivity(intent);
-            case R.id.generateReports:
-                Intent intent1 = new Intent(MainActivity.this, GenerateReportsActivity.class);
-                startActivity(intent1);
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -185,18 +181,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.recordDebt) {
+       if (id == R.id.recordDebt) {
             Intent intent = new Intent(MainActivity.this, RecordDebtActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_send) {
+           Intent intent1 = new Intent(MainActivity.this, GenerateReportsActivity.class);
+           startActivity(intent1);
 
         }
 
@@ -217,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 Toast.makeText(getApplicationContext(), "You are Signed in as: " + auth.getCurrentUser().getDisplayName(), Toast.LENGTH_LONG).show();
                 Log.v("number", String.valueOf(auth.getCurrentUser().getPhoneNumber()));
+                loggedIn();
 
             } else {
                 finish();

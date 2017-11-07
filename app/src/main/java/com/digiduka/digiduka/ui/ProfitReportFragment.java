@@ -92,7 +92,7 @@ public class ProfitReportFragment extends Fragment {
                         }
                     }
                 }
-                date.setText("Profit for  " +dateFormat.format(new Date()));
+               // date.setText("Profit for  " +dateFormat.format(new Date()));
                 Log.v("size",String.valueOf( products.size()));
                 mAdapter = new ProductListAdapter(getActivity(), products);
                 transactionsRecycler.setAdapter(mAdapter);

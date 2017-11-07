@@ -1,6 +1,4 @@
 package com.digiduka.digiduka.ui;
-
-
 import android.app.DatePickerDialog;
 
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.digiduka.digiduka.R;
 import com.digiduka.digiduka.utils.Constants;
 
