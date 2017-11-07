@@ -107,7 +107,7 @@ public class RecordDebtActivity extends AppCompatActivity implements View.OnClic
                                 Toast.makeText(getApplicationContext(),"Debt record saved.",Toast.LENGTH_LONG).show();
                                 mAdapter.notifyDataSetChanged();
                             }else{
-                                Toast.makeText(getApplicationContext(),"Debt was not saved successfully.",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"Debt was not saved.",Toast.LENGTH_LONG).show();
                             }
                         }
                     });
