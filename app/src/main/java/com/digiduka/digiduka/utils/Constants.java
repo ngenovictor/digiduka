@@ -26,6 +26,8 @@ public class Constants {
     public final static String END_DAY = "endDate";
     public final static String SINGLE_DAY = "singleDate";
 
+    public final static String DEBTS_DB_KEY = "debts";
+
 
 
 }

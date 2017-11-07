@@ -193,8 +193,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.recordDebt) {
+            Intent intent = new Intent(MainActivity.this, RecordDebtActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_send) {
 
         }
