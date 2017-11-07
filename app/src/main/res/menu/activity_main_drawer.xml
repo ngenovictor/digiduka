@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/recordDebt"
+                android:icon="@drawable/ic_font_download_black_24dp"
+                android:title="Record Debt" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+                android:title="Generate Profit Report" />
+        </menu>
+    </item>
+
+</menu>

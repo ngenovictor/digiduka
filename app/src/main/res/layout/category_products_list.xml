@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/productName"
+        android:text="Biscuit"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/productSize"
+        android:text="250gms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintLeft_toRightOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toLeftOf="@+id/productPrice"/>
+    <TextView
+        android:id="@+id/productPrice"
+        android:text="200KSH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/productSize"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toLeftOf="@+id/pickProductButton"/>
+    <Button
+        android:id="@+id/pickProductButton"
+        android:text="pick"
+        android:textAllCaps="false"
+        android:backgroundTint="#f4511e"
+        android:textColor="#fff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName"
+        app:layout_constraintRight_toLeftOf="@+id/dialProductsHolder"/>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialProductsHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/productName"
+        app:layout_constraintBottom_toBottomOf="@+id/productName">
+        <Button
+            android:id="@+id/incrementProduct"
+            android:text="+"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:backgroundTint="#f4511e"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/deductProduct"/>
+        <Button
+            android:id="@+id/deductProduct"
+            android:text="-"
+            android:textColor="#fff"
+            android:textAllCaps="false"
+            android:backgroundTint="#f4511e"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/incrementProduct"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

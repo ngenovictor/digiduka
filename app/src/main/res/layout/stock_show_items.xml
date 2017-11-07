@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:id="@+id/stockProductName"
+        android:text="productName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/stockProductSize"
+        android:text="250gms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/stockProductName"
+        app:layout_constraintTop_toTopOf="@+id/stockProductName"
+        app:layout_constraintBottom_toBottomOf="@+id/stockProductName"
+        app:layout_constraintRight_toLeftOf="@+id/stockProductBuyingPrice"/>
+    <TextView
+        android:id="@+id/stockProductBuyingPrice"
+        android:text="KSH. 200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/stockProductSize"
+        app:layout_constraintTop_toTopOf="@+id/stockProductName"
+        app:layout_constraintBottom_toBottomOf="@+id/stockProductName"
+        app:layout_constraintRight_toLeftOf="@+id/stockProductAmount"/>
+    <TextView
+        android:id="@+id/stockProductAmount"
+        android:text="2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/stockProductBuyingPrice"
+        app:layout_constraintTop_toTopOf="@+id/stockProductName"
+        app:layout_constraintBottom_toBottomOf="@+id/stockProductName"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

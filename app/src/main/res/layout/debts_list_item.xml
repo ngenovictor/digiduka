@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:id="@+id/debtOwnerPic"
+        android:src="@drawable/ic_person_black_24dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/debtorNameDisplayTitle"
+        android:text="Name: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/debtOwnerPic"
+        app:layout_constraintTop_toTopOf="@+id/debtOwnerPic"/>
+
+    <TextView
+        android:id="@+id/debtorNameDisplay"
+        android:text="Dennis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/debtorNameDisplayTitle"/>
+    <TextView
+        android:id="@+id/debtorAmountDisplayTitle"
+        android:text="Amount: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/debtorNameDisplayTitle"
+        app:layout_constraintLeft_toRightOf="@+id/debtOwnerPic"/>
+    <TextView
+        android:id="@+id/debtorAmountDisplay"
+        android:text="KSH 100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/debtorAmountDisplayTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/debtorAmountDisplayTitle"
+        app:layout_constraintLeft_toRightOf="@+id/debtorAmountDisplayTitle"/>
+    <TextView
+        android:id="@+id/debtorDateDisplayTitle"
+        android:text="Date Created: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/debtOwnerPic"
+        app:layout_constraintTop_toBottomOf="@+id/debtorAmountDisplayTitle"/>
+    <TextView
+        android:id="@+id/debtorDateDisplay"
+        android:text="Wednesday, 20 October 2017"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/debtorDateDisplayTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/debtorDateDisplayTitle"
+        app:layout_constraintLeft_toRightOf="@+id/debtorDateDisplayTitle"/>
+    <Button
+        android:id="@+id/clearDebtButton"
+        android:text="Clear"
+        android:backgroundTint="@color/backgroundButtonsCancel"
+        android:textColor="#fff"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/debtorDateDisplayTitle"/>
+
+</android.support.constraint.ConstraintLayout>
