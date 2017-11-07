@@ -82,6 +82,7 @@ public class AddCategoryFragment extends DialogFragment implements View.OnClickL
                 newCategory.setImageEncoded(imageEncoded);
                 puhRef.setValue(newCategory);
 
+
                 /**
                  * this line enables offline mode for firebase
                  * **/

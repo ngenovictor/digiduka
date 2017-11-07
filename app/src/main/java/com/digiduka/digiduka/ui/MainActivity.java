@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ViewPager mainActivityViewPager;
     private TabLayout homeNavTabLayout;
     private static final int RC_SIGN_IN = 123;
-    private ArrayList<Category> categories = new ArrayList<>();
+    public ArrayList<Category> categories = new ArrayList<>();
     private FirebaseUser loggedInUser;
     private DatabaseReference reference;
     private FirebaseAuth mAuth;
@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                categories.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     categories.add(data.getValue(Category.class));
                 }
@@ -257,5 +258,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
     //loggedIn();
 }
