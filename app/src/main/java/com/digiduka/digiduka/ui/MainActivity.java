@@ -167,14 +167,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.about:
                 showAbout();
                 break;
-
-
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
